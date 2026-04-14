@@ -5,11 +5,11 @@ import HistoryList from "../components/HistoryList.jsx";
 import { generateCaption, getCaptions } from "../services/api.js";
 
 const MOODS = [
-  { value: "sunyi", label: "Sunyi" },
-  { value: "malam", label: "Malam" },
-  { value: "nostalgia", label: "Nostalgia" },
-  { value: "kehilangan", label: "Kehilangan" },
-  { value: "tenang", label: "Tenang" },
+  { value: "lonely", label: "Lonely" },
+  { value: "night", label: "Night" },
+  { value: "nostalgic", label: "Nostalgic" },
+  { value: "lost", label: "Lost" },
+  { value: "calm", label: "Calm" },
 ];
 
 function useTypingText(fullText, { enabled, speedMs = 16 } = {}) {
@@ -43,7 +43,7 @@ function useTypingText(fullText, { enabled, speedMs = 16 } = {}) {
 }
 
 export default function HomePage() {
-  const [mood, setMood] = useState("malam");
+  const [mood, setMood] = useState("night");
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -136,39 +136,37 @@ export default function HomePage() {
     <div className="min-h-screen flex flex-col bg-[#0a0a0a]">
       <Header />
 
-      <main className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-1 w-full max-w-2xl mx-auto px-4 sm:px-6 py-6">
         {/* Hero */}
-        <section className="text-center mb-12">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-white/95 mb-3">
-            Cerita dalam satu kalimat.
+        <section className="text-center mb-10">
+          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white/95 mb-2">
+            Stories in a single line.
           </h1>
-          <p className="text-lg sm:text-xl text-white/60">
+          <p className="text-base text-white/60">
             AI-generated captions for every mood.
           </p>
         </section>
 
         {/* Generator */}
-        <div className="flex flex-col gap-6 max-w-2xl mx-auto">
+        <div className="flex flex-col gap-6">
           {/* Input Section */}
           <section className="w-full space-y-6">
             {/* Mood Selector */}
             <div className="space-y-3">
               <span className="block text-xs font-medium tracking-wider text-white/60 uppercase">Mood</span>
-              <div className="flex gap-2">
+              <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1 -mx-4 px-4 sm:mx-0 sm:px-0">
                 {MOODS.map((m) => (
                   <button
                     key={m.value}
                     type="button"
-                    className={`flex-1 min-w-0 px-2 sm:px-3 py-2.5 rounded-[10px] text-xs sm:text-sm font-medium transition-all duration-200 border truncate ${
-                      mood === m.value
-                        ? "bg-white text-[#0a0a0a] border-white"
-                        : "bg-white/[0.06] text-white/80 border-white/[0.10] hover:bg-white/[0.10] hover:border-white/[0.20]"
-                    } disabled:opacity-40 disabled:cursor-not-allowed`}
+                    className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap ${mood === m.value
+                        ? "bg-white text-[#0a0a0a]"
+                        : "bg-white/[0.08] text-white/70 hover:bg-white/[0.12] hover:text-white"
+                      } disabled:opacity-30 disabled:cursor-not-allowed`}
                     onClick={() => setMood(m.value)}
                     disabled={loading}
-                    title={m.label}
                   >
-                    <span className="truncate">{m.label}</span>
+                    {m.label}
                   </button>
                 ))}
               </div>
@@ -176,10 +174,10 @@ export default function HomePage() {
 
             {/* Context Input */}
             <div className="space-y-3">
-              <span className="block text-xs font-medium tracking-wider text-white/60 uppercase">Konteks</span>
+              <span className="block text-xs font-medium tracking-wider text-white/60 uppercase">Context</span>
               <div className="relative">
                 <textarea
-                  className="w-full min-h-[120px] p-4 rounded-[14px] bg-[#141414] border border-white/[0.06] text-white/95 placeholder:text-white/30 resize-y transition-all duration-200 focus:outline-none focus:border-white/[0.20] focus:bg-[#1a1a1a] disabled:opacity-50"
+                  className="w-full min-h-[120px] p-4 rounded-[14px] bg-[#141414] border border-white/[0.06] text-white/95 text-base placeholder:text-white/30 resize-y transition-all duration-200 focus:outline-none focus:border-white/[0.20] focus:bg-[#1a1a1a] disabled:opacity-50"
                   value={text}
                   onChange={(e) => setText(e.target.value)}
                   placeholder="Add context (optional)..."
@@ -188,7 +186,7 @@ export default function HomePage() {
                 />
               </div>
               <span className="block text-sm text-white/40">
-                Optional. Add context for more personal results.
+                Add context to make your caption more personal.
               </span>
             </div>
 
@@ -203,7 +201,7 @@ export default function HomePage() {
                 {loading ? (
                   <>
                     <span className="w-4 h-4 border-2 border-[#0a0a0a]/30 border-t-[#0a0a0a] rounded-full animate-spin-slow" />
-                    Generating...
+                    Creating...
                   </>
                 ) : (
                   "Generate"
@@ -218,7 +216,7 @@ export default function HomePage() {
                   onChange={(e) => setEnableTyping(e.target.checked)}
                   disabled={loading}
                 />
-                <span>Typing effect</span>
+                <span>Typewriter effect</span>
               </label>
             </div>
 

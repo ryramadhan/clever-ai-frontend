@@ -1,10 +1,22 @@
 import { useState, useEffect } from "react";
 
+const MOOD_LABELS = {
+  lonely: "Lonely",
+  night: "Night",
+  nostalgic: "Nostalgic",
+  lost: "Lost",
+  calm: "Calm",
+};
+
+function getMoodLabel(mood) {
+  return MOOD_LABELS[mood?.toLowerCase()] || mood || "Unknown";
+}
+
 function formatDate(iso) {
   if (!iso) return "";
   try {
     const date = new Date(iso);
-    return date.toLocaleDateString("id-ID", {
+    return date.toLocaleDateString("en-US", {
       day: "numeric",
       month: "short",
       year: "numeric",
@@ -22,7 +34,6 @@ async function copyToClipboard(text) {
   }
 }
 
-// Delayed loading to prevent flash for fast requests
 function useDelayedLoading(loading, delay = 200) {
   const [showLoading, setShowLoading] = useState(false);
 
@@ -51,7 +62,7 @@ export default function HistoryList({
   const hasItems = items && items.length > 0;
 
   return (
-    <section className="w-full max-w-2xl mx-auto mt-10 lg:mt-12 px-4 sm:px-0">
+    <section className="w-full max-w-2xl mx-auto mt-10">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-semibold tracking-tight text-white/95">History</h2>
@@ -69,7 +80,7 @@ export default function HistoryList({
               <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
             </svg>
           )}
-          {loading ? "Refreshing..." : "Refresh"}
+          {loading ? "Loading..." : "Refresh"}
         </button>
       </div>
 
@@ -91,7 +102,7 @@ export default function HistoryList({
 
       {/* Empty state */}
       {!loading && !hasItems && (
-        <div className="text-center py-12 text-white/40">
+        <div className="text-center py-12 text-base text-white/40">
           No history yet. Generate your first caption.
         </div>
       )}
@@ -109,9 +120,9 @@ export default function HistoryList({
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-3">
                   <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-white/[0.06] border border-white/[0.10] text-xs font-medium text-white/60 uppercase tracking-wider">
-                    {it.mood}
+                    {getMoodLabel(it.mood)}
                   </span>
-                  <span className="text-xs text-white/40">{formatDate(it.created_at)}</span>
+                  <span className="text-sm text-white/40">{formatDate(it.created_at)}</span>
                 </div>
                 <button
                   type="button"
@@ -134,7 +145,7 @@ export default function HistoryList({
               )}
 
               {/* Result */}
-              <div className="text-white/95 leading-relaxed">{it.result}</div>
+              <div className="text-base text-white/95 leading-relaxed">{it.result}</div>
             </article>
           ))}
         </div>
@@ -151,7 +162,7 @@ export default function HistoryList({
           >
             {loadingMore ? (
               <>
-                <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin-slow" />
+                <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin-slow" />
                 Loading...
               </>
             ) : (

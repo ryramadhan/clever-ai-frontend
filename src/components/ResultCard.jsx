@@ -18,7 +18,7 @@ export default function ResultCard({ text, isTyping, provider, hasResult }) {
     <section className="w-full" aria-live="polite">
       <div className="bg-[#141414] rounded-[14px] border border-white/[0.06] overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
+        <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/[0.06]">
           <span className="text-xs font-medium tracking-wider text-white/60 uppercase">Caption</span>
           <button
             type="button"
@@ -49,7 +49,7 @@ export default function ResultCard({ text, isTyping, provider, hasResult }) {
               {isTyping && <span className="inline-block w-0.5 h-5 bg-white/80 ml-0.5 align-middle caret-blink" aria-hidden="true" />}
             </p>
           ) : (
-            <p className="text-white/40 italic">
+            <p className="text-white/40 text-base italic">
               Your caption will appear here
             </p>
           )}
@@ -57,7 +57,7 @@ export default function ResultCard({ text, isTyping, provider, hasResult }) {
 
         {/* Meta */}
         {hasResult && (
-          <div className="px-4 py-3 border-t border-white/[0.06] flex items-center justify-end">
+          <div className="px-4 py-2.5 border-t border-white/[0.06] flex items-center justify-end">
             {provider && (
               <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-white/[0.06] border border-white/[0.10] text-xs text-white/60">
                 {provider === "gemini" ? "AI Generated" : "Mock"}
