@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLanguage } from "../contexts/LanguageContext.jsx";
 
 const MOOD_LABELS = {
   lonely: "Lonely",
@@ -8,8 +9,15 @@ const MOOD_LABELS = {
   calm: "Calm",
 };
 
-function getMoodLabel(mood) {
-  return MOOD_LABELS[mood?.toLowerCase()] || mood || "Unknown";
+function getMoodLabel(mood, t) {
+  const labels = {
+    lonely: t("moodLonely"),
+    night: t("moodNight"),
+    nostalgic: t("moodNostalgic"),
+    lost: t("moodLost"),
+    calm: t("moodCalm"),
+  };
+  return labels[mood?.toLowerCase()] || mood || t("moodLabel");
 }
 
 function formatDate(iso) {
@@ -58,6 +66,7 @@ export default function HistoryList({
   canLoadMore,
   loadingMore,
 }) {
+  const { t } = useLanguage();
   const showLoading = useDelayedLoading(loading, 200);
   const hasItems = items && items.length > 0;
 
@@ -65,7 +74,7 @@ export default function HistoryList({
     <section className="w-full max-w-2xl mx-auto mt-10">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold tracking-tight text-white/95">History</h2>
+        <h2 className="text-xl font-semibold tracking-tight text-white/95">{t("historyTitle")}</h2>
         <button
           type="button"
           className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-transparent border border-white/[0.10] text-sm text-white/60 transition-all duration-200 hover:bg-white/[0.06] hover:text-white/80 hover:border-white/[0.20] disabled:opacity-40 disabled:cursor-not-allowed"
@@ -80,7 +89,7 @@ export default function HistoryList({
               <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
             </svg>
           )}
-          {loading ? "Loading..." : "Refresh"}
+          {loading ? t("loading") : t("refresh")}
         </button>
       </div>
 
@@ -103,7 +112,7 @@ export default function HistoryList({
       {/* Empty state */}
       {!loading && !hasItems && (
         <div className="text-center py-12 text-base text-white/40">
-          No history yet. Generate your first caption.
+          {t("noHistory")}
         </div>
       )}
 
@@ -120,7 +129,7 @@ export default function HistoryList({
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-3">
                   <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-white/[0.06] border border-white/[0.10] text-xs font-medium text-white/60 uppercase tracking-wider">
-                    {getMoodLabel(it.mood)}
+                    {getMoodLabel(it.mood, t)}
                   </span>
                   <span className="text-sm text-white/40">{formatDate(it.created_at)}</span>
                 </div>
@@ -163,10 +172,10 @@ export default function HistoryList({
             {loadingMore ? (
               <>
                 <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin-slow" />
-                Loading...
+                {t("loading")}
               </>
             ) : (
-              "Load more"
+              t("loadMore")
             )}
           </button>
         </div>

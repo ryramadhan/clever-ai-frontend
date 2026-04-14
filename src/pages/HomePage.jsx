@@ -2,14 +2,15 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Header from "../components/Header.jsx";
 import ResultCard from "../components/ResultCard.jsx";
 import HistoryList from "../components/HistoryList.jsx";
+import { useLanguage } from "../contexts/LanguageContext.jsx";
 import { generateCaption, getCaptions } from "../services/api.js";
 
-const MOODS = [
-  { value: "lonely", label: "Lonely" },
-  { value: "night", label: "Night" },
-  { value: "nostalgic", label: "Nostalgic" },
-  { value: "lost", label: "Lost" },
-  { value: "calm", label: "Calm" },
+const MOOD_KEYS = [
+  { value: "lonely", labelKey: "moodLonely" },
+  { value: "night", labelKey: "moodNight" },
+  { value: "nostalgic", labelKey: "moodNostalgic" },
+  { value: "lost", labelKey: "moodLost" },
+  { value: "calm", labelKey: "moodCalm" },
 ];
 
 function useTypingText(fullText, { enabled, speedMs = 16 } = {}) {
@@ -43,6 +44,7 @@ function useTypingText(fullText, { enabled, speedMs = 16 } = {}) {
 }
 
 export default function HomePage() {
+  const { t } = useLanguage();
   const [mood, setMood] = useState("night");
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -140,10 +142,10 @@ export default function HomePage() {
         {/* Hero */}
         <section className="text-center mb-10">
           <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white/95 mb-2">
-            Stories in a single line.
+            {t("heroTitle")}
           </h1>
           <p className="text-base text-white/60">
-            AI-generated captions for every mood.
+            {t("heroSubtitle")}
           </p>
         </section>
 
@@ -153,20 +155,20 @@ export default function HomePage() {
           <section className="w-full space-y-6">
             {/* Mood Selector */}
             <div className="space-y-3">
-              <span className="block text-xs font-medium tracking-wider text-white/60 uppercase">Mood</span>
+              <span className="block text-xs font-medium tracking-wider text-white/60 uppercase">{t("moodLabel")}</span>
               <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1 -mx-4 px-4 sm:mx-0 sm:px-0">
-                {MOODS.map((m) => (
+                {MOOD_KEYS.map((m) => (
                   <button
                     key={m.value}
                     type="button"
                     className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap ${mood === m.value
-                        ? "bg-white text-[#0a0a0a]"
-                        : "bg-white/[0.08] text-white/70 hover:bg-white/[0.12] hover:text-white"
+                      ? "bg-white text-[#0a0a0a]"
+                      : "bg-white/[0.08] text-white/70 hover:bg-white/[0.12] hover:text-white"
                       } disabled:opacity-30 disabled:cursor-not-allowed`}
                     onClick={() => setMood(m.value)}
                     disabled={loading}
                   >
-                    {m.label}
+                    {t(m.labelKey)}
                   </button>
                 ))}
               </div>
@@ -174,19 +176,19 @@ export default function HomePage() {
 
             {/* Context Input */}
             <div className="space-y-3">
-              <span className="block text-xs font-medium tracking-wider text-white/60 uppercase">Context</span>
+              <span className="block text-xs font-medium tracking-wider text-white/60 uppercase">{t("contextLabel")}</span>
               <div className="relative">
                 <textarea
                   className="w-full min-h-[120px] p-4 rounded-[14px] bg-[#141414] border border-white/[0.06] text-white/95 text-base placeholder:text-white/30 resize-y transition-all duration-200 focus:outline-none focus:border-white/[0.20] focus:bg-[#1a1a1a] disabled:opacity-50"
                   value={text}
                   onChange={(e) => setText(e.target.value)}
-                  placeholder="Add context (optional)..."
+                  placeholder={t("contextPlaceholder")}
                   disabled={loading}
                   rows={3}
                 />
               </div>
               <span className="block text-sm text-white/40">
-                Add context to make your caption more personal.
+                {t("contextHint")}
               </span>
             </div>
 
@@ -201,10 +203,10 @@ export default function HomePage() {
                 {loading ? (
                   <>
                     <span className="w-4 h-4 border-2 border-[#0a0a0a]/30 border-t-[#0a0a0a] rounded-full animate-spin-slow" />
-                    Creating...
+                    {t("generating")}
                   </>
                 ) : (
-                  "Generate"
+                  t("generate")
                 )}
               </button>
 
@@ -216,7 +218,7 @@ export default function HomePage() {
                   onChange={(e) => setEnableTyping(e.target.checked)}
                   disabled={loading}
                 />
-                <span>Typewriter effect</span>
+                <span>{t("typewriterEffect")}</span>
               </label>
             </div>
 

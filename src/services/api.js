@@ -1,4 +1,4 @@
-const API_BASE = import.meta.env.VITE_API_BASE_URL || ""; // Empty = same origin (Vercel)
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "";
 
 async function request(path, options = {}) {
   // For Vercel: API is at same origin, so use /api prefix

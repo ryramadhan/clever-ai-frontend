@@ -1,6 +1,8 @@
 # 🌙 MoodWrite AI Frontend
 
-Monochrome AI Mood Caption Generator — React frontend untuk generate caption aesthetic berdasarkan mood. Minimal, modern, responsive.
+Monochrome AI Mood Caption Generator — React frontend for generating aesthetic captions based on mood. Minimal, modern, responsive.
+
+🌐 **Bilingual UI** — Toggle between English and Indonesia with one click.
 
 ## 🌐 Live Demo
 
@@ -19,11 +21,12 @@ Monochrome AI Mood Caption Generator — React frontend untuk generate caption a
 ## ✨ Features
 
 - **Monochrome UI** — Minimal, clean aesthetic
-- **5 Mood Options** — Sunyi, Malam, Nostalgia, Kehilangan, Tenang
+- **5 Mood Options** — Lonely, Night, Nostalgic, Lost, Calm
+- **Bilingual Support** — Toggle EN/ID language in navbar
 - **Real-time Generation** — AI-powered captions via backend API
-- **History** — Lihat caption yang pernah dibuat
-- **Copy to Clipboard** — Satu klik copy caption
-- **Typing Effect** — Animasi text halus
+- **History** — View previously generated captions
+- **Copy to Clipboard** — One-click caption copy
+- **Typing Effect** — Smooth text animation
 - **Fully Responsive** — Mobile & desktop
 
 ## 🚀 Setup Local
@@ -81,12 +84,13 @@ VITE_API_BASE_URL=https://moodwrite-api.vercel.app
 ```
 src/
 ├── components/     # Reusable UI components
+├── contexts/       # React contexts (LanguageContext)
 ├── pages/          # Page components
 ├── services/       # API service layer
 ├── assets/         # Images, icons
 ├── App.jsx         # Root component
 ├── main.jsx        # Entry point
-└── style.css       # Global styles (monochrome theme)
+└── index.css       # Global styles (Tailwind + custom)
 ```
 
 ## 🏗️ Architecture
