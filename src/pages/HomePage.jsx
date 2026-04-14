@@ -185,11 +185,17 @@ export default function HomePage() {
                   placeholder={t("contextPlaceholder")}
                   disabled={loading}
                   rows={3}
+                  maxLength={500}
                 />
               </div>
-              <span className="block text-sm text-white/40">
-                {t("contextHint")}
-              </span>
+              <div className="flex items-center justify-between">
+                <span className="block text-sm text-white/40">
+                  {t("contextHint")}
+                </span>
+                <span className={`block text-xs ${text.length >= 450 ? "text-amber-400" : "text-white/30"}`}>
+                  {text.length}/500
+                </span>
+              </div>
             </div>
 
             {/* Generate Row */}
@@ -224,8 +230,16 @@ export default function HomePage() {
 
             {/* Error */}
             {error && (
-              <div className="p-4 rounded-[10px] bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
-                {error}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 rounded-[10px] bg-red-500/10 border border-red-500/20">
+                <span className="text-red-400 text-sm">{error}</span>
+                <button
+                  type="button"
+                  onClick={onGenerate}
+                  disabled={loading}
+                  className="text-sm text-white/60 hover:text-white underline underline-offset-2 disabled:opacity-40 disabled:no-underline transition-colors"
+                >
+                  Try again
+                </button>
               </div>
             )}
           </section>
