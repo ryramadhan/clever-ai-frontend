@@ -133,63 +133,76 @@ export default function HomePage() {
   }
 
   return (
-    <div className="mw-app">
+    <div className="min-h-screen flex flex-col bg-[#0a0a0a]">
       <Header />
 
-      <main className="mw-main">
-        <section className="mw-hero">
-          <h1>Cerita dalam satu kalimat.</h1>
-          <p>AI-generated captions for every mood.</p>
+      <main className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Hero */}
+        <section className="text-center mb-12">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-white/95 mb-3">
+            Cerita dalam satu kalimat.
+          </h1>
+          <p className="text-lg sm:text-xl text-white/60">
+            AI-generated captions for every mood.
+          </p>
         </section>
 
-        <div className="mw-generator">
-          <section className="mw-input-section">
+        {/* Generator */}
+        <div className="flex flex-col gap-6 max-w-2xl mx-auto">
+          {/* Input Section */}
+          <section className="w-full space-y-6">
             {/* Mood Selector */}
-            <div className="mw-mood-section">
-              <span className="mw-section-label">Mood</span>
-              <div className="mw-mood-grid">
+            <div className="space-y-3">
+              <span className="block text-xs font-medium tracking-wider text-white/60 uppercase">Mood</span>
+              <div className="flex gap-2">
                 {MOODS.map((m) => (
                   <button
                     key={m.value}
                     type="button"
-                    className={`mw-mood-btn ${mood === m.value ? "active" : ""}`}
+                    className={`flex-1 min-w-0 px-2 sm:px-3 py-2.5 rounded-[10px] text-xs sm:text-sm font-medium transition-all duration-200 border truncate ${
+                      mood === m.value
+                        ? "bg-white text-[#0a0a0a] border-white"
+                        : "bg-white/[0.06] text-white/80 border-white/[0.10] hover:bg-white/[0.10] hover:border-white/[0.20]"
+                    } disabled:opacity-40 disabled:cursor-not-allowed`}
                     onClick={() => setMood(m.value)}
                     disabled={loading}
+                    title={m.label}
                   >
-                    {m.label}
+                    <span className="truncate">{m.label}</span>
                   </button>
                 ))}
               </div>
             </div>
 
             {/* Context Input */}
-            <div className="mw-context-section">
-              <span className="mw-section-label">Konteks</span>
-              <div className="mw-textarea-wrapper">
+            <div className="space-y-3">
+              <span className="block text-xs font-medium tracking-wider text-white/60 uppercase">Konteks</span>
+              <div className="relative">
                 <textarea
-                  className="mw-textarea"
+                  className="w-full min-h-[120px] p-4 rounded-[14px] bg-[#141414] border border-white/[0.06] text-white/95 placeholder:text-white/30 resize-y transition-all duration-200 focus:outline-none focus:border-white/[0.20] focus:bg-[#1a1a1a] disabled:opacity-50"
                   value={text}
                   onChange={(e) => setText(e.target.value)}
-                  placeholder="Add context..."
+                  placeholder="Add context (optional)..."
                   disabled={loading}
+                  rows={3}
                 />
               </div>
-              <span className="mw-textarea-hint">
+              <span className="block text-sm text-white/40">
                 Optional. Add context for more personal results.
               </span>
             </div>
 
             {/* Generate Row */}
-            <div className="mw-generate-row">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-4">
               <button
                 type="button"
-                className="mw-btn-primary"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-[10px] bg-white text-[#0a0a0a] font-medium text-sm transition-all duration-200 hover:bg-white/90 disabled:opacity-40 disabled:cursor-not-allowed w-full sm:w-auto"
                 onClick={onGenerate}
                 disabled={!canSubmit}
               >
                 {loading ? (
                   <>
-                    <span className="mw-spinner" />
+                    <span className="w-4 h-4 border-2 border-[#0a0a0a]/30 border-t-[#0a0a0a] rounded-full animate-spin-slow" />
                     Generating...
                   </>
                 ) : (
@@ -197,22 +210,27 @@ export default function HomePage() {
                 )}
               </button>
 
-              <div className="mw-toggle-group">
-                <label className="mw-toggle">
-                  <input
-                    type="checkbox"
-                    checked={enableTyping}
-                    onChange={(e) => setEnableTyping(e.target.checked)}
-                    disabled={loading}
-                  />
-                  <span>Typing effect</span>
-                </label>
-              </div>
+              <label className="flex items-center gap-2 text-sm text-white/60 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  className="w-4 h-4 rounded border-white/[0.20] bg-transparent checked:bg-white checked:border-white focus:ring-0 focus:ring-offset-0 cursor-pointer"
+                  checked={enableTyping}
+                  onChange={(e) => setEnableTyping(e.target.checked)}
+                  disabled={loading}
+                />
+                <span>Typing effect</span>
+              </label>
             </div>
 
-            {error ? <div className="mw-error">{error}</div> : null}
+            {/* Error */}
+            {error && (
+              <div className="p-4 rounded-[10px] bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+                {error}
+              </div>
+            )}
           </section>
 
+          {/* Result Card */}
           <ResultCard
             text={typed}
             isTyping={isTyping}
@@ -221,6 +239,7 @@ export default function HomePage() {
           />
         </div>
 
+        {/* History */}
         <HistoryList
           items={history}
           loading={historyLoading}
@@ -232,9 +251,10 @@ export default function HomePage() {
         />
       </main>
 
-      <footer className="mw-footer">
-        <div className="mw-footer-inner">
-          <span className="mw-footer-text">
+      {/* Footer */}
+      <footer className="py-6 border-t border-white/[0.06] mt-auto">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <span className="text-sm text-white/40">
             © {new Date().getFullYear()} MoodWrite
           </span>
         </div>

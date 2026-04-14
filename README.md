@@ -13,7 +13,7 @@ Monochrome AI Mood Caption Generator — React frontend untuk generate caption a
 | Framework | React 19 |
 | Build Tool | Vite |
 | Language | TypeScript |
-| Styling | Custom CSS (Monochrome) |
+| Styling | Tailwind CSS (Monochrome) |
 | Deploy | Vercel |
 
 ## ✨ Features

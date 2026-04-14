@@ -51,17 +51,18 @@ export default function HistoryList({
   const hasItems = items && items.length > 0;
 
   return (
-    <section className="mw-history-section">
-      <div className="mw-history-header">
-        <h2 className="mw-history-title">History</h2>
+    <section className="w-full max-w-2xl mx-auto mt-10 lg:mt-12 px-4 sm:px-0">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-semibold tracking-tight text-white/95">History</h2>
         <button
           type="button"
-          className="mw-btn-ghost"
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-transparent border border-white/[0.10] text-sm text-white/60 transition-all duration-200 hover:bg-white/[0.06] hover:text-white/80 hover:border-white/[0.20] disabled:opacity-40 disabled:cursor-not-allowed"
           onClick={onRefresh}
           disabled={loading || loadingMore}
         >
           {loading ? (
-            <span className="mw-spinner-sm" />
+            <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin-slow" />
           ) : (
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="23 4 23 10 17 10" />
@@ -72,41 +73,49 @@ export default function HistoryList({
         </button>
       </div>
 
-      {error ? <div className="mw-error">{error}</div> : null}
+      {/* Error */}
+      {error && (
+        <div className="p-4 rounded-[10px] bg-red-500/10 border border-red-500/20 text-red-400 text-sm mb-4">
+          {error}
+        </div>
+      )}
 
-      {/* Show skeleton only after delay */}
+      {/* Skeleton */}
       {showLoading && !hasItems && (
-        <div className="mw-history-skeleton">
-          <div className="mw-skeleton-item" />
-          <div className="mw-skeleton-item" />
-          <div className="mw-skeleton-item" />
+        <div className="space-y-3">
+          <div className="h-24 rounded-[14px] bg-white/[0.04] animate-skeleton" />
+          <div className="h-24 rounded-[14px] bg-white/[0.04] animate-skeleton" />
+          <div className="h-24 rounded-[14px] bg-white/[0.04] animate-skeleton" />
         </div>
       )}
 
       {/* Empty state */}
       {!loading && !hasItems && (
-        <div className="mw-empty-state">
+        <div className="text-center py-12 text-white/40">
           No history yet. Generate your first caption.
         </div>
       )}
 
-      {/* History list with fade overlay when refreshing */}
+      {/* History list */}
       {hasItems && (
-        <div className={`mw-history-list ${loading ? "is-refreshing" : ""}`}>
+        <div className={`space-y-3 ${loading ? "opacity-60" : ""}`}>
           {items.map((it, index) => (
             <article
               key={it.id}
-              className="mw-history-item"
-              style={{ animationDelay: `${index * 50}ms` }}
+              className="bg-[#141414] rounded-[14px] border border-white/[0.06] p-4 transition-all duration-300 hover:border-white/[0.12] animate-fade-in"
+              style={{ animationDelay: `${index * 50}ms`, opacity: 0, animationFillMode: "forwards" }}
             >
-              <div className="mw-history-top">
-                <div className="mw-history-meta-left">
-                  <span className="mw-mood-tag">{it.mood}</span>
-                  <span className="mw-history-date">{formatDate(it.created_at)}</span>
+              {/* Top row */}
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-white/[0.06] border border-white/[0.10] text-xs font-medium text-white/60 uppercase tracking-wider">
+                    {it.mood}
+                  </span>
+                  <span className="text-xs text-white/40">{formatDate(it.created_at)}</span>
                 </div>
                 <button
                   type="button"
-                  className="mw-btn-icon"
+                  className="w-8 h-8 rounded-lg bg-white/[0.06] border border-white/[0.10] flex items-center justify-center text-white/60 transition-all duration-150 hover:bg-white/[0.10] hover:text-white disabled:opacity-30"
                   onClick={() => copyToClipboard(it.result)}
                   title="Copy caption"
                   aria-label="Copy caption"
@@ -119,25 +128,35 @@ export default function HistoryList({
                 </button>
               </div>
 
-              {it.input_text ? (
-                <div className="mw-history-input">"{it.input_text}"</div>
-              ) : null}
+              {/* Input context */}
+              {it.input_text && (
+                <div className="text-sm text-white/50 italic mb-2">"{it.input_text}"</div>
+              )}
 
-              <div className="mw-history-result">{it.result}</div>
+              {/* Result */}
+              <div className="text-white/95 leading-relaxed">{it.result}</div>
             </article>
           ))}
         </div>
       )}
 
+      {/* Load more */}
       {canLoadMore && (
-        <div className="mw-load-more">
+        <div className="flex justify-center mt-6">
           <button
             type="button"
-            className="mw-btn-ghost"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-transparent border border-white/[0.10] text-sm text-white/60 transition-all duration-200 hover:bg-white/[0.06] hover:text-white/80 hover:border-white/[0.20] disabled:opacity-40"
             onClick={onLoadMore}
             disabled={loading || loadingMore}
           >
-            {loadingMore ? "Loading..." : "Load more"}
+            {loadingMore ? (
+              <>
+                <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin-slow" />
+                Loading...
+              </>
+            ) : (
+              "Load more"
+            )}
           </button>
         </div>
       )}

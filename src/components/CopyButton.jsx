@@ -20,10 +20,23 @@ export default function CopyButton({ text }) {
     }
   }
 
+  const baseClasses = "px-4 py-2 rounded-[10px] font-medium text-sm transition-all duration-200 ease border";
+  const activeClasses = "bg-white/10 border-white/20 text-white hover:bg-white/15";
+  const copiedClasses = "bg-green-500/20 border-green-500/30 text-green-400";
+  const errorClasses = "bg-red-500/20 border-red-500/30 text-red-400";
+  const disabledClasses = "opacity-40 cursor-not-allowed border-white/10 text-white/40";
+
+  const classes = `${baseClasses} ${
+    !text ? disabledClasses :
+    status === "copied" ? copiedClasses :
+    status === "error" ? errorClasses :
+    activeClasses
+  }`;
+
   return (
     <button
       type="button"
-      className="mw-button mw-button-secondary"
+      className={classes}
       onClick={onCopy}
       disabled={!text}
     >

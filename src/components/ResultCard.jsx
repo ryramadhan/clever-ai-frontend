@@ -15,50 +15,51 @@ export default function ResultCard({ text, isTyping, provider, hasResult }) {
   }
 
   return (
-    <section className="mw-result-section" aria-live="polite">
-      <div className="mw-result-card">
-        <div className="mw-result-header">
-          <span className="mw-result-label">Caption</span>
-          <div className="mw-result-actions">
-            <button
-              type="button"
-              className="mw-btn-icon"
-              onClick={handleCopy}
-              disabled={!text}
-              title="Copy to clipboard"
-              aria-label="Copy result"
-            >
-              {copied ? (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-              ) : (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                </svg>
-              )}
-            </button>
-          </div>
+    <section className="w-full" aria-live="polite">
+      <div className="bg-[#141414] rounded-[14px] border border-white/[0.06] overflow-hidden">
+        {/* Header */}
+        <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
+          <span className="text-xs font-medium tracking-wider text-white/60 uppercase">Caption</span>
+          <button
+            type="button"
+            className="w-8 h-8 rounded-lg bg-white/[0.06] border border-white/[0.10] flex items-center justify-center text-white/60 transition-all duration-150 hover:bg-white/[0.10] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
+            onClick={handleCopy}
+            disabled={!text}
+            title="Copy to clipboard"
+            aria-label="Copy result"
+          >
+            {copied ? (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
+            )}
+          </button>
         </div>
 
-        <div className="mw-result-content">
+        {/* Content */}
+        <div className="p-4 min-h-[120px]">
           {hasResult ? (
-            <p className="mw-result-text">
+            <p className="text-white/95 text-lg leading-relaxed whitespace-pre-wrap">
               {text}
-              {isTyping ? <span className="mw-caret" aria-hidden="true" /> : null}
+              {isTyping && <span className="inline-block w-0.5 h-5 bg-white/80 ml-0.5 align-middle caret-blink" aria-hidden="true" />}
             </p>
           ) : (
-            <p className="mw-result-placeholder">
+            <p className="text-white/40 italic">
               Your caption will appear here
             </p>
           )}
         </div>
 
+        {/* Meta */}
         {hasResult && (
-          <div className="mw-result-meta">
+          <div className="px-4 py-3 border-t border-white/[0.06] flex items-center justify-end">
             {provider && (
-              <span className="mw-provider-badge">
+              <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-white/[0.06] border border-white/[0.10] text-xs text-white/60">
                 {provider === "gemini" ? "AI Generated" : "Mock"}
               </span>
             )}
