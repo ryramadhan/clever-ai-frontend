@@ -6,7 +6,7 @@ AI Assistant Chat Interface — React frontend for asking questions and getting 
 
 ## 🌐 Live Demo
 
-🌐 [https://moodwrite-ai.vercel.app](https://moodwrite-ai.vercel.app)
+🌐 [https://clever-ai-chat.vercel.app](https://clever-ai-chat.vercel.app)
 
 ## 🧰 Tech Stack
 
@@ -44,7 +44,7 @@ cp .env.example .env
 | Mode | `VITE_API_BASE_URL` |
 |------|---------------------|
 | Development | `/api` (Vite proxy ke localhost:4000) |
-| Production | `https://moodwrite-ai-backend.vercel.app` |
+| Production | `https://your-backend.vercel.app` |
 
 ### ▶️ Run Dev
 
@@ -76,7 +76,7 @@ Output: `dist/` folder
 Add di Vercel Dashboard:
 
 ```
-VITE_API_BASE_URL=https://moodwrite-ai-backend.vercel.app
+VITE_API_BASE_URL=https://your-backend.vercel.app
 ```
 
 ## 📁 Project Structure
