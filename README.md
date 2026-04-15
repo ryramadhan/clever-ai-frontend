@@ -6,7 +6,7 @@ AI Assistant Chat Interface — React frontend for asking questions and getting 
 
 ## 🌐 Live Demo
 
-🌐 [https://moodwrite-ai.vercel.app](https://moodwrite-ai.vercel.app)
+🌐 [https://clever-ai-chat.vercel.app](https://clever-ai-chat.vercel.app)
 
 ## 🧰 Tech Stack
 
