@@ -1,6 +1,6 @@
-# 🌙 MoodWrite AI Frontend
+# 🤖 MoodWrite AI Frontend
 
-Monochrome AI Mood Caption Generator — React frontend for generating aesthetic captions based on mood. Minimal, modern, responsive.
+AI Assistant Chat Interface — React frontend for asking questions and getting AI-powered responses. Minimal, modern, responsive.
 
 🌐 **Bilingual UI** — Toggle between English and Indonesia with one click.
 
@@ -21,11 +21,11 @@ Monochrome AI Mood Caption Generator — React frontend for generating aesthetic
 ## ✨ Features
 
 - **Monochrome UI** — Minimal, clean aesthetic
-- **5 Mood Options** — Lonely, Night, Nostalgic, Lost, Calm
+- **Single Context Input** — Ask anything in one text area (max 2000 chars)
 - **Bilingual Support** — Toggle EN/ID language in navbar
-- **Real-time Generation** — AI-powered captions via backend API
-- **History** — View previously generated captions
-- **Copy to Clipboard** — One-click caption copy
+- **Real-time AI Responses** — Get answers via backend API with fallback
+- **History** — View previously asked questions and responses
+- **Copy to Clipboard** — One-click response copy
 - **Typing Effect** — Smooth text animation
 - **Fully Responsive** — Mobile & desktop
 
@@ -44,7 +44,7 @@ cp .env.example .env
 | Mode | `VITE_API_BASE_URL` |
 |------|---------------------|
 | Development | `/api` (Vite proxy ke localhost:4000) |
-| Production | `https://your-backend.vercel.app` |
+| Production | `https://moodwrite-ai-backend.vercel.app` |
 
 ### ▶️ Run Dev
 
@@ -76,7 +76,7 @@ Output: `dist/` folder
 Add di Vercel Dashboard:
 
 ```
-VITE_API_BASE_URL=https://moodwrite-api.vercel.app
+VITE_API_BASE_URL=https://moodwrite-ai-backend.vercel.app
 ```
 
 ## 📁 Project Structure
@@ -123,7 +123,7 @@ GET  ${API_BASE}/api/captions
 
 ## 🔗 Related
 
-- [moodwrite-ai-backend](https://github.com/ryramadhan/moodwrite-ai-backend) — Express API
+- [moodwrite-ai-backend](https://github.com/ryramadhan/moodwrite-ai-backend) — Express AI API
 
 ## 📄 License
 
