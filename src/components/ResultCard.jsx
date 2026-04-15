@@ -21,7 +21,7 @@ export default function ResultCard({ text, isTyping, provider, hasResult }) {
       <div className="bg-[#141414] rounded-[14px] border border-white/[0.06] overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/[0.06]">
-          <span className="text-xs font-medium tracking-wider text-white/60 uppercase">{t("appSubtitle")}</span>
+          <span className="text-xs font-medium tracking-wider text-white/60 uppercase">AI Response</span>
           <button
             type="button"
             className="w-8 h-8 rounded-lg bg-white/[0.06] border border-white/[0.10] flex items-center justify-center text-white/60 transition-all duration-150 hover:bg-white/[0.10] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"

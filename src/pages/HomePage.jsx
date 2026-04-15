@@ -3,15 +3,7 @@ import Header from "../components/Header.jsx";
 import ResultCard from "../components/ResultCard.jsx";
 import HistoryList from "../components/HistoryList.jsx";
 import { useLanguage } from "../contexts/LanguageContext.jsx";
-import { generateCaption, getCaptions } from "../services/api.js";
-
-const MOOD_KEYS = [
-  { value: "lonely", labelKey: "moodLonely" },
-  { value: "night", labelKey: "moodNight" },
-  { value: "nostalgic", labelKey: "moodNostalgic" },
-  { value: "lost", labelKey: "moodLost" },
-  { value: "calm", labelKey: "moodCalm" },
-];
+import { generateResponse, getCaptions } from "../services/api.js";
 
 function useTypingText(fullText, { enabled, speedMs = 16 } = {}) {
   const [typed, setTyped] = useState("");
@@ -45,8 +37,7 @@ function useTypingText(fullText, { enabled, speedMs = 16 } = {}) {
 
 export default function HomePage() {
   const { t } = useLanguage();
-  const [mood, setMood] = useState("night");
-  const [text, setText] = useState("");
+  const [context, setContext] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [result, setResult] = useState("");
@@ -64,8 +55,8 @@ export default function HomePage() {
   const HISTORY_LIMIT = 20;
 
   const canSubmit = useMemo(() => {
-    return Boolean(mood) && !loading;
-  }, [mood, loading]);
+    return Boolean(context.trim()) && !loading;
+  }, [context, loading]);
 
   async function refreshHistory() {
     setHistoryError("");
@@ -123,7 +114,7 @@ export default function HomePage() {
     setProvider("");
 
     try {
-      const data = await generateCaption({ mood, text: text.trim() || "" });
+      const data = await generateResponse({ context: context.trim() });
       setResult(data.result || "");
       setProvider(data.provider || "");
       refreshHistory();
@@ -153,47 +144,26 @@ export default function HomePage() {
         <div className="flex flex-col gap-6">
           {/* Input Section */}
           <section className="w-full space-y-6">
-            {/* Mood Selector */}
-            <div className="space-y-3">
-              <span className="block text-xs font-medium tracking-wider text-white/60 uppercase">{t("moodLabel")}</span>
-              <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1 -mx-4 px-4 sm:mx-0 sm:px-0">
-                {MOOD_KEYS.map((m) => (
-                  <button
-                    key={m.value}
-                    type="button"
-                    className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap ${mood === m.value
-                      ? "bg-white text-[#0a0a0a]"
-                      : "bg-white/[0.08] text-white/70 hover:bg-white/[0.12] hover:text-white"
-                      } disabled:opacity-30 disabled:cursor-not-allowed`}
-                    onClick={() => setMood(m.value)}
-                    disabled={loading}
-                  >
-                    {t(m.labelKey)}
-                  </button>
-                ))}
-              </div>
-            </div>
-
             {/* Context Input */}
             <div className="space-y-3">
               <span className="block text-xs font-medium tracking-wider text-white/60 uppercase">{t("contextLabel")}</span>
               <div className="relative">
                 <textarea
-                  className="w-full min-h-[120px] p-4 rounded-[14px] bg-[#141414] border border-white/[0.06] text-white/95 text-base placeholder:text-white/30 resize-y transition-all duration-200 focus:outline-none focus:border-white/[0.20] focus:bg-[#1a1a1a] disabled:opacity-50"
-                  value={text}
-                  onChange={(e) => setText(e.target.value)}
+                  className="w-full min-h-[160px] p-4 rounded-[14px] bg-[#141414] border border-white/[0.06] text-white/95 text-base placeholder:text-white/30 resize-y transition-all duration-200 focus:outline-none focus:border-white/[0.20] focus:bg-[#1a1a1a] disabled:opacity-50"
+                  value={context}
+                  onChange={(e) => setContext(e.target.value)}
                   placeholder={t("contextPlaceholder")}
                   disabled={loading}
-                  rows={3}
-                  maxLength={500}
+                  rows={5}
+                  maxLength={2000}
                 />
               </div>
               <div className="flex items-center justify-between">
                 <span className="block text-sm text-white/40">
                   {t("contextHint")}
                 </span>
-                <span className={`block text-xs ${text.length >= 450 ? "text-amber-400" : "text-white/30"}`}>
-                  {text.length}/500
+                <span className={`block text-xs ${context.length >= 1800 ? "text-amber-400" : "text-white/30"}`}>
+                  {context.length}/2000
                 </span>
               </div>
             </div>
@@ -269,7 +239,7 @@ export default function HomePage() {
       <footer className="py-6 border-t border-white/[0.06] mt-auto">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <span className="text-sm text-white/40">
-            © {new Date().getFullYear()} MoodWrite
+            © {new Date().getFullYear()} AI Assistant
           </span>
         </div>
       </footer>

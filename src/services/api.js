@@ -21,8 +21,8 @@ async function request(path, options = {}) {
   return data;
 }
 
-export async function generateCaption({ mood, text }) {
-  return request("/generate", { method: "POST", body: { mood, text } });
+export async function generateResponse({ context }) {
+  return request("/generate", { method: "POST", body: { context } });
 }
 
 export async function getCaptions({ limit = 20, offset = 0 } = {}) {

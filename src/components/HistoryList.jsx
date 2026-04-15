@@ -1,23 +1,10 @@
 import { useState, useEffect } from "react";
 import { useLanguage } from "../contexts/LanguageContext.jsx";
 
-const MOOD_LABELS = {
-  lonely: "Lonely",
-  night: "Night",
-  nostalgic: "Nostalgic",
-  lost: "Lost",
-  calm: "Calm",
-};
-
-function getMoodLabel(mood, t) {
-  const labels = {
-    lonely: t("moodLonely"),
-    night: t("moodNight"),
-    nostalgic: t("moodNostalgic"),
-    lost: t("moodLost"),
-    calm: t("moodCalm"),
-  };
-  return labels[mood?.toLowerCase()] || mood || t("moodLabel");
+function truncateContext(context, maxLength = 60) {
+  if (!context) return "";
+  if (context.length <= maxLength) return context;
+  return context.substring(0, maxLength) + "...";
 }
 
 function formatDate(iso) {
@@ -128,17 +115,14 @@ export default function HistoryList({
               {/* Top row */}
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-3">
-                  <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-white/[0.06] border border-white/[0.10] text-xs font-medium text-white/60 uppercase tracking-wider">
-                    {getMoodLabel(it.mood, t)}
-                  </span>
                   <span className="text-sm text-white/40">{formatDate(it.created_at)}</span>
                 </div>
                 <button
                   type="button"
                   className="w-8 h-8 rounded-lg bg-white/[0.06] border border-white/[0.10] flex items-center justify-center text-white/60 transition-all duration-150 hover:bg-white/[0.10] hover:text-white disabled:opacity-30"
                   onClick={() => copyToClipboard(it.result)}
-                  title="Copy caption"
-                  aria-label="Copy caption"
+                  title="Copy result"
+                  aria-label="Copy result"
                   disabled={loading}
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -149,8 +133,8 @@ export default function HistoryList({
               </div>
 
               {/* Input context */}
-              {it.input_text && (
-                <div className="text-sm text-white/50 italic mb-2">"{it.input_text}"</div>
+              {it.context && (
+                <div className="text-sm text-white/50 italic mb-2">Q: "{truncateContext(it.context)}"</div>
               )}
 
               {/* Result */}

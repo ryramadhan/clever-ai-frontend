@@ -3,29 +3,21 @@ import { createContext, useContext, useState, useCallback } from "react";
 const translations = {
   en: {
     // Header
-    appTitle: "MoodWrite",
-    appSubtitle: "Caption Generator",
+    appTitle: "AI Assistant",
+    appSubtitle: "Ask anything",
 
     // Hero
-    heroTitle: "Stories in a single line.",
-    heroSubtitle: "AI-generated captions for every mood.",
-
-    // Mood labels
-    moodLabel: "Mood",
-    moodLonely: "Lonely",
-    moodNight: "Night",
-    moodNostalgic: "Nostalgic",
-    moodLost: "Lost",
-    moodCalm: "Calm",
+    heroTitle: "How can I help you today?",
+    heroSubtitle: "Ask a question or describe what you need.",
 
     // Form labels
-    contextLabel: "Context",
-    contextPlaceholder: "Add context (optional)...",
-    contextHint: "Add context to make your caption more personal.",
+    contextLabel: "Your Question",
+    contextPlaceholder: "Type your question here...",
+    contextHint: "Be specific for better results.",
 
     // Buttons
-    generate: "Generate",
-    generating: "Creating...",
+    generate: "Get Answer",
+    generating: "Thinking...",
     refresh: "Refresh",
     loadMore: "Load more",
     copy: "Copy",
@@ -36,42 +28,34 @@ const translations = {
 
     // History
     historyTitle: "History",
-    noHistory: "No history yet. Generate your first caption.",
+    noHistory: "No history yet. Ask your first question.",
     loading: "Loading...",
 
     // Result
-    resultPlaceholder: "Your caption will appear here",
+    resultPlaceholder: "The answer will appear here",
     aiGenerated: "AI Generated",
-    mock: "Mock",
+    mock: "Fallback",
 
     // Language
     language: "Language",
   },
   id: {
     // Header
-    appTitle: "MoodWrite",
-    appSubtitle: "Generator Caption",
+    appTitle: "AI Assistant",
+    appSubtitle: "Tanya apa saja",
 
     // Hero
-    heroTitle: "Cerita dalam satu kalimat.",
-    heroSubtitle: "Caption AI untuk setiap suasana hati.",
-
-    // Mood labels
-    moodLabel: "Mood",
-    moodLonely: "Sunyi",
-    moodNight: "Malam",
-    moodNostalgic: "Nostalgia",
-    moodLost: "Kehilangan",
-    moodCalm: "Tenang",
+    heroTitle: "Ada yang bisa saya bantu?",
+    heroSubtitle: "Ajukan pertanyaan atau jelaskan apa yang Anda butuhkan.",
 
     // Form labels
-    contextLabel: "Konteks",
-    contextPlaceholder: "Tambahkan konteks (opsional)...",
-    contextHint: "Tambahkan konteks agar caption lebih personal.",
+    contextLabel: "Pertanyaan Anda",
+    contextPlaceholder: "Ketik pertanyaan di sini...",
+    contextHint: "Lebih spesifik untuk hasil yang lebih baik.",
 
     // Buttons
-    generate: "Buat Caption",
-    generating: "Membuat...",
+    generate: "Dapatkan Jawaban",
+    generating: "Memikirkan...",
     refresh: "Muat Ulang",
     loadMore: "Muat Lebih",
     copy: "Salin",
@@ -82,13 +66,13 @@ const translations = {
 
     // History
     historyTitle: "Riwayat",
-    noHistory: "Belum ada riwayat. Buat caption pertamamu.",
+    noHistory: "Belum ada riwayat. Ajukan pertanyaan pertama Anda.",
     loading: "Memuat...",
 
     // Result
-    resultPlaceholder: "Caption akan muncul di sini",
-    aiGenerated: "AI Generated",
-    mock: "Mock",
+    resultPlaceholder: "Jawaban akan muncul di sini",
+    aiGenerated: "Dihasilkan AI",
+    mock: "Fallback",
 
     // Language
     language: "Bahasa",
