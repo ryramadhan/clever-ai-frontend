@@ -123,7 +123,7 @@ GET  ${API_BASE}/api/captions
 
 ## 🔗 Related
 
-- [moodwrite-ai-backend](https://github.com/ryramadhan/moodwrite-ai-backend) — Express AI API
+- [clever-ai-backend](https://github.com/ryramadhan/clever-ai-backend) — Express AI API
 
 ## 📄 License
 
