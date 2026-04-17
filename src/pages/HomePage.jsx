@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import ResultCard from "../components/ResultCard.jsx";
 import HistoryList from "../components/HistoryList.jsx";
 import { useLanguage } from "../contexts/LanguageContext.jsx";
+import { useAuth } from "../contexts/AuthContext.jsx";
 import { generateResponse, getCaptions } from "../services/api.js";
 
 function useTypingText(fullText, { enabled, speedMs = 16 } = {}) {
@@ -37,6 +39,7 @@ function useTypingText(fullText, { enabled, speedMs = 16 } = {}) {
 
 export default function HomePage() {
   const { t } = useLanguage();
+  const { isAuthenticated } = useAuth();
   const [context, setContext] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -159,9 +162,20 @@ export default function HomePage() {
                 />
               </div>
               <div className="flex items-center justify-between">
-                <span className="block text-sm text-white/40">
-                  {t("contextHint")}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="block text-sm text-white/40">
+                    {t("contextHint")}
+                  </span>
+                  {/* Subtle guest indicator */}
+                  {!isAuthenticated && (
+                    <span className="text-xs text-white/25">•</span>
+                  )}
+                  {!isAuthenticated && (
+                    <Link to="/login" className="text-xs text-white/30 hover:text-white/50 transition-colors">
+                      Login untuk menyimpan
+                    </Link>
+                  )}
+                </div>
                 <span className={`block text-xs ${context.length >= 1800 ? "text-amber-400" : "text-white/30"}`}>
                   {context.length}/2000
                 </span>
@@ -232,6 +246,7 @@ export default function HomePage() {
           onLoadMore={loadMoreHistory}
           canLoadMore={historyHasMore}
           loadingMore={historyLoadingMore}
+          isAuthenticated={isAuthenticated}
         />
       </main>
 

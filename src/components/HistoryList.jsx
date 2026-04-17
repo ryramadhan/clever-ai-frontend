@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext.jsx";
 
 function truncateContext(context, maxLength = 60) {
@@ -52,6 +53,7 @@ export default function HistoryList({
   onLoadMore,
   canLoadMore,
   loadingMore,
+  isAuthenticated,
 }) {
   const { t } = useLanguage();
   const showLoading = useDelayedLoading(loading, 200);
@@ -59,9 +61,22 @@ export default function HistoryList({
 
   return (
     <section className="w-full max-w-2xl mx-auto mt-10">
-      {/* Header */}
+      {/* Header dengan Guest/Logged-in indicator */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold tracking-tight text-white/95">{t("historyTitle")}</h2>
+        <div className="flex items-center gap-3">
+          <h2 className="text-xl font-semibold tracking-tight text-white/95">{t("historyTitle")}</h2>
+          {/* Subtle mode indicator */}
+          {!isAuthenticated && (
+            <span className="px-2 py-0.5 rounded-full text-xs bg-white/[0.06] text-white/40 border border-white/[0.08]">
+              Guest
+            </span>
+          )}
+          {isAuthenticated && (
+            <span className="px-2 py-0.5 rounded-full text-xs bg-white/[0.06] text-white/40 border border-white/[0.08]">
+              Personal
+            </span>
+          )}
+        </div>
         <button
           type="button"
           className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-transparent border border-white/[0.10] text-sm text-white/60 transition-all duration-200 hover:bg-white/[0.06] hover:text-white/80 hover:border-white/[0.20] disabled:opacity-40 disabled:cursor-not-allowed"
@@ -96,10 +111,53 @@ export default function HistoryList({
         </div>
       )}
 
-      {/* Empty state */}
-      {!loading && !hasItems && (
-        <div className="text-center py-12 text-base text-white/40">
-          {t("noHistory")}
+      {/* Empty state - Guest Mode (clean, professional) */}
+      {!loading && !hasItems && !isAuthenticated && (
+        <div className="text-center py-12 px-4">
+          {/* Icon */}
+          <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-white/30">
+              <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
+              <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" />
+            </svg>
+          </div>
+          
+          <p className="text-sm text-white/50 mb-1">
+            Guest Mode
+          </p>
+          <p className="text-sm text-white/30 mb-6 max-w-xs mx-auto">
+            Login untuk menyimpan history pribadi dan mengakses dari perangkat mana saja
+          </p>
+          
+          {/* Subtle CTA */}
+          <Link
+            to="/login"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.04] border border-white/[0.08] text-sm text-white/50 transition-all duration-200 hover:bg-white/[0.08] hover:text-white/70 hover:border-white/[0.15]"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M13.8 12H3" />
+            </svg>
+            Sign in
+          </Link>
+        </div>
+      )}
+
+      {/* Empty state - Logged in but no history (professional, encouraging) */}
+      {!loading && !hasItems && isAuthenticated && (
+        <div className="text-center py-12 px-4">
+          {/* Icon */}
+          <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-white/30">
+              <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+          </div>
+          
+          <p className="text-sm text-white/50 mb-1">
+            Belum ada history
+          </p>
+          <p className="text-sm text-white/30">
+            Mulai percakapan pertama kamu
+          </p>
         </div>
       )}
 

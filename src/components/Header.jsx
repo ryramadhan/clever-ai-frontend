@@ -1,7 +1,10 @@
+import { Link } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext.jsx";
+import { useAuth } from "../contexts/AuthContext.jsx";
 
 export default function Header() {
   const { lang, toggleLanguage, t } = useLanguage();
+  const { user, isAuthenticated, logout } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 backdrop-blur-xl bg-[#0a0a0a]/80 border-b border-white/[0.06]">
@@ -28,17 +31,49 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Language Toggle */}
-          <button
-            type="button"
-            onClick={toggleLanguage}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.06] border border-white/[0.10] text-sm text-white/70 transition-all duration-200 hover:bg-white/[0.10] hover:text-white hover:border-white/[0.20]"
-            aria-label={t("language")}
-          >
-            <span className={`${lang === "en" ? "text-white font-medium" : ""}`}>EN</span>
-            <span className="text-white/30">|</span>
-            <span className={`${lang === "id" ? "text-white font-medium" : ""}`}>ID</span>
-          </button>
+          <div className="flex items-center gap-2">
+            {/* Auth Buttons */}
+            {isAuthenticated ? (
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-white/60 hidden sm:block">
+                  {user?.name}
+                </span>
+                <button
+                  onClick={logout}
+                  className="px-3 py-1.5 rounded-lg bg-white/[0.06] border border-white/[0.10] text-sm text-white/70 transition-all duration-200 hover:bg-white/[0.10] hover:text-white hover:border-white/[0.20]"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Link
+                  to="/login"
+                  className="px-3 py-1.5 rounded-lg text-sm text-white/70 transition-all duration-200 hover:text-white"
+                >
+                  Sign in
+                </Link>
+                <Link
+                  to="/register"
+                  className="px-3 py-1.5 rounded-lg bg-white/[0.06] border border-white/[0.10] text-sm text-white/70 transition-all duration-200 hover:bg-white/[0.10] hover:text-white hover:border-white/[0.20]"
+                >
+                  Sign up
+                </Link>
+              </div>
+            )}
+
+            {/* Language Toggle */}
+            <button
+              type="button"
+              onClick={toggleLanguage}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.06] border border-white/[0.10] text-sm text-white/70 transition-all duration-200 hover:bg-white/[0.10] hover:text-white hover:border-white/[0.20]"
+              aria-label={t("language")}
+            >
+              <span className={`${lang === "en" ? "text-white font-medium" : ""}`}>EN</span>
+              <span className="text-white/30">|</span>
+              <span className={`${lang === "id" ? "text-white font-medium" : ""}`}>ID</span>
+            </button>
+          </div>
         </div>
       </div>
     </header>
