@@ -56,6 +56,16 @@ const translations = {
 
     // Language
     language: "Language",
+
+    // Sidebar
+    menu: "Menu",
+    closeSidebar: "Close menu",
+    openSidebar: "Open menu",
+    newChat: "New Chat",
+    searchHistory: "Search history...",
+    noSearchResults: "No results found",
+    untitledChat: "Untitled Chat",
+    guestUser: "Guest",
   },
   id: {
     // Header
@@ -112,6 +122,16 @@ const translations = {
 
     // Language
     language: "Bahasa",
+
+    // Sidebar
+    menu: "Menu",
+    closeSidebar: "Tutup menu",
+    openSidebar: "Buka menu",
+    newChat: "Chat Baru",
+    searchHistory: "Cari riwayat...",
+    noSearchResults: "Tidak ada hasil",
+    untitledChat: "Chat Tanpa Judul",
+    guestUser: "Tamu",
   },
 };
 

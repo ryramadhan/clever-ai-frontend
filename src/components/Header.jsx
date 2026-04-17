@@ -1,91 +1,83 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import { useLanguage } from "../contexts/LanguageContext.jsx";
 import { useAuth } from "../contexts/AuthContext.jsx";
+import logoIconUrl from "../assets/logo-icon.svg";
 
-export default function Header() {
+const MOBILE_TRIGGER_BASE = [
+  "lg:hidden fixed z-[70]",
+  "left-3 top-3.5",
+  "inline-flex items-center justify-center p-0",
+  "w-11 h-11 rounded-xl overflow-hidden",
+  "bg-[#0a0a0a]/40 backdrop-blur text-white/80",
+  "border border-white/[0.10] hover:border-white/[0.15]",
+  "hover:bg-white/[0.06] hover:text-white/95 active:bg-white/[0.10]",
+  "transition-colors duration-200",
+  "focus:outline-none focus:ring-2 focus:ring-white/10",
+].join(" ");
+
+export default function Header({ onMenuToggle, isMenuOpen }) {
   const { lang, toggleLanguage, t } = useLanguage();
-  const { user, isAuthenticated, logout } = useAuth();
-  const [showConfirmLogout, setShowConfirmLogout] = useState(false);
-
-  const handleLogoutClick = () => {
-    setShowConfirmLogout(true);
-  };
-
-  const handleConfirmLogout = () => {
-    logout();
-    setShowConfirmLogout(false);
-  };
-
-  const handleCancelLogout = () => {
-    setShowConfirmLogout(false);
-  };
+  const { isAuthenticated } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 backdrop-blur-xl bg-[#0a0a0a]/80 border-b border-white/[0.06]">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-xl bg-white/[0.06] border border-white/[0.10] flex items-center justify-center text-white/80 transition-all duration-300 group-hover:bg-white/[0.10] group-hover:border-white/[0.15]">
-              <svg
-                viewBox="0 0 32 32"
-                fill="none"
-                className="w-4 h-4"
-              >
-                {/* Dynamic C arc */}
-                <path
-                  d="M24 8c-3-3-7-4-11-2s-7 6-7 10 3 8 7 10 8 1 11-2"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  fill="none"
-                  opacity="0.9"
-                />
-                {/* Inner arc for depth */}
-                <path
-                  d="M20 12c-2-1.5-4.5-2-7-1s-4 3.5-4 6 1.5 4.5 4 6 5 0.5 7-1"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  fill="none"
-                  opacity="0.4"
-                />
-                {/* AI Spark */}
-                <path
-                  d="M22 6l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"
-                  fill="currentColor"
-                  opacity="0.95"
-                />
+      {onMenuToggle && (
+        <>
+          {isMenuOpen ? (
+            <button
+              type="button"
+              onClick={onMenuToggle}
+              className={MOBILE_TRIGGER_BASE}
+              aria-label={t("closeSidebar")}
+              title={t("closeSidebar")}
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 18L18 6M6 6l12 12" />
               </svg>
-            </div>
-            <div className="flex flex-col">
-              <div className="text-lg font-semibold tracking-tight text-white/95 transition-colors duration-300 group-hover:text-white">{t("appTitle")}</div>
-              <div className="text-sm text-white/60">{t("appSubtitle")}</div>
-            </div>
-          </Link>
+            </button>
+          ) : (
+            <Link
+              to="/"
+              onClick={onMenuToggle}
+              className={MOBILE_TRIGGER_BASE}
+              aria-label={t("openSidebar")}
+              title={t("openSidebar")}
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </Link>
+          )}
+        </>
+      )}
+
+      {onMenuToggle && !isMenuOpen && (
+        <Link
+          to="/"
+          onClick={onMenuToggle}
+          className="hidden lg:flex fixed left-4 top-4 z-[70] w-9 h-9 flex items-center justify-center text-white/80 hover:opacity-80 transition-opacity duration-200"
+          aria-label={t("openSidebar")}
+          title={t("openSidebar")}
+        >
+          <img src={logoIconUrl} alt="" className="w-full h-full object-contain" />
+        </Link>
+      )}
+
+      <div
+        className={[
+          "max-w-2xl mx-auto py-4",
+          onMenuToggle ? "pl-[4.5rem] pr-4 sm:pl-6 sm:pr-6" : "px-4 sm:px-6",
+        ].join(" ")}
+      >
+        <div className="flex items-center justify-between">
+          <div className="flex-1 flex flex-col">
+            <span className="text-lg font-semibold text-white/95">{t("appTitle")}</span>
+            <span className="text-sm text-white/60">{t("appSubtitle")}</span>
+          </div>
 
           <div className="flex items-center gap-1.5 sm:gap-3">
-            {/* Auth Buttons - Desktop: Text, Mobile: Icon */}
-            {isAuthenticated ? (
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-white/40 hidden sm:block">
-                  {user?.name?.split(' ')[0]}
-                </span>
-                <button
-                  onClick={handleLogoutClick}
-                  className="flex items-center justify-center w-9 h-9 sm:w-auto sm:h-auto sm:px-4 sm:py-2 rounded-full text-white/60 bg-white/[0.05] border border-white/[0.08] transition-all duration-300 hover:bg-white/[0.10] hover:border-white/[0.15] hover:text-white"
-                  title="Logout"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                  </svg>
-                  <span className="hidden sm:inline sm:ml-2 text-sm font-medium">Logout</span>
-                </button>
-              </div>
-            ) : (
+            {!isAuthenticated && (
               <div className="flex items-center gap-1 sm:gap-2">
-                {/* Mobile: Icon only */}
                 <Link
                   to="/login"
                   className="sm:hidden flex items-center justify-center w-9 h-9 rounded-full text-white/50 bg-white/[0.05] border border-white/[0.08] transition-all duration-300 hover:text-white hover:bg-white/[0.08]"
@@ -95,15 +87,12 @@ export default function Header() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                   </svg>
                 </Link>
-                {/* Desktop: Text */}
                 <Link
                   to="/login"
                   className="hidden sm:block px-4 py-2 text-sm font-medium text-white/50 transition-all duration-300 hover:text-white"
                 >
                   Sign in
                 </Link>
-
-                {/* Mobile: Icon only */}
                 <Link
                   to="/register"
                   className="sm:hidden flex items-center justify-center w-9 h-9 rounded-full text-black bg-white shadow-md transition-all duration-300 hover:bg-white/90 hover:scale-105"
@@ -113,7 +102,6 @@ export default function Header() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                   </svg>
                 </Link>
-                {/* Desktop: Text */}
                 <Link
                   to="/register"
                   className="hidden sm:block px-5 py-2 rounded-full text-sm font-medium text-black bg-white shadow-lg shadow-white/10 transition-all duration-300 hover:bg-white/90 hover:shadow-white/20 hover:scale-[1.02]"
@@ -123,7 +111,6 @@ export default function Header() {
               </div>
             )}
 
-            {/* Language Toggle */}
             <button
               type="button"
               onClick={toggleLanguage}
@@ -140,51 +127,6 @@ export default function Header() {
           </div>
         </div>
       </div>
-
-      {/* Logout Confirmation Modal */}
-      {showConfirmLogout && (
-        <div className="fixed inset-0 z-[100]">
-          {/* Backdrop */}
-          <div
-            className="absolute inset-0 min-h-screen bg-black/80"
-            onClick={handleCancelLogout}
-          />
-          {/* Modal Container */}
-          <div className="absolute inset-0 flex items-center justify-center min-h-screen p-4 sm:p-6">
-            <div
-              className="w-full max-w-sm bg-[#141414] rounded-xl border border-white/[0.08] p-5 sm:p-6 shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Title */}
-              <h3 className="text-lg font-semibold text-white/95 mb-2">
-                {t("signOutTitle")}
-              </h3>
-
-              {/* Message */}
-              <p className="text-sm text-white/50 mb-5 sm:mb-6 leading-relaxed">
-                {t("signOutMessage")}
-              </p>
-
-              {/* Buttons */}
-              <div className="flex flex-col-reverse sm:flex-row gap-2 sm:gap-3">
-                <button
-                  onClick={handleCancelLogout}
-                  className="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-white/50 transition-all duration-200 hover:text-white/70"
-                >
-                  {t("cancel")}
-                </button>
-                <button
-                  onClick={handleConfirmLogout}
-                  className="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-black bg-white border border-white transition-all duration-200 hover:bg-white/90 hover:scale-[1.02]"
-                >
-                  {t("signOut")}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </header>
   );
 }
-

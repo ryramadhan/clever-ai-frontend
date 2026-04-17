@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header.jsx";
+import Sidebar from "../components/Sidebar.jsx";
 import ResultCard from "../components/ResultCard.jsx";
 import HistoryList from "../components/HistoryList.jsx";
 import { useLanguage } from "../contexts/LanguageContext.jsx";
@@ -52,6 +53,7 @@ export default function HomePage() {
   const [historyOffset, setHistoryOffset] = useState(0);
   const [historyHasMore, setHistoryHasMore] = useState(true);
   const [historyLoadingMore, setHistoryLoadingMore] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const typed = useTypingText(result, { enabled: enableTyping });
   const isTyping = enableTyping && typed !== result;
@@ -128,9 +130,47 @@ export default function HomePage() {
     }
   }
 
+  // Sidebar handlers
+  function handleNewChat() {
+    setContext("");
+    setResult("");
+    setProvider("");
+    setError("");
+    setEnableTyping(true);
+  }
+
+  function handleHistoryItemClick(item) {
+    setContext(item.context || "");
+    setResult(item.result || "");
+    setProvider("");
+    setError("");
+  }
+
+  function toggleSidebar() {
+    setIsSidebarOpen((prev) => !prev);
+  }
+
+  function closeSidebar() {
+    setIsSidebarOpen(false);
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-[#0a0a0a]">
-      <Header />
+      <Sidebar
+        isOpen={isSidebarOpen}
+        onToggle={toggleSidebar}
+        onClose={closeSidebar}
+        historyItems={history}
+        historyLoading={historyLoading}
+        onRefreshHistory={refreshHistory}
+        onHistoryItemClick={handleHistoryItemClick}
+        onNewChat={handleNewChat}
+      />
+
+      <Header
+        onMenuToggle={toggleSidebar}
+        isMenuOpen={isSidebarOpen}
+      />
 
       <main className="flex-1 w-full max-w-2xl mx-auto px-4 sm:px-6 py-6">
         {/* Hero */}
@@ -272,4 +312,3 @@ export default function HomePage() {
     </div>
   );
 }
-
