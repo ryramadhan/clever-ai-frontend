@@ -43,6 +43,12 @@ const translations = {
     // Guest CTA
     savePrompt: "Want to save this conversation?",
 
+    // Logout Confirmation
+    signOutTitle: "Sign out",
+    signOutMessage: "You'll need to sign in again to access your history.",
+    signOut: "Sign out",
+    cancel: "Cancel",
+
     // Result
     resultPlaceholder: "The answer will appear here",
     aiGenerated: "AI Generated",
@@ -92,6 +98,12 @@ const translations = {
 
     // Guest CTA
     savePrompt: "Ingin menyimpan percakapan ini?",
+
+    // Logout Confirmation
+    signOutTitle: "Keluar",
+    signOutMessage: "Anda perlu masuk kembali untuk mengakses riwayat.",
+    signOut: "Keluar",
+    cancel: "Batal",
 
     // Result
     resultPlaceholder: "Jawaban akan muncul di sini",

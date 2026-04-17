@@ -1,10 +1,25 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import { useLanguage } from "../contexts/LanguageContext.jsx";
 import { useAuth } from "../contexts/AuthContext.jsx";
 
 export default function Header() {
   const { lang, toggleLanguage, t } = useLanguage();
   const { user, isAuthenticated, logout } = useAuth();
+  const [showConfirmLogout, setShowConfirmLogout] = useState(false);
+
+  const handleLogoutClick = () => {
+    setShowConfirmLogout(true);
+  };
+
+  const handleConfirmLogout = () => {
+    logout();
+    setShowConfirmLogout(false);
+  };
+
+  const handleCancelLogout = () => {
+    setShowConfirmLogout(false);
+  };
 
   return (
     <header className="sticky top-0 z-50 backdrop-blur-xl bg-[#0a0a0a]/80 border-b border-white/[0.06]">
@@ -39,7 +54,7 @@ export default function Header() {
                   {user?.name?.split(' ')[0]}
                 </span>
                 <button
-                  onClick={logout}
+                  onClick={handleLogoutClick}
                   className="flex items-center justify-center w-9 h-9 sm:w-auto sm:h-auto sm:px-4 sm:py-2 rounded-full text-white/60 bg-white/[0.05] border border-white/[0.08] transition-all duration-300 hover:bg-white/[0.10] hover:border-white/[0.15] hover:text-white"
                   title="Logout"
                 >
@@ -106,6 +121,50 @@ export default function Header() {
           </div>
         </div>
       </div>
+
+      {/* Logout Confirmation Modal */}
+      {showConfirmLogout && (
+        <div className="fixed inset-0 z-[100]">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 min-h-screen bg-black/80"
+            onClick={handleCancelLogout}
+          />
+          {/* Modal Container */}
+          <div className="absolute inset-0 flex items-center justify-center min-h-screen p-4 sm:p-6">
+            <div
+              className="w-full max-w-sm bg-[#141414] rounded-xl border border-white/[0.08] p-5 sm:p-6 shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Title */}
+              <h3 className="text-lg font-semibold text-white/95 mb-2">
+                {t("signOutTitle")}
+              </h3>
+
+              {/* Message */}
+              <p className="text-sm text-white/50 mb-5 sm:mb-6 leading-relaxed">
+                {t("signOutMessage")}
+              </p>
+
+              {/* Buttons */}
+              <div className="flex flex-col-reverse sm:flex-row gap-2 sm:gap-3">
+                <button
+                  onClick={handleCancelLogout}
+                  className="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-white/50 transition-all duration-200 hover:text-white/70"
+                >
+                  {t("cancel")}
+                </button>
+                <button
+                  onClick={handleConfirmLogout}
+                  className="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-black bg-white border border-white transition-all duration-200 hover:bg-white/90 hover:scale-[1.02]"
+                >
+                  {t("signOut")}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
