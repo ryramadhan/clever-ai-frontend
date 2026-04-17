@@ -137,7 +137,7 @@ export default function HomePage() {
     setProvider("");
     setError("");
     setEnableTyping(true);
-    setTimeout(() => textareaRef.current?.focus(), 0);
+    setTimeout(() => textareaRef.current?.focus({ preventScroll: true }), 0);
   }
 
   function handleHistoryItemClick(item) {

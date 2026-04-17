@@ -1,10 +1,11 @@
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "../../contexts/LanguageContext.jsx";
 import { useAuth } from "../../contexts/AuthContext.jsx";
 import SidebarHistory from "./SidebarHistory.jsx";
 import SidebarUserFooter from "./SidebarUserFooter.jsx";
 import SidebarGuestFooter from "./SidebarGuestFooter.jsx";
+import GuestSearchCta from "./GuestSearchCta.jsx";
 import logoIconUrl from "../../assets/logo-icon.svg";
 
 const SIDEBAR_WIDTH = "w-[280px]";
@@ -41,11 +42,11 @@ export default function Sidebar({
 }) {
   const { t } = useLanguage();
   const { isAuthenticated } = useAuth();
+  const [newChatCounter, setNewChatCounter] = useState(0);
 
   // Lock scroll only when a backdrop covers content (mobile).
   useLockBodyScroll(isOpen);
 
-  // Match ChatGPT-like UX: open by default on desktop (without visible "closed → open" flicker).
   const didInitRef = useRef(false);
   useLayoutEffect(() => {
     if (didInitRef.current) return;
@@ -98,7 +99,10 @@ export default function Sidebar({
             <div className="p-3">
               <button
                 type="button"
-                onClick={onNewChat}
+                onClick={() => {
+                  onNewChat();
+                  setNewChatCounter(c => c + 1);
+                }}
                 className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-white/[0.06] border border-white/[0.10] text-white/90 hover:bg-white/[0.10] hover:border-white/[0.15] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/10"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
@@ -115,6 +119,11 @@ export default function Sidebar({
                   onRefresh={onRefreshHistory}
                   onItemClick={onHistoryItemClick}
                 />
+              </div>
+            )}
+            {!isAuthenticated && (
+              <div className="px-3 pb-3">
+                <GuestSearchCta onClose={onClose} newChatCounter={newChatCounter} />
               </div>
             )}
             {isAuthenticated ? (
@@ -174,6 +183,7 @@ export default function Sidebar({
               type="button"
               onClick={() => {
                 onNewChat();
+                setNewChatCounter(c => c + 1);
                 onClose();
               }}
               className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-white/[0.06] border border-white/[0.10] text-white/90 hover:bg-white/[0.10] hover:border-white/[0.15] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/10"
@@ -195,6 +205,11 @@ export default function Sidebar({
                   onClose();
                 }}
               />
+            </div>
+          )}
+          {!isAuthenticated && (
+            <div className="px-3 pb-3">
+              <GuestSearchCta onClose={onClose} newChatCounter={newChatCounter} />
             </div>
           )}
           {isAuthenticated ? (

@@ -38,13 +38,15 @@ const translations = {
     emptyStateSubtitle: "Your saved conversations will appear here",
     signInToSave: "Sign in to save",
     privateCtaText: "Want to keep your conversations private?",
-    createAccount: "Create an account",
+    createAccount: "Sign Up",
 
     // Guest CTA
     savePrompt: "Want to save this conversation?",
     personalizedResponse: "Save your conversations",
     signInBenefits: "Sign in to access your chat history across devices. Your data stays private and secure.",
     signIn: "Sign in",
+    accessYourHistory: "Access your chat history",
+    signInToBrowse: "Sign in to save conversations, browse previous answers, and continue where you left off.",
 
     // Logout Confirmation
     signOutTitle: "Sign out",
@@ -107,13 +109,15 @@ const translations = {
     emptyStateSubtitle: "Percakapan tersimpan akan muncul di sini",
     signInToSave: "Masuk untuk menyimpan",
     privateCtaText: "Ingin menjaga percakapan Anda tetap pribadi?",
-    createAccount: "Buat akun",
+    createAccount: "Mendaftar",
 
     // Guest CTA
     savePrompt: "Ingin menyimpan percakapan ini?",
     personalizedResponse: "Simpan percakapan Anda",
     signInBenefits: "Masuk untuk mengakses riwayat chat di semua perangkat. Data Anda tetap aman dan terpisah.",
     signIn: "Masuk",
+    accessYourHistory: "Akses riwayat chat Anda",
+    signInToBrowse: "Masuk untuk menyimpan percakapan, menelusuri jawaban sebelumnya, dan melanjutkan dari tempat terakhir Anda berhenti.",
 
     // Logout Confirmation
     signOutTitle: "Keluar",
