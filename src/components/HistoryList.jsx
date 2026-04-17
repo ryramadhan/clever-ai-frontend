@@ -65,6 +65,14 @@ export default function HistoryList({
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
           <h2 className="text-xl font-semibold tracking-tight text-white/95">{t("historyTitle")}</h2>
+          {!isAuthenticated && hasItems && (
+            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs bg-white/[0.04] text-white/50 border border-white/[0.08]">
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              {t("publicBadge")}
+            </span>
+          )}
           {isAuthenticated && (
             <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs bg-white/[0.04] text-white/50 border border-white/[0.08]">
               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
@@ -110,7 +118,17 @@ export default function HistoryList({
         </div>
       )}
 
-      {/* Guest tidak melihat community history - privacy first */}
+      {/* Guest Context Banner - when community data exists */}
+      {!loading && hasItems && !isAuthenticated && (
+        <div className="mb-4 p-3 sm:p-4 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+          <p className="text-xs sm:text-sm text-white/40 text-center">
+            {t("guestBannerText")}
+            <Link to="/login" className="ml-1.5 text-white/60 hover:text-white underline underline-offset-2 transition-colors">
+              {t("guestBannerLink")}
+            </Link>
+          </p>
+        </div>
+      )}
 
       {/* Empty state - Guest Mode */}
       {!loading && !hasItems && !isAuthenticated && (
@@ -155,8 +173,8 @@ export default function HistoryList({
         </div>
       )}
 
-      {/* History list - hanya untuk authenticated users */}
-      {hasItems && isAuthenticated && (
+      {/* History list - authenticated users lihat personal, guest lihat community */}
+      {hasItems && (
         <div className={`space-y-3 ${loading ? "opacity-60" : ""}`}>
           {items.map((it, index) => (
             <article
@@ -168,6 +186,11 @@ export default function HistoryList({
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <span className="text-sm text-white/40">{formatDate(it.created_at)}</span>
+                  {!isAuthenticated && (
+                    <span className="text-[10px] text-white/25 px-1.5 py-0.5 rounded border border-white/[0.06]">
+                      {t("publicBadge")}
+                    </span>
+                  )}
                 </div>
                 <button
                   type="button"
@@ -197,7 +220,7 @@ export default function HistoryList({
       )}
 
       {/* Load more */}
-      {canLoadMore && isAuthenticated && (
+      {canLoadMore && (
         <div className="flex justify-center mt-5 sm:mt-6">
           <button
             type="button"
@@ -217,7 +240,25 @@ export default function HistoryList({
         </div>
       )}
 
-      {/* Bottom spacing */}
+      {/* Subtle CTA at bottom for Guest with data */}
+      {!loading && hasItems && !isAuthenticated && (
+        <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-white/[0.06]">
+          <p className="text-center text-xs text-white/30 mb-3">
+            {t("privateCtaText")}
+          </p>
+          <div className="flex justify-center">
+            <Link
+              to="/register"
+              className="inline-flex items-center gap-1.5 text-sm text-white/50 hover:text-white/80 transition-colors group"
+            >
+              {t("createAccount")}
+              <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
