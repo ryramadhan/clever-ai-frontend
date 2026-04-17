@@ -59,10 +59,10 @@ export default function RegisterPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-2xl sm:text-3xl font-medium tracking-tight text-white/95">
-            Create account
+            Join Clever AI
           </h1>
-          <p className="mt-2 text-sm sm:text-base text-white/50">
-            Start your journey today
+          <p className="mt-2 text-sm sm:text-base text-white/40">
+            Create an account to get started
           </p>
         </div>
 

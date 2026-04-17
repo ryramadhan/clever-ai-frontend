@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext.jsx";
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
 
-// Detect mobile/tablet devices
+// detect mobile/tablet devices
 function isMobileDevice() {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
@@ -45,7 +45,6 @@ export default function LoginPage() {
       const result = await googleAuth(credentialResponse.credential);
       console.log("[Google Login] Success:", result.user?.email);
 
-      // Navigate to home after successful login
       navigate("/", { replace: true });
     } catch (err) {
       console.error("[Google Login] Error:", err);
@@ -61,9 +60,9 @@ export default function LoginPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-2xl sm:text-3xl font-medium tracking-tight text-white/95">
-            Welcome back
+            Clever AI
           </h1>
-          <p className="mt-2 text-sm sm:text-base text-white/50">
+          <p className="mt-2 text-sm sm:text-base text-white/40">
             Sign in to continue
           </p>
         </div>

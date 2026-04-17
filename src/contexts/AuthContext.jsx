@@ -8,7 +8,6 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Check for existing token on mount
   useEffect(() => {
     const initAuth = async () => {
       const token = localStorage.getItem("token");
@@ -18,7 +17,7 @@ export function AuthProvider({ children }) {
           setUser(data.user);
           setIsAuthenticated(true);
         } catch (err) {
-          // Token invalid, clear it
+          // token invalid, clear it
           localStorage.removeItem("token");
           setUser(null);
           setIsAuthenticated(false);

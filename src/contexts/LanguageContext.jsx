@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useCallback } from "react";
 const translations = {
   en: {
     // Header
-    appTitle: "AI Assistant",
+    appTitle: "Clever AI",
     appSubtitle: "Ask anything",
 
     // Hero
@@ -13,7 +13,7 @@ const translations = {
     // Form labels
     contextLabel: "Your Question",
     contextPlaceholder: "Type your question here...",
-    contextHint: "Be specific for better results.",
+    contextHint: "Be specific.",
 
     // Buttons
     generate: "Get Answer",
@@ -28,8 +28,20 @@ const translations = {
 
     // History
     historyTitle: "History",
-    noHistory: "No history yet. Ask your first question.",
+    noHistory: "No history yet",
     loading: "Loading...",
+    publicBadge: "Public",
+    personalBadge: "Personal",
+    guestBannerText: "Showing community history.",
+    guestBannerLink: "Sign in to save your own",
+    emptyStateTitle: "No history yet",
+    emptyStateSubtitle: "Your saved conversations will appear here",
+    signInToSave: "Sign in to save",
+    privateCtaText: "Want to keep your conversations private?",
+    createAccount: "Create an account",
+
+    // Guest CTA
+    savePrompt: "Want to save this conversation?",
 
     // Result
     resultPlaceholder: "The answer will appear here",
@@ -41,7 +53,7 @@ const translations = {
   },
   id: {
     // Header
-    appTitle: "AI Assistant",
+    appTitle: "Clever AI",
     appSubtitle: "Tanya apa saja",
 
     // Hero
@@ -51,7 +63,7 @@ const translations = {
     // Form labels
     contextLabel: "Pertanyaan Anda",
     contextPlaceholder: "Ketik pertanyaan di sini...",
-    contextHint: "Lebih spesifik untuk hasil yang lebih baik.",
+    contextHint: "Lebih spesifik.",
 
     // Buttons
     generate: "Dapatkan Jawaban",
@@ -66,8 +78,20 @@ const translations = {
 
     // History
     historyTitle: "Riwayat",
-    noHistory: "Belum ada riwayat. Ajukan pertanyaan pertama Anda.",
+    noHistory: "Belum ada riwayat",
     loading: "Memuat...",
+    publicBadge: "Publik",
+    personalBadge: "Pribadi",
+    guestBannerText: "Menampilkan riwayat komunitas.",
+    guestBannerLink: "Masuk untuk menyimpan milik Anda",
+    emptyStateTitle: "Belum ada riwayat",
+    emptyStateSubtitle: "Percakapan tersimpan akan muncul di sini",
+    signInToSave: "Masuk untuk menyimpan",
+    privateCtaText: "Ingin menjaga percakapan Anda tetap pribadi?",
+    createAccount: "Buat akun",
+
+    // Guest CTA
+    savePrompt: "Ingin menyimpan percakapan ini?",
 
     // Result
     resultPlaceholder: "Jawaban akan muncul di sini",

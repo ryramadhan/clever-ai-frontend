@@ -166,15 +166,6 @@ export default function HomePage() {
                   <span className="block text-sm text-white/40">
                     {t("contextHint")}
                   </span>
-                  {/* Subtle guest indicator */}
-                  {!isAuthenticated && (
-                    <span className="text-xs text-white/25">•</span>
-                  )}
-                  {!isAuthenticated && (
-                    <Link to="/login" className="text-xs text-white/30 hover:text-white/50 transition-colors">
-                      Login untuk menyimpan
-                    </Link>
-                  )}
                 </div>
                 <span className={`block text-xs ${context.length >= 1800 ? "text-amber-400" : "text-white/30"}`}>
                   {context.length}/2000
@@ -235,6 +226,26 @@ export default function HomePage() {
             provider={provider}
             hasResult={Boolean(result)}
           />
+
+          {/* Guest CTA - Show after result */}
+          {!isAuthenticated && result && !isTyping && (
+            <div className="mt-4 p-4 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+                <p className="text-sm text-white/50 text-center sm:text-left">
+                  {t("savePrompt")}
+                </p>
+                <Link
+                  to="/login"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.06] border border-white/[0.10] text-sm text-white/70 hover:bg-white/[0.10] hover:text-white hover:border-white/[0.15] transition-all duration-200"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                  </svg>
+                  {t("signInToSave")}
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* History */}
