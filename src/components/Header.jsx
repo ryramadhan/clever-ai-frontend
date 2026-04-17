@@ -26,25 +26,44 @@ export default function Header() {
       <div className="max-w-2xl mx-auto px-4 sm:px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-white/[0.06] border border-white/[0.10] flex items-center justify-center text-white/80">
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="w-9 h-9 rounded-xl bg-white/[0.06] border border-white/[0.10] flex items-center justify-center text-white/80 transition-all duration-300 group-hover:bg-white/[0.10] group-hover:border-white/[0.15]">
               <svg
-                viewBox="0 0 24 24"
+                viewBox="0 0 32 32"
                 fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
                 className="w-4 h-4"
               >
-                <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+                {/* Dynamic C arc */}
+                <path
+                  d="M24 8c-3-3-7-4-11-2s-7 6-7 10 3 8 7 10 8 1 11-2"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  fill="none"
+                  opacity="0.9"
+                />
+                {/* Inner arc for depth */}
+                <path
+                  d="M20 12c-2-1.5-4.5-2-7-1s-4 3.5-4 6 1.5 4.5 4 6 5 0.5 7-1"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  fill="none"
+                  opacity="0.4"
+                />
+                {/* AI Spark */}
+                <path
+                  d="M22 6l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"
+                  fill="currentColor"
+                  opacity="0.95"
+                />
               </svg>
             </div>
             <div className="flex flex-col">
-              <div className="text-lg font-semibold tracking-tight text-white/95">{t("appTitle")}</div>
+              <div className="text-lg font-semibold tracking-tight text-white/95 transition-colors duration-300 group-hover:text-white">{t("appTitle")}</div>
               <div className="text-sm text-white/60">{t("appSubtitle")}</div>
             </div>
-          </div>
+          </Link>
 
           <div className="flex items-center gap-1.5 sm:gap-3">
             {/* Auth Buttons - Desktop: Text, Mobile: Icon */}
