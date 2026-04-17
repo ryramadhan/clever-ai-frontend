@@ -44,7 +44,7 @@ export default function LoginPage() {
       console.log("[Google Login] Token received, sending to backend...");
       const result = await googleAuth(credentialResponse.credential);
       console.log("[Google Login] Success:", result.user?.email);
-      
+
       // Navigate to home after successful login
       navigate("/", { replace: true });
     } catch (err) {
@@ -56,21 +56,21 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 animate-fade-in">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 py-8 animate-fade-in bg-[#0a0a0a]">
+      <div className="w-full max-w-sm">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-medium tracking-tight text-[var(--color-text-primary)]">
+          <h1 className="text-2xl sm:text-3xl font-medium tracking-tight text-white/95">
             Welcome back
           </h1>
-          <p className="mt-2 text-[var(--color-text-secondary)]">
+          <p className="mt-2 text-sm sm:text-base text-white/50">
             Sign in to continue
           </p>
         </div>
 
         {/* Error */}
         {error && (
-          <div className="mb-4 p-3 rounded-[var(--radius-md)] bg-[var(--color-white-04)] border border-[var(--color-border-default)] text-[var(--color-text-primary)] text-sm">
+          <div className="mb-4 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
             {error}
           </div>
         )}
@@ -80,7 +80,7 @@ export default function LoginPage() {
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1.5"
+              className="block text-sm font-medium text-white/60 mb-2"
             >
               Email
             </label>
@@ -90,7 +90,7 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-3 rounded-[var(--radius-md)] bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-border-strong)] transition-colors"
+              className="w-full px-4 py-3 rounded-xl bg-[#141414] border border-white/[0.06] text-white/90 placeholder:text-white/25 focus:outline-none focus:border-white/[0.15] focus:bg-[#181818] transition-all duration-200"
               placeholder="you@example.com"
             />
           </div>
@@ -98,7 +98,7 @@ export default function LoginPage() {
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1.5"
+              className="block text-sm font-medium text-white/60 mb-2"
             >
               Password
             </label>
@@ -109,22 +109,22 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={6}
-              className="w-full px-4 py-3 rounded-[var(--radius-md)] bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-border-strong)] transition-colors"
+              className="w-full px-4 py-3 rounded-xl bg-[#141414] border border-white/[0.06] text-white/90 placeholder:text-white/25 focus:outline-none focus:border-white/[0.15] focus:bg-[#181818] transition-all duration-200"
               placeholder="••••••"
             />
           </div>
 
           <div className="flex items-center justify-between text-sm">
-            <label className="flex items-center gap-2 text-[var(--color-text-secondary)]">
+            <label className="flex items-center gap-2 text-white/40 cursor-pointer">
               <input
                 type="checkbox"
-                className="w-4 h-4 rounded border-[var(--color-border-default)] bg-[var(--color-bg-secondary)]"
+                className="w-4 h-4 rounded border-white/[0.15] bg-[#141414] checked:bg-white/90 transition-colors"
               />
-              Remember me
+              <span className="text-white/50">Remember me</span>
             </label>
             <Link
               to="/forgot-password"
-              className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+              className="text-white/50 hover:text-white/80 transition-colors"
             >
               Forgot password?
             </Link>
@@ -133,7 +133,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 px-4 rounded-[var(--radius-md)] bg-[var(--color-white-100)] text-black font-medium hover:bg-[var(--color-white-80)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3 px-4 mt-2 rounded-xl bg-white text-black font-medium text-sm hover:bg-white/90 active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100"
           >
             {loading ? "Signing in..." : "Sign in"}
           </button>
@@ -142,53 +142,54 @@ export default function LoginPage() {
         {/* Divider */}
         <div className="relative my-6">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-[var(--color-border-default)]"></div>
+            <div className="w-full border-t border-white/[0.06]"></div>
           </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-[var(--color-bg-primary)] text-[var(--color-text-muted)]">
-              Or continue with
+          <div className="relative flex justify-center">
+            <span className="px-3 bg-[#0a0a0a] text-xs text-white/30 uppercase tracking-wider">
+              Or
             </span>
           </div>
         </div>
 
         {/* Google Login */}
-        <div className="flex flex-col items-center gap-3">
+        <div className="flex flex-col items-center gap-2">
           <GoogleLogin
             onSuccess={handleGoogleSuccess}
             onError={() => setError("Google login failed")}
             theme="outline"
             size="large"
-            useOneTap={!isMobile} // Disable One Tap on mobile (unsupported)
+            useOneTap={!isMobile}
           />
-          
-          {/* Mobile notice - subtle */}
+
           {isMobile && (
-            <p className="text-xs text-white/30 text-center max-w-xs">
-              Jika Google Login tidak berfungsi di mobile, silakan daftar dengan Email/Password
+            <p className="text-xs text-white/25 text-center max-w-xs">
+              Google Login may not work on some mobile browsers
             </p>
           )}
         </div>
 
         {/* Footer */}
-        <p className="mt-8 text-center text-[var(--color-text-secondary)] text-sm">
-          Don't have an account?{" "}
-          <Link
-            to="/register"
-            className="text-[var(--color-text-primary)] hover:underline"
-          >
-            Sign up
-          </Link>
-        </p>
+        <div className="mt-8 space-y-3 text-center">
+          <p className="text-sm text-white/40">
+            Don't have an account?{" "}
+            <Link
+              to="/register"
+              className="text-white/70 hover:text-white font-medium transition-colors"
+            >
+              Sign up
+            </Link>
+          </p>
 
-        {/* Back to home */}
-        <p className="mt-4 text-center">
           <Link
             to="/"
-            className="text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] text-sm transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm text-white/30 hover:text-white/60 transition-colors"
           >
-            ← Back to home
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to home
           </Link>
-        </p>
+        </div>
       </div>
     </div>
   );

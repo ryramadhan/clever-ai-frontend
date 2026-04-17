@@ -7,9 +7,9 @@ export default function Button({ children, disabled, loading, ...props }) {
     >
       <span>{children}</span>
       {loading && (
-        <span 
-          className="w-4 h-4 border-2 border-[#0a0a0a]/30 border-t-[#0a0a0a] rounded-full animate-spin-slow" 
-          aria-hidden="true" 
+        <span
+          className="w-4 h-4 border-2 border-[#0a0a0a]/30 border-t-[#0a0a0a] rounded-full animate-spin-slow"
+          aria-hidden="true"
         />
       )}
     </button>
