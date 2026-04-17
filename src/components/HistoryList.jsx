@@ -123,9 +123,6 @@ export default function HistoryList({
         <div className="mb-4 p-3 sm:p-4 rounded-xl bg-white/[0.03] border border-white/[0.06]">
           <p className="text-xs sm:text-sm text-white/40 text-center">
             {t("guestBannerText")}
-            <Link to="/login" className="ml-1.5 text-white/60 hover:text-white underline underline-offset-2 transition-colors">
-              {t("guestBannerLink")}
-            </Link>
           </p>
         </div>
       )}
