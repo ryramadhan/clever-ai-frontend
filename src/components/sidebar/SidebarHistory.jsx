@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { useLanguage } from "../contexts/LanguageContext.jsx";
+import { useLanguage } from "../../contexts/LanguageContext.jsx";
 
 function truncateText(text, maxLength = 45) {
   if (!text) return "";

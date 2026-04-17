@@ -1,10 +1,11 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { useLanguage } from "../contexts/LanguageContext.jsx";
-import { useAuth } from "../contexts/AuthContext.jsx";
+import { useLanguage } from "../../contexts/LanguageContext.jsx";
+import { useAuth } from "../../contexts/AuthContext.jsx";
 import SidebarHistory from "./SidebarHistory.jsx";
 import SidebarUserFooter from "./SidebarUserFooter.jsx";
-import logoIconUrl from "../assets/logo-icon.svg";
+import SidebarGuestFooter from "./SidebarGuestFooter.jsx";
+import logoIconUrl from "../../assets/logo-icon.svg";
 
 const SIDEBAR_WIDTH = "w-[280px]";
 const DESKTOP_ASIDE_CLASSES = [
@@ -116,7 +117,11 @@ export default function Sidebar({
                 />
               </div>
             )}
-            {isAuthenticated && <SidebarUserFooter onAction={onClose} />}
+            {isAuthenticated ? (
+              <SidebarUserFooter onAction={onClose} />
+            ) : (
+              <SidebarGuestFooter onAction={onClose} />
+            )}
           </div>
         </aside>
       </div>
@@ -192,8 +197,10 @@ export default function Sidebar({
               />
             </div>
           )}
-          {isAuthenticated && (
+          {isAuthenticated ? (
             <SidebarUserFooter onAction={onClose} />
+          ) : (
+            <SidebarGuestFooter onAction={onClose} />
           )}
         </aside>
       </div>

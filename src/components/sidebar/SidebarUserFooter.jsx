@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useLanguage } from "../contexts/LanguageContext.jsx";
-import { useAuth } from "../contexts/AuthContext.jsx";
+import { useLanguage } from "../../contexts/LanguageContext.jsx";
+import { useAuth } from "../../contexts/AuthContext.jsx";
 
 export default function SidebarUserFooter({ onAction }) {
   const { t } = useLanguage();

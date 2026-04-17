@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header.jsx";
-import Sidebar from "../components/Sidebar.jsx";
+import Sidebar from "../components/sidebar/Sidebar.jsx";
 import ResultCard from "../components/ResultCard.jsx";
 import HistoryList from "../components/HistoryList.jsx";
 import { useLanguage } from "../contexts/LanguageContext.jsx";
@@ -54,6 +54,7 @@ export default function HomePage() {
   const [historyHasMore, setHistoryHasMore] = useState(true);
   const [historyLoadingMore, setHistoryLoadingMore] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const textareaRef = useRef(null);
 
   const typed = useTypingText(result, { enabled: enableTyping });
   const isTyping = enableTyping && typed !== result;
@@ -130,13 +131,13 @@ export default function HomePage() {
     }
   }
 
-  // Sidebar handlers
   function handleNewChat() {
     setContext("");
     setResult("");
     setProvider("");
     setError("");
     setEnableTyping(true);
+    setTimeout(() => textareaRef.current?.focus(), 0);
   }
 
   function handleHistoryItemClick(item) {
@@ -192,6 +193,7 @@ export default function HomePage() {
               <span className="block text-xs font-medium tracking-wider text-white/60 uppercase">{t("contextLabel")}</span>
               <div className="relative">
                 <textarea
+                  ref={textareaRef}
                   className="w-full min-h-[160px] p-4 rounded-[14px] bg-[#141414] border border-white/[0.06] text-white/95 text-base placeholder:text-white/30 resize-y transition-all duration-200 focus:outline-none focus:border-white/[0.20] focus:bg-[#1a1a1a] disabled:opacity-50"
                   value={context}
                   onChange={(e) => setContext(e.target.value)}

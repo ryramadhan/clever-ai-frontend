@@ -42,6 +42,9 @@ const translations = {
 
     // Guest CTA
     savePrompt: "Want to save this conversation?",
+    personalizedResponse: "Save your conversations",
+    signInBenefits: "Sign in to access your chat history across devices. Your data stays private and secure.",
+    signIn: "Sign in",
 
     // Logout Confirmation
     signOutTitle: "Sign out",
@@ -108,6 +111,9 @@ const translations = {
 
     // Guest CTA
     savePrompt: "Ingin menyimpan percakapan ini?",
+    personalizedResponse: "Simpan percakapan Anda",
+    signInBenefits: "Masuk untuk mengakses riwayat chat di semua perangkat. Data Anda tetap aman dan terpisah.",
+    signIn: "Masuk",
 
     // Logout Confirmation
     signOutTitle: "Keluar",
