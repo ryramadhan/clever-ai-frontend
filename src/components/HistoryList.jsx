@@ -60,7 +60,7 @@ export default function HistoryList({
   const hasItems = items && items.length > 0;
 
   return (
-    <section className="w-full max-w-2xl mx-auto mt-10">
+    <section className="w-full mt-10">
       {/* Header dengan mode indicator */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
@@ -259,4 +259,3 @@ export default function HistoryList({
     </section>
   );
 }
-

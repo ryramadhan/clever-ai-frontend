@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLanguage } from "../contexts/LanguageContext.jsx";
 
-export default function ResultCard({ text, isTyping, provider, hasResult }) {
+export default function ResultCard({ text, isTyping, provider, hasResult, onRegenerate }) {
   const { t } = useLanguage();
   const [copied, setCopied] = useState(false);
 
@@ -16,53 +16,68 @@ export default function ResultCard({ text, isTyping, provider, hasResult }) {
     }
   }
 
+  if (!hasResult) return null;
+
   return (
     <section className="w-full" aria-live="polite">
-      <div className="bg-[#141414] rounded-[14px] border border-white/[0.06] overflow-hidden">
-        {/* Header */}
-        <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/[0.06]">
-          <span className="text-xs font-medium tracking-wider text-white/60 uppercase">AI Response</span>
-          <button
-            type="button"
-            className="w-8 h-8 rounded-lg bg-white/[0.06] border border-white/[0.10] flex items-center justify-center text-white/60 transition-all duration-150 hover:bg-white/[0.10] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
-            onClick={handleCopy}
-            disabled={!text}
-            title="Copy to clipboard"
-            aria-label="Copy result"
-          >
-            {copied ? (
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-            ) : (
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-              </svg>
-            )}
-          </button>
-        </div>
-
-        {/* Content */}
-        <div className="p-4 min-h-[120px]">
-          {hasResult ? (
-            <p className="text-white/95 text-lg leading-relaxed whitespace-pre-wrap">
-              {text}
-              {isTyping && <span className="inline-block w-0.5 h-5 bg-white/80 ml-0.5 align-middle caret-blink" aria-hidden="true" />}
-            </p>
-          ) : (
-            <p className="text-white/40 text-base italic">
-              {t("resultPlaceholder")}
-            </p>
+      {/* Response) */}
+      <div className="py-6">
+        {/* Content with typing animation */}
+        <div className="text-white/95 text-lg leading-[1.75] whitespace-pre-wrap">
+          {text}
+          {isTyping && (
+            <span
+              className="inline-block w-[2px] h-[1.2em] bg-white/80 ml-1 align-middle animate-pulse"
+              aria-hidden="true"
+            />
           )}
         </div>
 
-        {/* Meta */}
-        {hasResult && (
-          <div className="px-4 py-2.5 border-t border-white/[0.06] flex items-center justify-end">
+        {/* Action buttons - minimal style */}
+        {!isTyping && (
+          <div className="flex items-center gap-2 mt-6">
+            <button
+              type="button"
+              onClick={handleCopy}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-white/60 hover:text-white/90 hover:bg-white/[0.06] transition-all duration-200"
+              title={t("copy")}
+            >
+              {copied ? (
+                <>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  {t("copied")}
+                </>
+              ) : (
+                <>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                  </svg>
+                  {t("copy")}
+                </>
+              )}
+            </button>
+
+            {onRegenerate && (
+              <button
+                type="button"
+                onClick={onRegenerate}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-white/60 hover:text-white/90 hover:bg-white/[0.06] transition-all duration-200"
+                title={t("regenerate")}
+              >
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                {t("regenerate")}
+              </button>
+            )}
+
+            {/* Provider badge - minimal */}
             {provider && (
-              <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-white/[0.06] border border-white/[0.10] text-xs text-white/60">
-                {provider === "gemini" ? t("aiGenerated") : t("mock")}
+              <span className="ml-auto text-[10px] text-white/30 uppercase tracking-wider">
+                {provider === "gemini" ? "Gemini" : "AI"}
               </span>
             )}
           </div>

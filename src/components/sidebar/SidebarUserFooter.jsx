@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLanguage } from "../../contexts/LanguageContext.jsx";
 import { useAuth } from "../../contexts/AuthContext.jsx";
 
-export default function SidebarUserFooter({ onAction }) {
+export default function SidebarUserFooter({ isExpanded = true, onAction }) {
   const { t } = useLanguage();
   const { user, logout } = useAuth();
   const [showConfirm, setShowConfirm] = useState(false);
@@ -31,6 +31,66 @@ export default function SidebarUserFooter({ onAction }) {
       .slice(0, 2);
   };
 
+  // Collapsed state - just show avatar with tooltip
+  if (!isExpanded) {
+    return (
+      <>
+        <div className="border-t border-white/[0.06] p-2">
+          <button
+            onClick={handleLogoutClick}
+            className="w-10 h-10 mx-auto rounded-full bg-white/[0.06] border border-white/[0.10] flex items-center justify-center overflow-hidden hover:bg-white/[0.10] hover:border-white/[0.15] transition-all duration-200"
+            title={`${user?.name || t("guestUser")} - ${t("signOut")}`}
+          >
+            {user?.picture ? (
+              <img src={user.picture} alt="" className="w-full h-full object-cover" />
+            ) : (
+              <span className="text-xs font-medium text-white/80">
+                {getInitials(user?.name)}
+              </span>
+            )}
+          </button>
+        </div>
+        {/* Confirm Modal for collapsed state */}
+        {showConfirm && (
+          <div className="fixed inset-0 z-[80]">
+            <div
+              className="absolute inset-0 bg-black/60"
+              onClick={handleCancelLogout}
+            />
+            <div className="absolute inset-0 flex items-center justify-center p-4">
+              <div
+                className="w-full max-w-xs bg-[#141414] rounded-xl border border-white/[0.08] p-5 shadow-2xl"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <h3 className="text-base font-semibold text-white/95 mb-2">
+                  {t("signOutTitle")}
+                </h3>
+                <p className="text-sm text-white/50 mb-5 leading-relaxed">
+                  {t("signOutMessage")}
+                </p>
+                <div className="flex flex-col-reverse gap-2">
+                  <button
+                    onClick={handleCancelLogout}
+                    className="px-4 py-2 rounded-lg text-sm font-medium text-white/50 transition-all duration-200 hover:text-white/70"
+                  >
+                    {t("cancel")}
+                  </button>
+                  <button
+                    onClick={handleConfirmLogout}
+                    className="px-4 py-2 rounded-lg text-sm font-medium text-black bg-white hover:bg-white/90 transition-all duration-200"
+                  >
+                    {t("signOut")}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
+    );
+  }
+
+  // Expanded state - full footer
   return (
     <>
       <div className="border-t border-white/[0.06] p-3">

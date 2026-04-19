@@ -6,7 +6,11 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const token = localStorage.getItem("token");
+    return !!token;
+  });
+  const [isAuthReady, setIsAuthReady] = useState(false);
 
   useEffect(() => {
     const initAuth = async () => {
@@ -17,13 +21,13 @@ export function AuthProvider({ children }) {
           setUser(data.user);
           setIsAuthenticated(true);
         } catch (err) {
-          // token invalid, clear it
           localStorage.removeItem("token");
           setUser(null);
           setIsAuthenticated(false);
         }
       }
       setLoading(false);
+      setIsAuthReady(true);
     };
 
     initAuth();
@@ -62,6 +66,7 @@ export function AuthProvider({ children }) {
   const value = {
     user,
     isAuthenticated,
+    isAuthReady,
     loading,
     login,
     register,

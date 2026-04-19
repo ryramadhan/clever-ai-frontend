@@ -10,26 +10,25 @@ const translations = {
     heroTitle: "How can I help you today?",
     heroSubtitle: "Ask a question or describe what you need.",
 
-    // Form labels
-    contextLabel: "Your Question",
-    contextPlaceholder: "Type your question here...",
-    contextHint: "Be specific.",
-
-    // Buttons
-    generate: "Get Answer",
-    generating: "Thinking...",
-    refresh: "Refresh",
-    loadMore: "Load more",
+    // Input
+    contextLabel: "Context",
+    contextPlaceholder: "Ask anything...",
+    contextHint: "Provide details for better results",
+    generate: "Generate",
+    generating: "Generating...",
+    typewriterEffect: "Typewriter effect",
+    charLimit: "{current}/{max} characters",
+    pressEnterToSend: "Press Enter to send, Shift+Enter for new line",
+    askFollowUp: "Ask a follow-up...",
+    aiMayProduceInaccurate: "AI may produce inaccurate information. Verify important details.",
     copy: "Copy",
     copied: "Copied",
-
-    // Toggle
-    typewriterEffect: "Typewriter effect",
 
     // History
     historyTitle: "History",
     noHistory: "No history yet",
     loading: "Loading...",
+    refresh: "Refresh",
     publicBadge: "Public",
     personalBadge: "Personal",
     guestBannerText: "Showing community history.",
@@ -41,12 +40,16 @@ const translations = {
     createAccount: "Sign Up",
 
     // Guest CTA
-    savePrompt: "Want to save this conversation?",
+    savePrompt: "Sign in to save this prompt and access your history.",
     personalizedResponse: "Save your conversations",
     signInBenefits: "Sign in to access your chat history across devices. Your data stays private and secure.",
-    signIn: "Sign in",
-    accessYourHistory: "Access your chat history",
-    signInToBrowse: "Sign in to save conversations, browse previous answers, and continue where you left off.",
+    signIn: "Sign In",
+    accessYourHistory: "Access your history",
+    signInToBrowse: "Sign in to browse and continue your previous conversations.",
+    likeWhatYouSee: "Like what you see?",
+    signInToSaveAndHistory: "Sign in to save this result and access your full history.",
+    browsePreviousAnswers: "Browse previous answers",
+    continueConversations: "Continue where you left off",
 
     // Logout Confirmation
     signOutTitle: "Sign out",
@@ -58,6 +61,9 @@ const translations = {
     resultPlaceholder: "The answer will appear here",
     aiGenerated: "AI Generated",
     mock: "Fallback",
+    copy: "Copy",
+    copied: "Copied",
+    regenerate: "Regenerate",
 
     // Language
     language: "Language",
@@ -66,11 +72,23 @@ const translations = {
     menu: "Menu",
     closeSidebar: "Close menu",
     openSidebar: "Open menu",
+    collapseSidebar: "Collapse sidebar",
+    signInToAccess: "Sign in to access your history",
     newChat: "New Chat",
+    history: "History",
     searchHistory: "Search history...",
     noSearchResults: "No results found",
     untitledChat: "Untitled Chat",
     guestUser: "Guest",
+
+    // History Item Actions
+    renameChat: "Rename",
+    pinChat: "Pin",
+    unpinChat: "Unpin",
+    deleteChat: "Delete",
+    confirmDeleteTitle: "Delete chat?",
+    confirmDeleteMessage: "This will permanently delete this conversation. This action cannot be undone.",
+    renameHint: "Enter to save, Esc to cancel",
   },
   id: {
     // Header
@@ -83,7 +101,7 @@ const translations = {
 
     // Form labels
     contextLabel: "Pertanyaan Anda",
-    contextPlaceholder: "Ketik pertanyaan di sini...",
+    contextPlaceholder: "Tanyakan apa saja...",
     contextHint: "Lebih spesifik.",
 
     // Buttons
@@ -96,11 +114,15 @@ const translations = {
 
     // Toggle
     typewriterEffect: "Efek ketik",
+    pressEnterToSend: "Tekan Enter untuk kirim, Shift+Enter untuk baris baru",
+    askFollowUp: "Tanyakan lanjutan...",
+    aiMayProduceInaccurate: "AI dapat menghasilkan informasi yang tidak akurat. Verifikasi detail penting.",
 
     // History
     historyTitle: "Riwayat",
     noHistory: "Belum ada riwayat",
     loading: "Memuat...",
+    refresh: "Muat Ulang",
     publicBadge: "Publik",
     personalBadge: "Pribadi",
     guestBannerText: "Menampilkan riwayat komunitas.",
@@ -112,12 +134,16 @@ const translations = {
     createAccount: "Mendaftar",
 
     // Guest CTA
-    savePrompt: "Ingin menyimpan percakapan ini?",
+    savePrompt: "Masuk untuk menyimpan prompt ini dan mengakses riwayat.",
     personalizedResponse: "Simpan percakapan Anda",
-    signInBenefits: "Masuk untuk mengakses riwayat chat di semua perangkat. Data Anda tetap aman dan terpisah.",
+    signInBenefits: "Masuk untuk mengakses riwayat chat Anda di semua perangkat. Data Anda tetap pribadi dan aman.",
     signIn: "Masuk",
-    accessYourHistory: "Akses riwayat chat Anda",
-    signInToBrowse: "Masuk untuk menyimpan percakapan, menelusuri jawaban sebelumnya, dan melanjutkan dari tempat terakhir Anda berhenti.",
+    accessYourHistory: "Akses riwayat Anda",
+    signInToBrowse: "Masuk untuk menelusuri dan melanjutkan percakapan sebelumnya.",
+    likeWhatYouSee: "Suka dengan hasilnya?",
+    signInToSaveAndHistory: "Masuk untuk menyimpan hasil ini dan mengakses riwayat lengkap.",
+    browsePreviousAnswers: "Telusuri jawaban sebelumnya",
+    continueConversations: "Lanjutkan percakapan",
 
     // Logout Confirmation
     signOutTitle: "Keluar",
@@ -129,6 +155,9 @@ const translations = {
     resultPlaceholder: "Jawaban akan muncul di sini",
     aiGenerated: "Dihasilkan AI",
     mock: "Fallback",
+    copy: "Salin",
+    copied: "Tersalin",
+    regenerate: "Buat Ulang",
 
     // Language
     language: "Bahasa",
@@ -137,11 +166,23 @@ const translations = {
     menu: "Menu",
     closeSidebar: "Tutup menu",
     openSidebar: "Buka menu",
+    collapseSidebar: "Ciutkan sidebar",
+    signInToAccess: "Masuk untuk mengakses riwayat",
     newChat: "Chat Baru",
+    history: "Riwayat",
     searchHistory: "Cari riwayat...",
     noSearchResults: "Tidak ada hasil",
     untitledChat: "Chat Tanpa Judul",
     guestUser: "Tamu",
+
+    // History Item Actions
+    renameChat: "Ganti nama",
+    pinChat: "Sematkan",
+    unpinChat: "Lepas semat",
+    deleteChat: "Hapus",
+    confirmDeleteTitle: "Hapus obrolan?",
+    confirmDeleteMessage: "Tindakan ini akan menghapus percakapan secara permanen. Tidak dapat dibatalkan.",
+    renameHint: "Enter untuk simpan, Esc untuk batal",
   },
 };
 

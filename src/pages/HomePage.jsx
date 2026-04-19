@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import Sidebar from "../components/sidebar/Sidebar.jsx";
 import ResultCard from "../components/ResultCard.jsx";
-import HistoryList from "../components/HistoryList.jsx";
 import { useLanguage } from "../contexts/LanguageContext.jsx";
 import { useAuth } from "../contexts/AuthContext.jsx";
 import { generateResponse, getCaptions } from "../services/api.js";
@@ -64,11 +63,11 @@ export default function HomePage() {
     return Boolean(context.trim()) && !loading;
   }, [context, loading]);
 
-  async function refreshHistory() {
+  async function refreshHistory(useCache = true) {
     setHistoryError("");
     setHistoryLoading(true);
     try {
-      const data = await getCaptions({ limit: HISTORY_LIMIT, offset: 0 });
+      const data = await getCaptions({ limit: HISTORY_LIMIT, offset: 0, useCache });
       const items = Array.isArray(data.items) ? data.items : [];
       setHistory(items);
       setHistoryOffset(items.length);
@@ -113,7 +112,7 @@ export default function HomePage() {
   }, []);
 
   async function onGenerate(e) {
-    e.preventDefault();
+    if (e?.preventDefault) e.preventDefault();
     setError("");
     setLoading(true);
     setResult("");
@@ -147,6 +146,10 @@ export default function HomePage() {
     setError("");
   }
 
+  function handleHistoryItemsChange(newItems) {
+    setHistory(newItems);
+  }
+
   function toggleSidebar() {
     setIsSidebarOpen((prev) => !prev);
   }
@@ -156,161 +159,204 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0a0a0a]">
-      <Sidebar
-        isOpen={isSidebarOpen}
-        onToggle={toggleSidebar}
-        onClose={closeSidebar}
-        historyItems={history}
-        historyLoading={historyLoading}
-        onRefreshHistory={refreshHistory}
-        onHistoryItemClick={handleHistoryItemClick}
-        onNewChat={handleNewChat}
-      />
+    <div className="h-screen flex flex-col bg-[#0a0a0a] overflow-hidden">
+      <Header onMenuToggle={toggleSidebar} />
 
-      <Header
-        onMenuToggle={toggleSidebar}
-        isMenuOpen={isSidebarOpen}
-      />
-
-      <main className="flex-1 w-full max-w-2xl mx-auto px-4 sm:px-6 py-6">
-        {/* Hero */}
-        <section className="text-center mb-10">
-          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white/95 mb-2">
-            {t("heroTitle")}
-          </h1>
-          <p className="text-base text-white/60">
-            {t("heroSubtitle")}
-          </p>
-        </section>
-
-        {/* Generator */}
-        <div className="flex flex-col gap-6">
-          {/* Input Section */}
-          <section className="w-full space-y-6">
-            {/* Context Input */}
-            <div className="space-y-3">
-              <span className="block text-xs font-medium tracking-wider text-white/60 uppercase">{t("contextLabel")}</span>
-              <div className="relative">
-                <textarea
-                  ref={textareaRef}
-                  className="w-full min-h-[160px] p-4 rounded-[14px] bg-[#141414] border border-white/[0.06] text-white/95 text-base placeholder:text-white/30 resize-y transition-all duration-200 focus:outline-none focus:border-white/[0.20] focus:bg-[#1a1a1a] disabled:opacity-50"
-                  value={context}
-                  onChange={(e) => setContext(e.target.value)}
-                  placeholder={t("contextPlaceholder")}
-                  disabled={loading}
-                  rows={5}
-                  maxLength={2000}
-                />
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="block text-sm text-white/40">
-                    {t("contextHint")}
-                  </span>
-                </div>
-                <span className={`block text-xs ${context.length >= 1800 ? "text-amber-400" : "text-white/30"}`}>
-                  {context.length}/2000
-                </span>
-              </div>
-            </div>
-
-            {/* Generate Row */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-4">
-              <button
-                type="button"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-[10px] bg-white text-[#0a0a0a] font-medium text-sm transition-all duration-200 hover:bg-white/90 disabled:opacity-40 disabled:cursor-not-allowed w-full sm:w-auto"
-                onClick={onGenerate}
-                disabled={!canSubmit}
-              >
-                {loading ? (
-                  <>
-                    <span className="w-4 h-4 border-2 border-[#0a0a0a]/30 border-t-[#0a0a0a] rounded-full animate-spin-slow" />
-                    {t("generating")}
-                  </>
-                ) : (
-                  t("generate")
-                )}
-              </button>
-
-              <label className="flex items-center gap-2 text-sm text-white/60 cursor-pointer select-none">
-                <input
-                  type="checkbox"
-                  className="w-4 h-4 rounded border-white/[0.20] bg-transparent checked:bg-white checked:border-white focus:ring-0 focus:ring-offset-0 cursor-pointer"
-                  checked={enableTyping}
-                  onChange={(e) => setEnableTyping(e.target.checked)}
-                  disabled={loading}
-                />
-                <span>{t("typewriterEffect")}</span>
-              </label>
-            </div>
-
-            {/* Error */}
-            {error && (
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 rounded-[10px] bg-red-500/10 border border-red-500/20">
-                <span className="text-red-400 text-sm">{error}</span>
-                <button
-                  type="button"
-                  onClick={onGenerate}
-                  disabled={loading}
-                  className="text-sm text-white/60 hover:text-white underline underline-offset-2 disabled:opacity-40 disabled:no-underline transition-colors"
-                >
-                  Try again
-                </button>
-              </div>
-            )}
-          </section>
-
-          {/* Result Card */}
-          <ResultCard
-            text={typed}
-            isTyping={isTyping}
-            provider={provider}
-            hasResult={Boolean(result)}
-          />
-
-          {/* Guest CTA - Show after result */}
-          {!isAuthenticated && result && !isTyping && (
-            <div className="mt-4 p-4 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-                <p className="text-sm text-white/50 text-center sm:text-left">
-                  {t("savePrompt")}
-                </p>
-                <Link
-                  to="/login"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.06] border border-white/[0.10] text-sm text-white/70 hover:bg-white/[0.10] hover:text-white hover:border-white/[0.15] transition-all duration-200"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                  </svg>
-                  {t("signInToSave")}
-                </Link>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* History */}
-        <HistoryList
-          items={history}
-          loading={historyLoading}
-          error={historyError}
-          onRefresh={refreshHistory}
-          onLoadMore={loadMoreHistory}
-          canLoadMore={historyHasMore}
-          loadingMore={historyLoadingMore}
-          isAuthenticated={isAuthenticated}
+      <div className="flex flex-1 overflow-hidden">
+        <Sidebar
+          isOpen={isSidebarOpen}
+          onToggle={toggleSidebar}
+          onClose={closeSidebar}
+          historyItems={history}
+          historyLoading={historyLoading}
+          onRefreshHistory={refreshHistory}
+          onHistoryItemClick={handleHistoryItemClick}
+          onNewChat={handleNewChat}
+          onHistoryItemsChange={handleHistoryItemsChange}
         />
-      </main>
 
-      {/* Footer */}
-      <footer className="py-6 border-t border-white/[0.06] mt-auto">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <span className="text-sm text-white/40">
-            © {new Date().getFullYear()} AI Assistant
-          </span>
-        </div>
-      </footer>
+        <main className="flex-1 overflow-hidden flex flex-col">
+          {!result ? (
+            // Empty State - Centered layout
+            <div className="flex-1 overflow-y-auto">
+              <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-12 min-h-full flex flex-col">
+                {/* Hero */}
+                <section className="text-center mb-12 flex-1 flex flex-col justify-center">
+                  <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white/95 mb-3">
+                    {t("heroTitle")}
+                  </h1>
+                  <p className="text-lg text-white/50">
+                    {t("heroSubtitle")}
+                  </p>
+                </section>
+
+                {/* Input */}
+                <div className="w-full px-4 sm:px-6">
+                  <div className="relative bg-[#141414] rounded-2xl sm:rounded-[26px] border border-white/[0.08] shadow-lg shadow-black/20 min-h-[52px] sm:min-h-[56px] flex items-center pr-12 sm:pr-14">
+                    <textarea
+                      ref={textareaRef}
+                      className="w-full py-3 sm:py-[15px] px-4 sm:px-5 bg-transparent text-white/95 text-[15px] sm:text-base placeholder:text-white/40 resize-none transition-all duration-200 focus:outline-none disabled:opacity-50 leading-normal"
+                      value={context}
+                      onChange={(e) => setContext(e.target.value)}
+                      placeholder={t("contextPlaceholder")}
+                      disabled={loading}
+                      rows={1}
+                      maxLength={2000}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !e.shiftKey && canSubmit) {
+                          e.preventDefault();
+                          onGenerate();
+                        }
+                      }}
+                      onInput={(e) => {
+                        e.target.style.height = 'auto';
+                        e.target.style.height = Math.min(e.target.scrollHeight, 200) + 'px';
+                      }}
+                    />
+                    {/* Send Button */}
+                    <button
+                      type="button"
+                      onClick={onGenerate}
+                      disabled={!canSubmit || loading}
+                      className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white text-[#0a0a0a] flex items-center justify-center transition-all duration-200 hover:bg-white/90 disabled:opacity-30 disabled:cursor-not-allowed disabled:bg-white/50"
+                      aria-label={t("generate")}
+                    >
+                      {loading ? (
+                        <span className="w-3.5 h-3.5 sm:w-4 sm:h-4 border-2 border-[#0a0a0a]/30 border-t-[#0a0a0a] rounded-full animate-spin" />
+                      ) : (
+                        <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                      )}
+                    </button>
+                  </div>
+                  <p className="text-xs text-white/25 text-center mt-3">
+                    {t("pressEnterToSend")}
+                  </p>
+
+                  {/* Error */}
+                  {error && (
+                    <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-center">
+                      <span className="text-red-400 text-sm">{error}</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Footer */}
+                <footer className="py-8 text-center">
+                  <span className="text-xs text-white/30">
+                    © {new Date().getFullYear()} Clever AI
+                  </span>
+                </footer>
+              </div>
+            </div>
+          ) : (
+            <>
+              {/* Chat History - Scrollable */}
+              <div className="flex-1 overflow-y-auto">
+                <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-8">
+                  {/* User Message */}
+                  <div className="flex gap-4 mb-8">
+                    <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
+                      <img src="/logo.svg" alt="AI" className="w-8 h-8" />
+                    </div>
+                    <div className="flex-1 pt-1">
+                      <p className="text-white/90 text-base leading-relaxed">{context}</p>
+                    </div>
+                  </div>
+
+                  {/* AI Response */}
+                  <div className="pl-12">
+                    <ResultCard
+                      text={typed}
+                      isTyping={isTyping}
+                      provider={provider}
+                      hasResult={Boolean(result)}
+                      onRegenerate={onGenerate}
+                    />
+                  </div>
+
+                  {/* Guest CTA */}
+                  {!isAuthenticated && !isTyping && (
+                    <div className="mt-8 p-5 rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] border border-white/[0.12]">
+                      <div className="flex flex-col sm:flex-row items-center gap-4">
+                        <div className="flex-1 text-center sm:text-left">
+                          <p className="text-sm font-medium text-white/90 mb-1">
+                            {t("likeWhatYouSee")}
+                          </p>
+                          <p className="text-xs text-white/50">
+                            {t("signInToSaveAndHistory")}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Link
+                            to="/login"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-black text-sm font-medium hover:bg-white/90 transition-all duration-200"
+                          >
+                            {t("signIn")}
+                          </Link>
+                          <Link
+                            to="/register"
+                            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.06] border border-white/[0.12] text-sm text-white/80 hover:bg-white/[0.10] hover:text-white transition-all duration-200"
+                          >
+                            {t("createAccount")}
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Input - Sticky Bottom */}
+              <div className="bg-[#0a0a0a]">
+                <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-4">
+                  <div className="relative bg-[#141414] rounded-[26px] border border-white/[0.08] shadow-lg shadow-black/20 min-h-[56px] flex items-center">
+                    <textarea
+                      ref={textareaRef}
+                      className="w-full py-[15px] px-5 pr-14 bg-transparent text-white/95 text-base placeholder:text-white/40 resize-none transition-all duration-200 focus:outline-none disabled:opacity-50 leading-normal"
+                      value={context}
+                      onChange={(e) => setContext(e.target.value)}
+                      placeholder={t("askFollowUp")}
+                      disabled={loading}
+                      rows={1}
+                      maxLength={2000}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !e.shiftKey && canSubmit) {
+                          e.preventDefault();
+                          onGenerate();
+                        }
+                      }}
+                      onInput={(e) => {
+                        e.target.style.height = 'auto';
+                        e.target.style.height = Math.min(e.target.scrollHeight, 200) + 'px';
+                      }}
+                    />
+                    <button
+                      type="button"
+                      onClick={onGenerate}
+                      disabled={!canSubmit || loading}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white text-[#0a0a0a] flex items-center justify-center transition-all duration-200 hover:bg-white/90 disabled:opacity-30 disabled:cursor-not-allowed disabled:bg-white/50"
+                      aria-label={t("generate")}
+                    >
+                      {loading ? (
+                        <span className="w-4 h-4 border-2 border-[#0a0a0a]/30 border-t-[#0a0a0a] rounded-full animate-spin" />
+                      ) : (
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                      )}
+                    </button>
+                  </div>
+                  <p className="text-[10px] text-white/20 text-center mt-2">
+                    {t("aiMayProduceInaccurate")}
+                  </p>
+                </div>
+              </div>
+            </>
+          )}
+        </main>
+      </div>
     </div>
   );
 }

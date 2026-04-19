@@ -4,6 +4,17 @@ function getToken() {
   return localStorage.getItem("token");
 }
 
+const pending = new Map();
+
+async function dedupedRequest(key, fn) {
+  if (pending.has(key)) {
+    return pending.get(key);
+  }
+  const promise = fn().finally(() => pending.delete(key));
+  pending.set(key, promise);
+  return promise;
+}
+
 async function request(path, options = {}) {
   const base = API_BASE || "";
   const url = `${base}${path}`;
@@ -13,7 +24,6 @@ async function request(path, options = {}) {
     "Content-Type": "application/json",
   };
 
-  // Add auth token if required or available
   const token = getToken();
   if (token && (requireAuth || options.headers?.Authorization)) {
     headers["Authorization"] = `Bearer ${token}`;
@@ -36,7 +46,6 @@ async function request(path, options = {}) {
 }
 
 export async function generateResponse({ context }) {
-  // Optional auth - sends token if available
   return request("/api/generate", {
     method: "POST",
     body: { context },
@@ -44,18 +53,54 @@ export async function generateResponse({ context }) {
   });
 }
 
-export async function getCaptions({ limit = 20, offset = 0 } = {}) {
+export async function getCaptions({ limit = 20, offset = 0, useCache = true } = {}) {
   const qs = new URLSearchParams({
     limit: String(limit),
     offset: String(offset),
   }).toString();
-  // Optional auth - sends token if available
-  return request(`/api/captions?${qs}`, {
-    requireAuth: !!getToken(),
+
+  const cacheKey = `captions_${limit}_${offset}_${getToken() || "guest"}`;
+
+  if (useCache && offset === 0) {
+    try {
+      const cached = sessionStorage.getItem(cacheKey);
+      if (cached) {
+        const { data, timestamp } = JSON.parse(cached);
+        if (Date.now() - timestamp < 300000) {
+          setTimeout(() => {
+            request(`/api/captions?${qs}`, { requireAuth: !!getToken() })
+              .then((fresh) => sessionStorage.setItem(cacheKey, JSON.stringify({ data: fresh, timestamp: Date.now() })))
+              .catch(() => { });
+          }, 100);
+          return data;
+        }
+      }
+    } catch { }
+  }
+
+  return dedupedRequest(cacheKey, async () => {
+    const data = await request(`/api/captions?${qs}`, { requireAuth: !!getToken() });
+    if (offset === 0) {
+      try {
+        sessionStorage.setItem(cacheKey, JSON.stringify({ data, timestamp: Date.now() }));
+      } catch { }
+    }
+    return data;
   });
 }
 
-// Auth API
+export function clearCaptionsCache() {
+  try {
+    const prefix = "captions_";
+    for (let i = sessionStorage.length - 1; i >= 0; i--) {
+      const key = sessionStorage.key(i);
+      if (key && key.startsWith(prefix)) {
+        sessionStorage.removeItem(key);
+      }
+    }
+  } catch {}
+}
+
 export async function register({ name, email, password }) {
   return request("/api/auth/register", {
     method: "POST",
@@ -93,5 +138,34 @@ export async function resetPassword({ token, newPassword }) {
     method: "POST",
     body: { token, newPassword },
   });
+}
+
+export async function renameCaption(id, title) {
+  const result = await request(`/api/captions/${id}`, {
+    method: "PATCH",
+    body: { title },
+    requireAuth: true,
+  });
+  clearCaptionsCache();
+  return result;
+}
+
+export async function pinCaption(id, isPinned) {
+  const result = await request(`/api/captions/${id}/pin`, {
+    method: "PATCH",
+    body: { is_pinned: isPinned },
+    requireAuth: true,
+  });
+  clearCaptionsCache();
+  return result;
+}
+
+export async function deleteCaption(id) {
+  const result = await request(`/api/captions/${id}`, {
+    method: "DELETE",
+    requireAuth: true,
+  });
+  clearCaptionsCache();
+  return result;
 }
 

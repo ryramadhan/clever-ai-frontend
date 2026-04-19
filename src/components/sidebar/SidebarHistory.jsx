@@ -1,5 +1,7 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useCallback, useRef } from "react";
 import { useLanguage } from "../../contexts/LanguageContext.jsx";
+import HistoryItemMenu from "./HistoryItemMenu.jsx";
+import { renameCaption } from "../../services/api.js";
 
 function truncateText(text, maxLength = 45) {
   if (!text) return "";
@@ -31,24 +33,189 @@ function formatDateShort(iso) {
   }
 }
 
+function HistoryItem({ item, onClick, onRename, onPin, onDelete, t }) {
+  const [mode, setMode] = useState("view");
+  const [value, setValue] = useState("");
+  const [pending, setPending] = useState(false);
+  const inputRef = useRef(null);
+  const savedRef = useRef(false);
+
+  useEffect(() => {
+    if (mode === "edit" && inputRef.current) {
+      inputRef.current.focus();
+      inputRef.current.select();
+    }
+  }, [mode]);
+
+  const startEdit = useCallback(() => {
+    setValue(item.title || truncateText(item.context, 50) || t("untitledChat"));
+    setMode("edit");
+    savedRef.current = false;
+  }, [item, t]);
+
+  const save = useCallback(async () => {
+    if (savedRef.current || pending) return;
+    savedRef.current = true;
+
+    const trimmed = value.trim();
+    const original = item.title || "";
+
+    if (!trimmed || trimmed === original) {
+      setMode("view");
+      return;
+    }
+
+    setPending(true);
+    try {
+      await renameCaption(item.id, trimmed);
+      onRename(item.id, trimmed);
+      setMode("view");
+    } catch {
+      setMode("view");
+    } finally {
+      setPending(false);
+    }
+  }, [value, item.id, item.title, onRename, pending]);
+
+  const cancel = useCallback(() => {
+    if (pending) return;
+    setMode("view");
+  }, [pending]);
+
+  const handleKey = useCallback((e) => {
+    if (e.key === "Enter") save();
+    else if (e.key === "Escape") cancel();
+  }, [save, cancel]);
+
+  const handleBlur = useCallback(() => {
+    setTimeout(save, 50);
+  }, [save]);
+
+  if (mode === "edit") {
+    return (
+      <div className="px-2 py-2">
+        <div className={`flex items-center gap-2 rounded-lg px-3 py-2.5 border bg-white/[0.08] border-white/[0.15] ${pending ? "opacity-60" : "focus-within:border-white/30"}`}>
+          {item.is_pinned && (
+            <svg className="w-3.5 h-3.5 text-white/40 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+            </svg>
+          )}
+          <input
+            ref={inputRef}
+            type="text"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            onKeyDown={handleKey}
+            onBlur={handleBlur}
+            maxLength={255}
+            disabled={pending}
+            className="flex-1 min-w-0 bg-transparent text-sm text-white/90 placeholder:text-white/30 focus:outline-none"
+            placeholder={t("untitledChat")}
+          />
+          {pending && <span className="w-4 h-4 border-2 border-white/30 border-t-white/80 rounded-full animate-spin flex-shrink-0" />}
+        </div>
+        <p className="text-[10px] text-white/30 mt-1 px-1">{t("renameHint")}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="group/item relative">
+      <button
+        onClick={() => onClick(item)}
+        className="w-full text-left px-3 py-3 rounded-lg hover:bg-white/[0.06] active:bg-white/[0.08] transition-all duration-200"
+      >
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex-1 min-w-0 pr-8">
+            <p className="text-sm text-white/80 group-hover/item:text-white/95 transition-colors flex items-center gap-1.5">
+              {item.is_pinned && (
+                <svg className="w-3.5 h-3.5 text-white/50 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                </svg>
+              )}
+              <span className="truncate">{truncateText(item.title || item.context || t("untitledChat"), 50)}</span>
+            </p>
+            <p className="text-xs text-white/40 mt-0.5 truncate">{truncateText(item.result, 40)}</p>
+          </div>
+        </div>
+      </button>
+
+      <div className="absolute right-2 top-1/2 -translate-y-1/2 md:opacity-0 md:group-hover/item:opacity-100 transition-opacity duration-200">
+        <HistoryItemMenu
+          item={item}
+          onStartRename={startEdit}
+          onPin={onPin}
+          onDelete={onDelete}
+          t={t}
+        />
+      </div>
+    </div>
+  );
+}
+
 export default function SidebarHistory({
   items,
   loading,
   onRefresh,
   onItemClick,
+  onItemsChange,
 }) {
   const { t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState("");
+  const [localItems, setLocalItems] = useState(items);
+  const skipNextSyncRef = useRef(false);
+
+  useEffect(() => {
+    if (skipNextSyncRef.current) {
+      skipNextSyncRef.current = false;
+      return;
+    }
+    setLocalItems(items);
+  }, [items]);
 
   const filteredItems = useMemo(() => {
-    if (!searchQuery.trim()) return items;
+    if (!searchQuery.trim()) return localItems;
     const query = searchQuery.toLowerCase();
-    return items.filter(
+    return localItems.filter(
       (item) =>
-        (item.context && item.context.toLowerCase().includes(query)) ||
+        ((item.title || item.context) && (item.title || item.context).toLowerCase().includes(query)) ||
         (item.result && item.result.toLowerCase().includes(query))
     );
-  }, [items, searchQuery]);
+  }, [localItems, searchQuery]);
+
+  const handleRename = useCallback((id, newTitle) => {
+    skipNextSyncRef.current = true;
+    setLocalItems((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, title: newTitle } : item
+      )
+    );
+    onItemsChange?.(localItems.map((item) =>
+      item.id === id ? { ...item, title: newTitle } : item
+    ));
+  }, [localItems, onItemsChange]);
+
+  const handlePin = useCallback((id, isPinned) => {
+    skipNextSyncRef.current = true;
+    setLocalItems((prev) => {
+      const updated = prev.map((item) =>
+        item.id === id ? { ...item, is_pinned: isPinned } : item
+      );
+      return updated.sort((a, b) => {
+        if (a.is_pinned === b.is_pinned) {
+          return new Date(b.created_at) - new Date(a.created_at);
+        }
+        return a.is_pinned ? -1 : 1;
+      });
+    });
+    onItemsChange?.(localItems);
+  }, [localItems, onItemsChange]);
+
+  const handleDelete = useCallback((id) => {
+    skipNextSyncRef.current = true;
+    setLocalItems((prev) => prev.filter((item) => item.id !== id));
+    onItemsChange?.(localItems.filter((item) => item.id !== id));
+  }, [localItems, onItemsChange]);
 
   return (
     <div className="flex flex-col h-full">
@@ -130,25 +297,15 @@ export default function SidebarHistory({
           </div>
         ) : (
           filteredItems.map((item) => (
-            <button
+            <HistoryItem
               key={item.id}
-              onClick={() => onItemClick(item)}
-              className="w-full text-left px-3 py-3 rounded-lg hover:bg-white/[0.06] transition-all duration-200 group"
-            >
-              <div className="flex items-start justify-between gap-2">
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm text-white/80 group-hover:text-white/95 truncate transition-colors">
-                    {truncateText(item.context || t("untitledChat"), 50)}
-                  </p>
-                  <p className="text-xs text-white/40 mt-0.5 truncate">
-                    {truncateText(item.result, 40)}
-                  </p>
-                </div>
-                <span className="text-[10px] text-white/25 flex-shrink-0">
-                  {formatDateShort(item.created_at)}
-                </span>
-              </div>
-            </button>
+              item={item}
+              onClick={onItemClick}
+              onRename={handleRename}
+              onPin={handlePin}
+              onDelete={handleDelete}
+              t={t}
+            />
           ))
         )}
       </div>
