@@ -260,8 +260,8 @@ export default function HomePage() {
                     <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
                       <img src="/logo.svg" alt="AI" className="w-8 h-8" />
                     </div>
-                    <div className="flex-1 pt-1">
-                      <p className="text-white/90 text-base leading-relaxed">{context}</p>
+                    <div className="flex-1 pt-1 min-w-0">
+                      <p className="text-white/90 text-base leading-relaxed break-words">{context}</p>
                     </div>
                   </div>
 
