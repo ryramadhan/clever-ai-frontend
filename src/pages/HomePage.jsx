@@ -329,7 +329,7 @@ export default function HomePage() {
           ) : (
             <>
               {/* Chat History - Scrollable */}
-              <div className="flex-1 overflow-y-auto">
+              <div className="flex-1 overflow-y-auto pb-24 sm:pb-28">
                 <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-8 space-y-6">
                   {/* User Message */}
                   <div className="flex justify-end">
@@ -381,9 +381,12 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Input - Sticky Bottom */}
-              <div className="sticky bottom-0 z-20 bg-[#0a0a0a]/95 backdrop-blur-sm border-t border-white/[0.06]">
-                <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+              {/* Gradient fade above input */}
+              <div className="sticky bottom-0 z-20">
+                <div className="h-12 bg-gradient-to-t from-[#0a0a0a] to-transparent pointer-events-none" />
+                {/* Input - Sticky Bottom */}
+                <div className="bg-[#0a0a0a]">
+                  <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
                   <div className="relative bg-[#141414] rounded-[26px] border border-white/[0.08] shadow-lg shadow-black/20 min-h-[56px] flex items-center">
                     <textarea
                       ref={textareaRef}
@@ -426,7 +429,8 @@ export default function HomePage() {
                   </p>
                 </div>
               </div>
-            </>
+            </div>
+          </>
           )}
         </main>
       </div>
