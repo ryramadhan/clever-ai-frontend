@@ -218,7 +218,7 @@ export default function HomePage() {
 
         <main className="flex-1 overflow-hidden flex flex-col">
           {!result ? (
-            <div className="flex-1 overflow-y-auto scrollbar-hide relative">
+            <div className="flex-1 overflow-y-auto relative">
               {/* Animated Background */}
               <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.03)_0%,transparent_50%)] animate-pulse-slow" />
@@ -329,7 +329,7 @@ export default function HomePage() {
           ) : (
             <>
               {/* Chat History - Scrollable */}
-              <div className="flex-1 overflow-y-auto scrollbar-hide">
+              <div className="flex-1 overflow-y-auto">
                 <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-8 space-y-6">
                   {/* User Message */}
                   <div className="flex justify-end">
