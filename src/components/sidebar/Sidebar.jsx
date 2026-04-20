@@ -48,8 +48,8 @@ export default function Sidebar({
 
   useLockBodyScroll(isOpen);
 
-  const handleNewChatClick = () => {
-    onNewChat();
+  const handleNewChatClick = async () => {
+    await onNewChat();
     setNewChatCounter(c => c + 1);
   };
 
@@ -77,8 +77,8 @@ export default function Sidebar({
       >
         {/* Header */}
         <div className={`
-          flex items-center border-b border-white/[0.06]
-          ${isOpen ? "justify-between px-4 py-4 h-[60px]" : "justify-center py-4 h-[60px]"}
+          flex items-center
+          ${isOpen ? "justify-between px-4 h-[60px]" : "justify-center px-2 h-[60px]"}
         `}>
           {isOpen ? (
             <>
@@ -241,8 +241,8 @@ export default function Sidebar({
           <div className="p-3">
             <button
               type="button"
-              onClick={() => {
-                handleNewChatClick();
+              onClick={async () => {
+                await handleNewChatClick();
                 onClose();
               }}
               className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl bg-white/[0.06] border border-white/[0.06] text-white/90 hover:bg-white/[0.10] hover:border-white/[0.10] transition-all duration-200"

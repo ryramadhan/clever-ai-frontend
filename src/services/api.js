@@ -39,7 +39,10 @@ async function request(path, options = {}) {
 
   if (!res.ok) {
     const message = data?.error?.message || `Request failed (${res.status})`;
-    throw new Error(message);
+    const err = new Error(message);
+    err.status = res.status;
+    err.statusCode = res.status;
+    throw err;
   }
 
   return data;
@@ -98,7 +101,7 @@ export function clearCaptionsCache() {
         sessionStorage.removeItem(key);
       }
     }
-  } catch {}
+  } catch { }
 }
 
 export async function register({ name, email, password }) {

@@ -3,6 +3,7 @@ import { useLanguage } from "../contexts/LanguageContext.jsx";
 import { useAuth } from "../contexts/AuthContext.jsx";
 import { useState } from "react";
 import logoIconUrl from "../assets/logo-icon.svg";
+import LogoutConfirmModal from "./modals/LogoutConfirmModal.jsx";
 
 export default function Header({ onMenuToggle }) {
   const { lang, toggleLanguage, t } = useLanguage();
@@ -35,22 +36,24 @@ export default function Header({ onMenuToggle }) {
   return (
     <>
       <header className="h-[60px] flex items-center justify-between px-4 bg-[#0a0a0a] border-b border-white/[0.06] flex-shrink-0 z-50">
-        {/* Left: Sidebar Toggle */}
-        <button
-          type="button"
-          onClick={onMenuToggle}
-          className="w-8 h-8 rounded-lg flex items-center justify-center text-white/60 hover:text-white/90 hover:bg-white/[0.06] transition-all duration-200"
-          aria-label={t("openSidebar")}
-          title={t("openSidebar")}
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
+        {/* Left: Mobile Toggle + Branding */}
+        <div className="flex items-center gap-3">
+          {/* Mobile Sidebar Toggle */}
+          <button
+            type="button"
+            onClick={onMenuToggle}
+            className="lg:hidden w-8 h-8 rounded-lg flex items-center justify-center text-white/60 hover:text-white/90 hover:bg-white/[0.06] transition-all duration-200"
+            aria-label={t("openSidebar")}
+            title={t("openSidebar")}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+          <span className="text-base font-bold text-white tracking-tight">Clever AI</span>
+        </div>
 
-        {/* Right: Language Toggle + Auth Actions */}
         <div className="flex items-center gap-2">
-          {/* Language Toggle */}
           <button
             type="button"
             onClick={toggleLanguage}
@@ -66,100 +69,48 @@ export default function Header({ onMenuToggle }) {
 
           {/* Auth Section */}
           {!isAuthReady ? (
-            <div className="flex items-center gap-2">
-              <div className="w-16 h-7 rounded bg-white/[0.08] animate-pulse" />
-              <div className="w-24 h-7 rounded bg-white/[0.08] animate-pulse" />
-            </div>
+            <div className="w-8 h-8 rounded-full bg-white/[0.08] animate-pulse" />
           ) : !isAuthenticated ? (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
               <Link
                 to="/login"
-                className="hidden sm:flex px-3 py-1.5 text-sm font-medium text-white/60 hover:text-white transition-colors"
+                className="px-3 py-1.5 text-sm font-medium text-white/60 hover:text-white transition-colors"
               >
                 {t("signIn")}
               </Link>
               <Link
                 to="/register"
-                className="px-3 py-1.5 rounded-lg text-sm font-medium text-black bg-white hover:bg-white/90 transition-all duration-200"
+                className="px-3 py-1.5 rounded-md text-sm font-medium text-black bg-white hover:bg-white/90 transition-all duration-200"
               >
-                {t("createAccount")}
+                {t("signUp")}
               </Link>
             </div>
           ) : (
-            <div className="flex items-center gap-2">
-              {/* User Avatar */}
-              <div className="w-8 h-8 rounded-full bg-white/10 border border-white/[0.15] flex items-center justify-center overflow-hidden">
+            <button
+              onClick={handleLogoutClick}
+              className="flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-white/[0.06] transition-colors"
+            >
+              <div className="w-7 h-7 rounded-full bg-white/10 border border-white/[0.12] flex items-center justify-center overflow-hidden">
                 {user?.picture ? (
                   <img src={user.picture} alt="" className="w-full h-full object-cover" />
                 ) : (
-                  <span className="text-xs font-medium text-white/80">
+                  <span className="text-xs font-medium text-white/70">
                     {getInitials(user?.name)}
                   </span>
                 )}
               </div>
-
-              {/* Sign Out Button - Desktop */}
-              <button
-                onClick={handleLogoutClick}
-                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-white/50 hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                </svg>
-                <span>{t("signOut")}</span>
-              </button>
-
-              {/* Sign Out Button - Mobile (icon only) */}
-              <button
-                onClick={handleLogoutClick}
-                className="sm:hidden w-8 h-8 rounded-lg flex items-center justify-center text-white/40 hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
-                title={t("signOut")}
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                </svg>
-              </button>
-            </div>
+            </button>
           )}
         </div>
       </header>
 
       {/* Logout Confirmation Modal */}
-      {showLogoutConfirm && (
-        <div className="fixed inset-0 z-[100]">
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={handleCancelLogout}
-          />
-          <div className="absolute inset-0 flex items-center justify-center p-4">
-            <div
-              className="w-full max-w-xs bg-[#141414] rounded-xl border border-white/[0.08] p-5 shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <h3 className="text-base font-semibold text-white/95 mb-2">
-                {t("signOutTitle")}
-              </h3>
-              <p className="text-sm text-white/50 mb-5 leading-relaxed">
-                {t("signOutMessage")}
-              </p>
-              <div className="flex flex-col-reverse gap-2">
-                <button
-                  onClick={handleCancelLogout}
-                  className="px-4 py-2 rounded-lg text-sm font-medium text-white/50 transition-all duration-200 hover:text-white/70"
-                >
-                  {t("cancel")}
-                </button>
-                <button
-                  onClick={handleConfirmLogout}
-                  className="px-4 py-2 rounded-lg text-sm font-medium text-black bg-white hover:bg-white/90 transition-all duration-200"
-                >
-                  {t("signOut")}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <LogoutConfirmModal
+        isOpen={showLogoutConfirm}
+        onConfirm={handleConfirmLogout}
+        onCancel={handleCancelLogout}
+        t={t}
+      />
     </>
   );
 }

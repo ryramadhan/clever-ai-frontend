@@ -39,8 +39,9 @@ function useTypingText(fullText, { enabled, speedMs = 16 } = {}) {
 
 export default function HomePage() {
   const { t } = useLanguage();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const [context, setContext] = useState("");
+  const [userMessage, setUserMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [result, setResult] = useState("");
@@ -51,6 +52,8 @@ export default function HomePage() {
   const [historyError, setHistoryError] = useState("");
   const [historyOffset, setHistoryOffset] = useState(0);
   const [historyHasMore, setHistoryHasMore] = useState(true);
+  const [retryCount, setRetryCount] = useState(0);
+  const timeoutRef = useRef(null);
   const [historyLoadingMore, setHistoryLoadingMore] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const textareaRef = useRef(null);
@@ -108,30 +111,67 @@ export default function HomePage() {
 
   useEffect(() => {
     refreshHistory();
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function onGenerate(e) {
     if (e?.preventDefault) e.preventDefault();
+    if (loading) return;
+
     setError("");
     setLoading(true);
     setResult("");
     setProvider("");
+    setUserMessage(context.trim());
+
+    const attempt = retryCount;
+    const maxRetries = 3;
+    const delay = Math.min(1000 * Math.pow(2, attempt), 8000);
+
+    if (attempt > 0) {
+      await new Promise(r => setTimeout(r, delay));
+    }
+
+    const timeoutId = setTimeout(() => {
+      setError(t("takingLonger") || "Taking longer than usual...");
+    }, 30000);
+    timeoutRef.current = timeoutId;
 
     try {
       const data = await generateResponse({ context: context.trim() });
+      clearTimeout(timeoutId);
       setResult(data.result || "");
       setProvider(data.provider || "");
-      refreshHistory();
+      setContext("");
+      setRetryCount(0);
+      await refreshHistory();
     } catch (err) {
-      setError(err?.message || "Something went wrong");
+      clearTimeout(timeoutId);
+      const status = err?.status || err?.statusCode;
+      // Network errors (no status) are retryable
+      const isRetryable = !status || (status !== 429 && status !== 401 && status !== 403 && status < 500);
+      if (attempt < maxRetries && isRetryable) {
+        setRetryCount(attempt + 1);
+        setError(`${t("retrying") || "Retrying"} (${attempt + 1}/${maxRetries})...`);
+        setTimeout(() => onGenerate(), 100);
+      } else {
+        setRetryCount(0);
+        setError(err?.message || t("somethingWrong") || "Something went wrong");
+      }
     } finally {
-      setLoading(false);
+      if (attempt >= maxRetries || !error?.includes("Retrying")) {
+        setLoading(false);
+      }
     }
   }
 
-  function handleNewChat() {
+  async function handleNewChat() {
+    await refreshHistory();
     setContext("");
+    setUserMessage("");
     setResult("");
     setProvider("");
     setError("");
@@ -140,7 +180,8 @@ export default function HomePage() {
   }
 
   function handleHistoryItemClick(item) {
-    setContext(item.context || "");
+    setContext("");
+    setUserMessage(item.context || "");
     setResult(item.result || "");
     setProvider("");
     setError("");
@@ -159,39 +200,44 @@ export default function HomePage() {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-[#0a0a0a] overflow-hidden">
-      <Header onMenuToggle={toggleSidebar} />
+    <div className="h-screen flex bg-[#0a0a0a] overflow-hidden">
+      <Sidebar
+        isOpen={isSidebarOpen}
+        onToggle={toggleSidebar}
+        onClose={closeSidebar}
+        historyItems={history}
+        historyLoading={historyLoading}
+        onRefreshHistory={refreshHistory}
+        onHistoryItemClick={handleHistoryItemClick}
+        onNewChat={handleNewChat}
+        onHistoryItemsChange={handleHistoryItemsChange}
+      />
 
-      <div className="flex flex-1 overflow-hidden">
-        <Sidebar
-          isOpen={isSidebarOpen}
-          onToggle={toggleSidebar}
-          onClose={closeSidebar}
-          historyItems={history}
-          historyLoading={historyLoading}
-          onRefreshHistory={refreshHistory}
-          onHistoryItemClick={handleHistoryItemClick}
-          onNewChat={handleNewChat}
-          onHistoryItemsChange={handleHistoryItemsChange}
-        />
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <Header onMenuToggle={toggleSidebar} />
 
         <main className="flex-1 overflow-hidden flex flex-col">
           {!result ? (
-            // Empty State - Centered layout
             <div className="flex-1 overflow-y-auto">
               <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-12 min-h-full flex flex-col">
                 {/* Hero */}
-                <section className="text-center mb-12 flex-1 flex flex-col justify-center">
-                  <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white/95 mb-3">
-                    {t("heroTitle")}
-                  </h1>
-                  <p className="text-lg text-white/50">
-                    {t("heroSubtitle")}
-                  </p>
+                <section className="mb-12 flex-1 flex flex-col justify-center px-4">
+                  <div className="space-y-2">
+                    <p className="text-base text-white/60 font-normal">
+                      {isAuthenticated && user?.name
+                        ? `${t("heroGreeting")} ${user.name.split(' ')[0]}`
+                        : t("heroGuestGreeting")}
+                    </p>
+                    <h1 className="text-3xl sm:text-[2rem] font-normal text-white/95">
+                      {isAuthenticated
+                        ? t("heroQuestion")
+                        : t("heroGuestQuestion")}
+                    </h1>
+                  </div>
                 </section>
 
                 {/* Input */}
-                <div className="w-full px-4 sm:px-6">
+                <div className="w-full">
                   <div className="relative bg-[#141414] rounded-2xl sm:rounded-[26px] border border-white/[0.08] shadow-lg shadow-black/20 min-h-[52px] sm:min-h-[56px] flex items-center pr-12 sm:pr-14">
                     <textarea
                       ref={textareaRef}
@@ -254,19 +300,16 @@ export default function HomePage() {
             <>
               {/* Chat History - Scrollable */}
               <div className="flex-1 overflow-y-auto">
-                <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-8">
+                <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-8 space-y-6">
                   {/* User Message */}
-                  <div className="flex gap-4 mb-8">
-                    <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
-                      <img src="/logo.svg" alt="AI" className="w-8 h-8" />
-                    </div>
-                    <div className="flex-1 pt-1 min-w-0">
-                      <p className="text-white/90 text-base leading-relaxed break-words">{context}</p>
+                  <div className="flex justify-end">
+                    <div className="max-w-[80%] bg-white/[0.03] rounded-2xl px-5 py-3">
+                      <p className="text-white/80 text-[15px] font-normal leading-relaxed break-words">{userMessage}</p>
                     </div>
                   </div>
 
                   {/* AI Response */}
-                  <div className="pl-12">
+                  <div className="flex justify-start">
                     <ResultCard
                       text={typed}
                       isTyping={isTyping}

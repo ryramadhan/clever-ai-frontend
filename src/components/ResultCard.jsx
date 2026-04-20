@@ -23,7 +23,7 @@ export default function ResultCard({ text, isTyping, provider, hasResult, onRege
       {/* Response) */}
       <div className="py-6">
         {/* Content with typing animation */}
-        <div className="text-white/95 text-lg leading-[1.75] whitespace-pre-wrap break-words">
+        <div className="text-white/80 text-[15px] font-normal leading-relaxed whitespace-pre-wrap break-words">
           {text}
           {isTyping && (
             <span

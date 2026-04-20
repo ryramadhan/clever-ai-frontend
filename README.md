@@ -22,17 +22,22 @@ AI Assistant Chat Interface — React frontend for asking questions and getting 
 
 ## ✨ Features
 
-- **Monochrome UI** — Minimal, clean aesthetic
+- **ChatGPT/Gemini-style UI** — Professional monochrome aesthetic
 - **Authentication System** — Email/Password + Google OAuth login
 - **Guest Mode** — Use without login (history not saved)
 - **Data Separation** — Each user sees only their own history
+- **Personalized Hero** — "Hello {name}" greeting like Gemini
+- **Smart Chat Layout** — User messages right, AI responses left
+- **Error Resilience** — Auto-retry (3x) with exponential backoff for network errors
+- **Timeout Handling** — "Taking longer than usual..." after 30s
+- **HTTP Status Code Logic** — Smart retry based on error type (429/401/403 vs network)
 - **Single Context Input** — Ask anything in one text area (max 2000 chars)
-- **Bilingual Support** — Toggle EN/ID language in navbar
+- **Bilingual Support** — Toggle EN/ID language
 - **Real-time AI Responses** — Get answers via backend API with fallback
-- **History** — View previously asked questions and responses
+- **History Management** — View, rename, pin, delete conversations
 - **Copy to Clipboard** — One-click response copy
 - **Typing Effect** — Smooth text animation
-- **Fully Responsive** — Mobile & desktop
+- **Fully Responsive** — Mobile & desktop optimized
 
 ## 🚀 Setup Local
 
@@ -88,14 +93,32 @@ VITE_API_BASE_URL=https://your-backend.vercel.app
 
 ```
 src/
-├── components/     # Reusable UI components
-├── contexts/       # React contexts (AuthContext, LanguageContext)
-├── pages/          # Page components (Home, Login, Register, etc)
-├── services/       # API service layer (auth + chat APIs)
-├── assets/         # Images, icons
-├── App.jsx         # Root component (Router + AuthProvider)
-├── main.jsx        # Entry point
-└── index.css       # Global styles (Tailwind + custom)
+├── components/
+│   ├── Header.jsx              # Top navigation with auth & mobile toggle
+│   ├── ResultCard.jsx          # AI response display with typing effect
+│   ├── sidebar/                # Sidebar components
+│   │   ├── Sidebar.jsx         # Main sidebar (full height, no duplication)
+│   │   ├── SidebarHistory.jsx  # History list with skeleton loading
+│   │   ├── SidebarUserFooter.jsx    # User avatar & logout
+│   │   ├── SidebarGuestFooter.jsx   # Guest CTA
+│   │   └── HistoryItemMenu.jsx      # Dropdown menu for history items
+│   └── modals/                 # Modal components
+│       ├── LogoutConfirmModal.jsx   # Reusable logout confirmation
+│       └── DeleteConfirmModal.jsx   # Delete history confirmation
+├── contexts/
+│   ├── AuthContext.jsx         # JWT + Google OAuth state
+│   └── LanguageContext.jsx     # EN/ID translation
+├── pages/
+│   ├── HomePage.jsx            # Main chat interface with error handling
+│   ├── LoginPage.jsx           # Email & Google login
+│   ├── RegisterPage.jsx        # Registration
+│   └── ForgotPasswordPage.jsx  # Password reset
+├── services/
+│   └── api.js                  # API layer with error status handling
+├── assets/                     # Images, icons
+├── App.jsx
+├── main.jsx
+└── index.css
 ```
 
 ## 🏗️ Architecture
@@ -152,12 +175,58 @@ GET  ${API_BASE}/api/captions
 1. Click "Sign in with Google" button
 2. One-tap login (desktop) or popup (mobile)
 3. Auto-register if new user, login if existing
-4. Same JWT token system
+4. Profile picture displayed in header/sidebar
+5. Same JWT token system
 
 ### Data Privacy
 - Strict data separation: users only see their own data
 - No cross-user data leakage
 - Guest data is separate from authenticated user data
+
+## 🔄 Error Handling & Resilience
+
+### Network Error Recovery
+```javascript
+// 3x retry with exponential backoff
+// 1st retry: 1s delay
+// 2nd retry: 2s delay  
+// 3rd retry: 4s delay
+```
+
+### HTTP Status Code Logic
+| Status | Behavior |
+|--------|----------|
+| No status (network error) | ✅ Auto-retry |
+| 429 (Quota/Rate limit) | ❌ No retry, show error |
+| 401/403 (Auth error) | ❌ No retry, show error |
+| 5xx (Server error) | ❌ No retry, show error |
+
+### Timeout Handling
+- After 30s: Display "Taking longer than usual..."
+- User can wait or retry manually
+
+### Error Messages (i18n)
+- English: "Taking longer than usual...", "Retrying (1/3)..."
+- Indonesian: "Memerlukan waktu lebih lama...", "Mencoba lagi (1/3)..."
+
+## 🎨 UI Refinements
+
+### Layout
+- **Sidebar**: Full height with right border as separator (ChatGPT-style)
+- **Header**: Minimal with "Clever AI" branding and mobile hamburger
+- **Hero**: Left-aligned greeting + question (Gemini-style)
+- **Chat**: User messages right, AI responses left
+
+### Styling
+- Monochrome palette: `bg-[#0a0a0a]`, `border-white/[0.06]`
+- Clean typography: `font-normal`, no unnecessary bold
+- Text wrapping: `break-words` for long content
+- Consistent spacing and transitions
+
+### Components
+- **Skeleton Loading**: Shimmer effects for auth/history loading states
+- **Modals**: Centered, no blur backdrop, monochrome theme
+- **History Menu**: Dropdown with rename, pin, delete actions
 
 ## 🔗 Related
 

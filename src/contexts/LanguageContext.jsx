@@ -7,7 +7,10 @@ const translations = {
     appSubtitle: "Ask anything",
 
     // Hero
-    heroTitle: "How can I help you today?",
+    heroGreeting: "Hello",
+    heroQuestion: "How can I help you today?",
+    heroGuestGreeting: "Hello there",
+    heroGuestQuestion: "What would you like to explore today?",
     heroSubtitle: "Ask a question or describe what you need.",
 
     // Input
@@ -44,6 +47,7 @@ const translations = {
     personalizedResponse: "Save your conversations",
     signInBenefits: "Sign in to access your chat history across devices. Your data stays private and secure.",
     signIn: "Sign In",
+    signUp: "Sign Up",
     accessYourHistory: "Access your history",
     signInToBrowse: "Sign in to browse and continue your previous conversations.",
     likeWhatYouSee: "Like what you see?",
@@ -63,6 +67,11 @@ const translations = {
     mock: "Fallback",
     copy: "Copy",
     copied: "Copied",
+
+    // Error handling
+    takingLonger: "Taking longer than usual...",
+    retrying: "Retrying",
+    somethingWrong: "Something went wrong",
     regenerate: "Regenerate",
 
     // Language
@@ -96,7 +105,10 @@ const translations = {
     appSubtitle: "Tanya apa saja",
 
     // Hero
-    heroTitle: "Ada yang bisa saya bantu?",
+    heroGreeting: "Halo",
+    heroQuestion: "Ada yang bisa saya bantu hari ini?",
+    heroGuestGreeting: "Halo",
+    heroGuestQuestion: "Mau eksplorasi apa hari ini?",
     heroSubtitle: "Ajukan pertanyaan atau jelaskan apa yang Anda butuhkan.",
 
     // Form labels
@@ -138,6 +150,7 @@ const translations = {
     personalizedResponse: "Simpan percakapan Anda",
     signInBenefits: "Masuk untuk mengakses riwayat chat Anda di semua perangkat. Data Anda tetap pribadi dan aman.",
     signIn: "Masuk",
+    signUp: "Daftar",
     accessYourHistory: "Akses riwayat Anda",
     signInToBrowse: "Masuk untuk menelusuri dan melanjutkan percakapan sebelumnya.",
     likeWhatYouSee: "Suka dengan hasilnya?",
@@ -157,6 +170,11 @@ const translations = {
     mock: "Fallback",
     copy: "Salin",
     copied: "Tersalin",
+
+    // Error handling
+    takingLonger: "Memerlukan waktu lebih lama...",
+    retrying: "Mencoba lagi",
+    somethingWrong: "Terjadi kesalahan",
     regenerate: "Buat Ulang",
 
     // Language
