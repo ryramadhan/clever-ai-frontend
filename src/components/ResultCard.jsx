@@ -60,6 +60,7 @@ export default function ResultCard({ text, isTyping, provider, hasResult, onRege
               )}
             </button>
 
+            {/* Regenerate button - disabled temporarily to prevent spam
             {onRegenerate && (
               <button
                 type="button"
@@ -73,6 +74,7 @@ export default function ResultCard({ text, isTyping, provider, hasResult, onRege
                 {t("regenerate")}
               </button>
             )}
+            */}
 
             {/* Provider badge - minimal */}
             {provider && (
