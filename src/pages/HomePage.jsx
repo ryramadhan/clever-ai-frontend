@@ -353,7 +353,7 @@ export default function HomePage() {
 
               {/* Input - Sticky Bottom */}
               <div className="bg-[#0a0a0a]">
-                <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-4">
+                <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
                   <div className="relative bg-[#141414] rounded-[26px] border border-white/[0.08] shadow-lg shadow-black/20 min-h-[56px] flex items-center">
                     <textarea
                       ref={textareaRef}
@@ -391,7 +391,7 @@ export default function HomePage() {
                       )}
                     </button>
                   </div>
-                  <p className="text-[10px] text-white/20 text-center mt-2">
+                  <p className="text-[10px] text-white/20 text-center mt-1 sm:mt-2">
                     {t("aiMayProduceInaccurate")}
                   </p>
                 </div>
