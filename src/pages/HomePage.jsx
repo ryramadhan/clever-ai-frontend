@@ -381,50 +381,48 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Input - Fixed Bottom */}
-              <div className="fixed bottom-0 left-0 right-0 z-20 bg-[#0a0a0a] w-full px-4 sm:px-6 py-3 sm:py-4" style={{ paddingBottom: 'env(safe-area-inset-bottom, 16px)' }}>
-                <div className="max-w-3xl mx-auto">
-                  <div className="relative bg-[#141414] rounded-[26px] border border-white/[0.08] shadow-lg shadow-black/20 min-h-[56px] flex items-center">
-                    <textarea
-                      ref={textareaRef}
-                      className="w-full py-[15px] px-5 pr-14 bg-transparent text-white/95 text-base placeholder:text-white/40 resize-none transition-all duration-200 focus:outline-none disabled:opacity-50 leading-normal"
-                      value={context}
-                      onChange={(e) => setContext(e.target.value)}
-                      placeholder={t("askFollowUp")}
-                      disabled={loading}
-                      rows={1}
-                      maxLength={2000}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' && !e.shiftKey && canSubmit) {
-                          e.preventDefault();
-                          onGenerate();
-                        }
-                      }}
-                      onInput={(e) => {
-                        e.target.style.height = 'auto';
-                        e.target.style.height = Math.min(e.target.scrollHeight, 200) + 'px';
-                      }}
-                    />
-                    <button
-                      type="button"
-                      onClick={onGenerate}
-                      disabled={!canSubmit || loading}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white text-[#0a0a0a] flex items-center justify-center transition-all duration-200 hover:bg-white/90 disabled:opacity-30 disabled:cursor-not-allowed disabled:bg-white/50"
-                      aria-label={t("generate")}
-                    >
-                      {loading ? (
-                        <span className="w-4 h-4 border-2 border-[#0a0a0a]/30 border-t-[#0a0a0a] rounded-full animate-spin" />
-                      ) : (
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
-                        </svg>
-                      )}
-                    </button>
-                  </div>
-                  <p className="text-[10px] text-white/20 text-center mt-1 sm:mt-2">
-                    {t("aiMayProduceInaccurate")}
-                  </p>
+              {/* Input - Sticky Bottom */}
+              <div className="sticky bottom-0 z-20 bg-[#0a0a0a] w-full max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+                <div className="relative bg-[#141414] rounded-[26px] border border-white/[0.08] shadow-lg shadow-black/20 min-h-[56px] flex items-center">
+                  <textarea
+                    ref={textareaRef}
+                    className="w-full py-[15px] px-5 pr-14 bg-transparent text-white/95 text-base placeholder:text-white/40 resize-none transition-all duration-200 focus:outline-none disabled:opacity-50 leading-normal"
+                    value={context}
+                    onChange={(e) => setContext(e.target.value)}
+                    placeholder={t("askFollowUp")}
+                    disabled={loading}
+                    rows={1}
+                    maxLength={2000}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && !e.shiftKey && canSubmit) {
+                        e.preventDefault();
+                        onGenerate();
+                      }
+                    }}
+                    onInput={(e) => {
+                      e.target.style.height = 'auto';
+                      e.target.style.height = Math.min(e.target.scrollHeight, 200) + 'px';
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={onGenerate}
+                    disabled={!canSubmit || loading}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white text-[#0a0a0a] flex items-center justify-center transition-all duration-200 hover:bg-white/90 disabled:opacity-30 disabled:cursor-not-allowed disabled:bg-white/50"
+                    aria-label={t("generate")}
+                  >
+                    {loading ? (
+                      <span className="w-4 h-4 border-2 border-[#0a0a0a]/30 border-t-[#0a0a0a] rounded-full animate-spin" />
+                    ) : (
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
+                    )}
+                  </button>
                 </div>
+                <p className="text-[10px] text-white/20 text-center mt-1 sm:mt-2">
+                  {t("aiMayProduceInaccurate")}
+                </p>
               </div>
             </>
           )}
