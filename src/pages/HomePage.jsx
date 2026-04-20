@@ -213,10 +213,10 @@ export default function HomePage() {
         onHistoryItemsChange={handleHistoryItemsChange}
       />
 
-      <div className="flex-1 flex flex-col">
+       <div className="flex-1 flex flex-col overflow-hidden">
         <Header onMenuToggle={toggleSidebar} />
 
-        <main className="flex-1 flex flex-col">
+        <main className="flex-1 overflow-hidden flex flex-col">
           {!result ? (
             <div className="flex-1 overflow-y-auto relative">
               {/* Animated Background */}
@@ -328,8 +328,8 @@ export default function HomePage() {
             </div>
           ) : (
             <>
-              {/* Chat History */}
-              <div className="flex-1">
+               {/* Chat History - Scrollable */}
+              <div className="flex-1 overflow-y-auto">
                 <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-8 space-y-6">
                   {/* User Message */}
                   <div className="flex justify-end">
