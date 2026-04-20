@@ -218,10 +218,16 @@ export default function HomePage() {
 
         <main className="flex-1 overflow-hidden flex flex-col">
           {!result ? (
-            <div className="flex-1 overflow-y-auto">
-              <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-12 min-h-full flex flex-col">
+            <div className="flex-1 overflow-y-auto relative">
+              {/* Animated Background */}
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.03)_0%,transparent_50%)] animate-pulse-slow" />
+                <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-[radial-gradient(circle_at_70%_70%,rgba(255,255,255,0.02)_0%,transparent_50%)] animate-pulse-slow-reverse" />
+              </div>
+
+              <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-12 min-h-full flex flex-col relative z-10">
                 {/* Hero */}
-                <section className="mb-12 flex-1 flex flex-col justify-center px-4">
+                <section className="mb-8 flex-1 flex flex-col justify-center px-4">
                   <div className="space-y-2">
                     <p className="text-base text-white/60 font-normal">
                       {isAuthenticated && user?.name
@@ -233,6 +239,30 @@ export default function HomePage() {
                         ? t("heroQuestion")
                         : t("heroGuestQuestion")}
                     </h1>
+                  </div>
+                </section>
+
+                {/* Quick Suggestions - Keywords match mockCaption.js */}
+                <section className="mb-8 px-4">
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    {[
+                      { icon: "💪", text: "Tips motivasi" },
+                      { icon: "💻", text: "Belajar coding" },
+                      { icon: "🏃", text: "Jaga kesehatan" },
+                      { icon: "💼", text: "Produktivitas kerja" },
+                    ].map((suggestion, index) => (
+                      <button
+                        key={index}
+                        onClick={() => {
+                          setContext(suggestion.text);
+                          setTimeout(() => textareaRef.current?.focus(), 0);
+                        }}
+                        className="group flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.04] border border-white/[0.08] text-sm text-white/70 hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white/90 hover:scale-105 hover:shadow-lg hover:shadow-white/5 transition-all duration-300 ease-out"
+                      >
+                        <span className="group-hover:scale-110 transition-transform duration-300">{suggestion.icon}</span>
+                        <span>{suggestion.text}</span>
+                      </button>
+                    ))}
                   </div>
                 </section>
 

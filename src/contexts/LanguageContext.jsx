@@ -73,6 +73,9 @@ const translations = {
     retrying: "Retrying",
     somethingWrong: "Something went wrong",
     regenerate: "Regenerate",
+    pleaseWait: "Please wait...",
+    waitBeforeRetry: "Please wait",
+    generating: "Generating...",
 
     // Language
     language: "Language",
@@ -176,6 +179,9 @@ const translations = {
     retrying: "Mencoba lagi",
     somethingWrong: "Terjadi kesalahan",
     regenerate: "Buat Ulang",
+    pleaseWait: "Mohon tunggu...",
+    waitBeforeRetry: "Mohon tunggu",
+    generating: "Membuat...",
 
     // Language
     language: "Bahasa",
