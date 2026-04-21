@@ -33,10 +33,11 @@ AI Assistant Chat Interface — React frontend for asking questions and getting 
 - **HTTP Status Code Logic** — Smart retry based on error type (429/401/403 vs network)
 - **Single Context Input** — Ask anything in one text area (max 2000 chars)
 - **Bilingual Support** — Toggle EN/ID language
-- **Real-time AI Responses** — Get answers via backend API with fallback
+- **Real-time AI Streaming** — Server-Sent Events (SSE) for ChatGPT-style response streaming
 - **History Management** — View, rename, pin, delete conversations
 - **Copy to Clipboard** — One-click response copy
-- **Typing Effect** — Smooth text animation
+- **Smart Auto-scroll** — Smooth scroll following streaming content
+- **Stream Cancellation** — Abort ongoing generation via New Chat
 - **Fully Responsive** — Mobile & desktop optimized
 
 ## 🚀 Setup Local
@@ -95,7 +96,7 @@ VITE_API_BASE_URL=https://your-backend.vercel.app
 src/
 ├── components/
 │   ├── Header.jsx              # Top navigation with auth & mobile toggle
-│   ├── ResultCard.jsx          # AI response display with typing effect
+│   ├── ResultCard.jsx          # AI response display with streaming indicator
 │   ├── sidebar/                # Sidebar components
 │   │   ├── Sidebar.jsx         # Main sidebar (full height, no duplication)
 │   │   ├── SidebarHistory.jsx  # History list with skeleton loading
@@ -153,9 +154,52 @@ POST ${API_BASE}/api/auth/forgot-password
 POST ${API_BASE}/api/auth/reset-password
 GET  ${API_BASE}/api/auth/me
 
-// Chat Endpoints
-POST ${API_BASE}/api/generate
+// Chat Endpoints (Streaming)
+POST ${API_BASE}/api/generate/stream  # SSE streaming (recommended)
+POST ${API_BASE}/api/generate         # Legacy non-streaming
 GET  ${API_BASE}/api/captions
+```
+
+## 🌊 Server-Sent Events (SSE) Streaming
+
+The frontend now consumes AI responses via **SSE streaming** for real-time, ChatGPT-like experience:
+
+### Architecture Change
+```
+BEFORE: Request → Wait full response → Client-side typing animation
+AFTER:  Request → Stream chunks via SSE → Real-time display
+```
+
+### Key Changes
+- **Removed:** `useTypingText` hook (client-side animation)
+- **Added:** `generateResponseStream()` in `services/api.js` for SSE consumption
+- **Added:** Auto-scroll following streaming content
+- **Added:** AbortController for stream cancellation
+
+### Frontend Implementation
+```javascript
+// services/api.js - SSE consumer
+export async function* generateResponseStream({ context, signal }) {
+  const res = await fetch('/api/generate/stream', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ context }),
+    signal, // AbortController support
+  });
+  
+  const reader = res.body.getReader();
+  // ... SSE parsing logic
+  yield { chunk: 'partial text', provider: 'gemini' };
+}
+
+// HomePage.jsx - Stream consumption
+async function onGenerate() {
+  for await (const data of generateResponseStream({ context, signal })) {
+    if (data.chunk) {
+      setResult(prev => prev + data.chunk); // Append chunk
+    }
+  }
+}
 ```
 
 ## 🔐 Authentication Flow

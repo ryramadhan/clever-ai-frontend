@@ -5,37 +5,7 @@ import Sidebar from "../components/sidebar/Sidebar.jsx";
 import ResultCard from "../components/ResultCard.jsx";
 import { useLanguage } from "../contexts/LanguageContext.jsx";
 import { useAuth } from "../contexts/AuthContext.jsx";
-import { generateResponse, getCaptions } from "../services/api.js";
-
-function useTypingText(fullText, { enabled, speedMs = 16 } = {}) {
-  const [typed, setTyped] = useState("");
-  const timerRef = useRef(null);
-
-  useEffect(() => {
-    if (!enabled) {
-      setTyped(fullText || "");
-      return;
-    }
-
-    const target = fullText || "";
-    setTyped("");
-    let i = 0;
-
-    function tick() {
-      i += 1;
-      setTyped(target.slice(0, i));
-      if (i >= target.length) return;
-      timerRef.current = window.setTimeout(tick, speedMs);
-    }
-
-    timerRef.current = window.setTimeout(tick, speedMs);
-    return () => {
-      if (timerRef.current) window.clearTimeout(timerRef.current);
-    };
-  }, [fullText, enabled, speedMs]);
-
-  return typed;
-}
+import { generateResponseStream, getCaptions } from "../services/api.js";
 
 export default function HomePage() {
   const { t } = useLanguage();
@@ -46,7 +16,7 @@ export default function HomePage() {
   const [error, setError] = useState("");
   const [result, setResult] = useState("");
   const [provider, setProvider] = useState("");
-  const [enableTyping, setEnableTyping] = useState(true);
+  const [isStreaming, setIsStreaming] = useState(false);
   const [history, setHistory] = useState([]);
   const [historyLoading, setHistoryLoading] = useState(false);
   const [historyError, setHistoryError] = useState("");
@@ -55,11 +25,23 @@ export default function HomePage() {
   const [retryCount, setRetryCount] = useState(0);
   const timeoutRef = useRef(null);
   const [historyLoadingMore, setHistoryLoadingMore] = useState(false);
+
+  function scrollToBottom(behavior = "smooth") {
+    scrollAnchorRef.current?.scrollIntoView({ behavior, block: "end" });
+  }
+
+  useEffect(() => {
+    if (result && isStreaming) {
+      scrollToBottom("smooth");
+    }
+  }, [result, isStreaming]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const textareaRef = useRef(null);
+  const abortControllerRef = useRef(null);
+  const chatContainerRef = useRef(null);
+  const scrollAnchorRef = useRef(null);
 
-  const typed = useTypingText(result, { enabled: enableTyping });
-  const isTyping = enableTyping && typed !== result;
+  const isTyping = isStreaming;
   const HISTORY_LIMIT = 20;
 
   const canSubmit = useMemo(() => {
@@ -119,13 +101,22 @@ export default function HomePage() {
 
   async function onGenerate(e) {
     if (e?.preventDefault) e.preventDefault();
-    if (loading) return;
+    if (loading || isStreaming) return;
+
+    // Cancel any existing stream
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
 
     setError("");
     setLoading(true);
+    setIsStreaming(true);
     setResult("");
     setProvider("");
     setUserMessage(context.trim());
+
+    const abortController = new AbortController();
+    abortControllerRef.current = abortController;
 
     const attempt = retryCount;
     const maxRetries = 3;
@@ -141,17 +132,44 @@ export default function HomePage() {
     timeoutRef.current = timeoutId;
 
     try {
-      const data = await generateResponse({ context: context.trim() });
+      let fullResult = "";
+      let finalProvider = "";
+
+      for await (const data of generateResponseStream({
+        context: context.trim(),
+        signal: abortController.signal,
+      })) {
+        if (data.error) {
+          throw new Error(data.message || "Stream error");
+        }
+
+        if (data.chunk) {
+          fullResult += data.chunk;
+          setResult(fullResult);
+          if (data.provider) finalProvider = data.provider;
+        }
+
+        if (data.done) {
+          fullResult = data.result || fullResult;
+          finalProvider = data.provider || finalProvider;
+          setResult(fullResult);
+          setProvider(finalProvider);
+          break;
+        }
+      }
+
       clearTimeout(timeoutId);
-      setResult(data.result || "");
-      setProvider(data.provider || "");
       setContext("");
       setRetryCount(0);
       await refreshHistory();
     } catch (err) {
       clearTimeout(timeoutId);
+      if (err.name === "AbortError") {
+        // User cancelled, don't show error
+        return;
+      }
+
       const status = err?.status || err?.statusCode;
-      // Network errors (no status) are retryable
       const isRetryable = !status || (status !== 429 && status !== 401 && status !== 403 && status < 500);
       if (attempt < maxRetries && isRetryable) {
         setRetryCount(attempt + 1);
@@ -162,20 +180,26 @@ export default function HomePage() {
         setError(err?.message || t("somethingWrong") || "Something went wrong");
       }
     } finally {
-      if (attempt >= maxRetries || !error?.includes("Retrying")) {
-        setLoading(false);
-      }
+      setIsStreaming(false);
+      setLoading(false);
+      abortControllerRef.current = null;
     }
   }
 
   async function handleNewChat() {
+    // Cancel any ongoing stream
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
     await refreshHistory();
     setContext("");
     setUserMessage("");
     setResult("");
     setProvider("");
     setError("");
-    setEnableTyping(true);
+    setIsStreaming(false);
+    setLoading(false);
     setTimeout(() => textareaRef.current?.focus({ preventScroll: true }), 0);
   }
 
@@ -327,9 +351,9 @@ export default function HomePage() {
               </div>
             </div>
           ) : (
-            <>
+            <div className="flex-1 flex flex-col overflow-hidden min-h-0">
               {/* Chat History */}
-              <div className="flex-1 overflow-y-auto">
+              <div ref={chatContainerRef} className="flex-1 overflow-y-auto min-h-0">
                 <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-8 space-y-6">
                   {/* User Message */}
                   <div className="flex justify-end">
@@ -341,7 +365,7 @@ export default function HomePage() {
                   {/* AI Response */}
                   <div className="flex justify-start">
                     <ResultCard
-                      text={typed}
+                      text={result}
                       isTyping={isTyping}
                       provider={provider}
                       hasResult={Boolean(result)}
@@ -378,53 +402,58 @@ export default function HomePage() {
                       </div>
                     </div>
                   )}
+
+                  {/* Scroll anchor sentinel */}
+                  <div ref={scrollAnchorRef} className="h-1" />
                 </div>
               </div>
 
-              {/* Input - Sticky Bottom */}
-              <div className="sticky bottom-0 z-20 bg-[#0a0a0a] w-full max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-                <div className="relative bg-[#141414] rounded-[26px] border border-white/[0.08] shadow-lg shadow-black/20 min-h-[56px] flex items-center">
-                  <textarea
-                    ref={textareaRef}
-                    className="w-full py-[15px] px-5 pr-14 bg-transparent text-white/95 text-base placeholder:text-white/40 resize-none transition-all duration-200 focus:outline-none disabled:opacity-50 leading-normal"
-                    value={context}
-                    onChange={(e) => setContext(e.target.value)}
-                    placeholder={t("askFollowUp")}
-                    disabled={loading}
-                    rows={1}
-                    maxLength={2000}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' && !e.shiftKey && canSubmit) {
-                        e.preventDefault();
-                        onGenerate();
-                      }
-                    }}
-                    onInput={(e) => {
-                      e.target.style.height = 'auto';
-                      e.target.style.height = Math.min(e.target.scrollHeight, 200) + 'px';
-                    }}
-                  />
-                  <button
-                    type="button"
-                    onClick={onGenerate}
-                    disabled={!canSubmit || loading}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white text-[#0a0a0a] flex items-center justify-center transition-all duration-200 hover:bg-white/90 disabled:opacity-30 disabled:cursor-not-allowed disabled:bg-white/50"
-                    aria-label={t("generate")}
-                  >
-                    {loading ? (
-                      <span className="w-4 h-4 border-2 border-[#0a0a0a]/30 border-t-[#0a0a0a] rounded-full animate-spin" />
-                    ) : (
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
-                      </svg>
-                    )}
-                  </button>
+              {/* Input - Bottom */}
+              <div className="shrink-0 bg-[#0a0a0a] w-full px-4 sm:px-6">
+                <div className="w-full max-w-3xl mx-auto">
+                  <div className="relative bg-[#141414] rounded-[26px] border border-white/[0.08] shadow-lg shadow-black/20 min-h-[56px] flex items-center">
+                    <textarea
+                      ref={textareaRef}
+                      className="w-full py-[15px] px-5 pr-14 bg-transparent text-white/95 text-base placeholder:text-white/40 resize-none transition-all duration-200 focus:outline-none disabled:opacity-50 leading-normal"
+                      value={context}
+                      onChange={(e) => setContext(e.target.value)}
+                      placeholder={t("askFollowUp")}
+                      disabled={loading}
+                      rows={1}
+                      maxLength={2000}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !e.shiftKey && canSubmit) {
+                          e.preventDefault();
+                          onGenerate();
+                        }
+                      }}
+                      onInput={(e) => {
+                        e.target.style.height = 'auto';
+                        e.target.style.height = Math.min(e.target.scrollHeight, 200) + 'px';
+                      }}
+                    />
+                    <button
+                      type="button"
+                      onClick={onGenerate}
+                      disabled={!canSubmit || loading}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white text-[#0a0a0a] flex items-center justify-center transition-all duration-200 hover:bg-white/90 disabled:opacity-30 disabled:cursor-not-allowed disabled:bg-white/50"
+                      aria-label={t("generate")}
+                    >
+                      {loading ? (
+                        <span className="w-4 h-4 border-2 border-[#0a0a0a]/30 border-t-[#0a0a0a] rounded-full animate-spin" />
+                      ) : (
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                      )}
+                    </button>
+                  </div>
+                  <p className="text-[10px] text-white/20 text-center mt-1 sm:mt-2 pb-3 sm:pb-4">
+                    {t("aiMayProduceInaccurate")}
+                  </p>
                 </div>
-                <p className="text-[10px] text-white/20 text-center mt-1 sm:mt-2">
-                  {t("aiMayProduceInaccurate")}
-                </p>
               </div>
-            </>
+            </div>
           )}
         </main>
       </div>

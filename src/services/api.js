@@ -56,6 +56,79 @@ export async function generateResponse({ context }) {
   });
 }
 
+export async function* generateResponseStream({ context, signal }) {
+  const base = API_BASE || "";
+  const url = `${base}/api/generate/stream`;
+
+  const headers = {
+    "Content-Type": "application/json",
+  };
+
+  const token = getToken();
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ context }),
+    signal, // For abort controller
+  });
+
+  if (!res.ok) {
+    const data = await res.json().catch(() => null);
+    const message = data?.error?.message || `Request failed (${res.status})`;
+    const err = new Error(message);
+    err.status = res.status;
+    err.statusCode = res.status;
+    throw err;
+  }
+
+  // Read SSE stream
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    buffer += decoder.decode(value, { stream: true });
+
+    // Process SSE events in buffer
+    const lines = buffer.split("\n");
+    buffer = lines.pop() || ""; // Keep incomplete line in buffer
+
+    for (const line of lines) {
+      if (line.startsWith("data: ")) {
+        const data = line.slice(6); // Remove "data: " prefix
+        if (data) {
+          try {
+            const parsed = JSON.parse(data);
+            yield parsed;
+          } catch {
+            // Skip invalid JSON
+          }
+        }
+      }
+    }
+  }
+
+  // Process remaining buffer
+  if (buffer.startsWith("data: ")) {
+    const data = buffer.slice(6);
+    if (data) {
+      try {
+        const parsed = JSON.parse(data);
+        yield parsed;
+      } catch {
+        // Skip invalid JSON
+      }
+    }
+  }
+}
+
 export async function getCaptions({ limit = 20, offset = 0, useCache = true } = {}) {
   const qs = new URLSearchParams({
     limit: String(limit),
