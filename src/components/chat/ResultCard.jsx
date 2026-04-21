@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLanguage } from "../contexts/LanguageContext.jsx";
+import { useLanguage } from "../../contexts/LanguageContext.jsx";
 
 export default function ResultCard({ text, isTyping, provider, hasResult, onRegenerate }) {
   const { t } = useLanguage();

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useLanguage } from "../contexts/LanguageContext.jsx";
+import { useLanguage } from "../../contexts/LanguageContext.jsx";
 
 function truncateContext(context, maxLength = 60) {
   if (!context) return "";

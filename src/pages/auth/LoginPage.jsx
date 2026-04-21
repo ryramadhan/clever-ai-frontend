@@ -1,39 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext.jsx";
-import { GoogleLogin } from "@react-oauth/google";
+import { useAuth } from "../../contexts/AuthContext.jsx";
+import { GoogleLogin, googleLogout } from "@react-oauth/google";
 
-export default function RegisterPage() {
+// detect mobile/tablet devices
+function isMobileDevice() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+export default function LoginPage() {
   const navigate = useNavigate();
-  const { register, googleAuth } = useAuth();
-  const [name, setName] = useState("");
+  const { login, googleAuth } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(isMobileDevice());
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
-
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters");
-      return;
-    }
-
     setLoading(true);
 
     try {
-      await register({ name, email, password });
+      await login({ email, password });
       navigate("/");
     } catch (err) {
-      setError(err.message || "Registration failed");
+      setError(err.message || "Login failed");
     } finally {
       setLoading(false);
     }
@@ -44,10 +41,14 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      await googleAuth(credentialResponse.credential);
-      navigate("/");
+      console.log("[Google Login] Token received, sending to backend...");
+      const result = await googleAuth(credentialResponse.credential);
+      console.log("[Google Login] Success:", result.user?.email);
+
+      navigate("/", { replace: true });
     } catch (err) {
-      setError(err.message || "Google login failed");
+      console.error("[Google Login] Error:", err);
+      setError(err.message || "Google login failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -59,10 +60,10 @@ export default function RegisterPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-2xl sm:text-3xl font-medium tracking-tight text-white/95">
-            Join Clever AI
+            Clever AI
           </h1>
           <p className="mt-2 text-sm sm:text-base text-white/40">
-            Create an account to get started
+            Sign in to continue
           </p>
         </div>
 
@@ -75,24 +76,6 @@ export default function RegisterPage() {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-white/60 mb-2"
-            >
-              Name
-            </label>
-            <input
-              id="name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              className="w-full px-4 py-3 rounded-xl bg-[#141414] border border-white/[0.06] text-white/90 placeholder:text-white/25 focus:outline-none focus:border-white/[0.15] focus:bg-[#181818] transition-all duration-200"
-              placeholder="Your name"
-            />
-          </div>
-
           <div>
             <label
               htmlFor="email"
@@ -126,27 +109,24 @@ export default function RegisterPage() {
               required
               minLength={6}
               className="w-full px-4 py-3 rounded-xl bg-[#141414] border border-white/[0.06] text-white/90 placeholder:text-white/25 focus:outline-none focus:border-white/[0.15] focus:bg-[#181818] transition-all duration-200"
-              placeholder="Min 6 characters"
+              placeholder="••••••"
             />
           </div>
 
-          <div>
-            <label
-              htmlFor="confirmPassword"
-              className="block text-sm font-medium text-white/60 mb-2"
-            >
-              Confirm Password
+          <div className="flex items-center justify-between text-sm">
+            <label className="flex items-center gap-2 text-white/40 cursor-pointer">
+              <input
+                type="checkbox"
+                className="w-4 h-4 rounded border-white/[0.15] bg-[#141414] checked:bg-white/90 transition-colors"
+              />
+              <span className="text-white/50">Remember me</span>
             </label>
-            <input
-              id="confirmPassword"
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-              minLength={6}
-              className="w-full px-4 py-3 rounded-xl bg-[#141414] border border-white/[0.06] text-white/90 placeholder:text-white/25 focus:outline-none focus:border-white/[0.15] focus:bg-[#181818] transition-all duration-200"
-              placeholder="••••••"
-            />
+            <Link
+              to="/forgot-password"
+              className="text-white/50 hover:text-white/80 transition-colors"
+            >
+              Forgot password?
+            </Link>
           </div>
 
           <button
@@ -154,7 +134,7 @@ export default function RegisterPage() {
             disabled={loading}
             className="w-full py-3 px-4 mt-2 rounded-xl bg-white text-black font-medium text-sm hover:bg-white/90 active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100"
           >
-            {loading ? "Creating account..." : "Create account"}
+            {loading ? "Signing in..." : "Sign in"}
           </button>
         </form>
 
@@ -171,24 +151,31 @@ export default function RegisterPage() {
         </div>
 
         {/* Google Login */}
-        <div className="flex justify-center">
+        <div className="flex flex-col items-center gap-2">
           <GoogleLogin
             onSuccess={handleGoogleSuccess}
             onError={() => setError("Google login failed")}
             theme="outline"
             size="large"
+            useOneTap={!isMobile}
           />
+
+          {isMobile && (
+            <p className="text-xs text-white/25 text-center max-w-xs">
+              Google Login may not work on some mobile browsers
+            </p>
+          )}
         </div>
 
         {/* Footer */}
         <div className="mt-8 space-y-3 text-center">
           <p className="text-sm text-white/40">
-            Already have an account?{" "}
+            Don't have an account?{" "}
             <Link
-              to="/login"
+              to="/register"
               className="text-white/70 hover:text-white font-medium transition-colors"
             >
-              Sign in
+              Sign up
             </Link>
           </p>
 

@@ -38,6 +38,9 @@ AI Assistant Chat Interface — React frontend for asking questions and getting 
 - **Copy to Clipboard** — One-click response copy
 - **Smart Auto-scroll** — Smooth scroll following streaming content
 - **Stream Cancellation** — Abort ongoing generation via New Chat
+- **Minimal Footer Navigation** — Clean bottom info with Product, Resources, Legal links
+- **Smooth Page Navigation** — React Router with ScrollToTop component
+- **Multi-page Support** — Docs, Guide, Changelog, Privacy, Terms, Security pages
 - **Fully Responsive** — Mobile & desktop optimized
 
 ## 🚀 Setup Local
@@ -95,28 +98,48 @@ VITE_API_BASE_URL=https://your-backend.vercel.app
 ```
 src/
 ├── components/
-│   ├── Header.jsx              # Top navigation with auth & mobile toggle
-│   ├── ResultCard.jsx          # AI response display with streaming indicator
-│   ├── sidebar/                # Sidebar components
-│   │   ├── Sidebar.jsx         # Main sidebar (full height, no duplication)
-│   │   ├── SidebarHistory.jsx  # History list with skeleton loading
-│   │   ├── SidebarUserFooter.jsx    # User avatar & logout
-│   │   ├── SidebarGuestFooter.jsx   # Guest CTA
-│   │   └── HistoryItemMenu.jsx      # Dropdown menu for history items
-│   └── modals/                 # Modal components
-│       ├── LogoutConfirmModal.jsx   # Reusable logout confirmation
-│       └── DeleteConfirmModal.jsx   # Delete history confirmation
+│   ├── layout/                 # Layout & structural components
+│   │   ├── Header.jsx          # Top navigation with auth & mobile toggle
+│   │   ├── Footer.jsx          # Minimal bottom navigation with links
+│   │   └── Sidebar.jsx         # Main sidebar (full height, no duplication)
+│   ├── chat/                   # Chat-related components
+│   │   ├── ResultCard.jsx     # AI response display with streaming indicator
+│   │   └── HistoryList.jsx    # History list component
+│   ├── ui/                     # UI primitives & reusable components
+│   │   └── Button.jsx         # Reusable button component
+│   ├── common/                 # Shared utility components
+│   │   └── ScrollToTop.jsx    # Auto-scroll to top on route change
+│   ├── sidebar/               # Sidebar sub-components
+│   │   ├── SidebarHistory.jsx # History list with skeleton loading
+│   │   ├── SidebarUserFooter.jsx   # User avatar & logout
+│   │   ├── SidebarGuestFooter.jsx  # Guest CTA
+│   │   ├── GuestSearchCta.jsx      # Guest search CTA
+│   │   └── HistoryItemMenu.jsx     # Dropdown menu for history items
+│   └── modals/                # Modal components
+│       ├── LogoutConfirmModal.jsx  # Reusable logout confirmation
+│       └── DeleteConfirmModal.jsx  # Delete history confirmation
 ├── contexts/
-│   ├── AuthContext.jsx         # JWT + Google OAuth state
-│   └── LanguageContext.jsx     # EN/ID translation
+│   ├── AuthContext.jsx        # JWT + Google OAuth state
+│   └── LanguageContext.jsx    # EN/ID translation
 ├── pages/
-│   ├── HomePage.jsx            # Main chat interface with error handling
-│   ├── LoginPage.jsx           # Email & Google login
-│   ├── RegisterPage.jsx        # Registration
-│   └── ForgotPasswordPage.jsx  # Password reset
+│   ├── HomePage.jsx           # Main chat interface with error handling
+│   ├── auth/                  # Authentication pages
+│   │   ├── LoginPage.jsx
+│   │   ├── RegisterPage.jsx
+│   │   ├── ForgotPasswordPage.jsx
+│   │   └── ResetPasswordPage.jsx
+│   ├── docs/                  # Documentation pages
+│   │   ├── DocsPage.jsx      # API documentation
+│   │   └── GuidePage.jsx     # User guide
+│   ├── changelog/             # Changelog page
+│   │   └── ChangelogPage.jsx
+│   └── legal/                 # Legal pages
+│       ├── PrivacyPage.jsx   # Privacy policy
+│       ├── TermsPage.jsx     # Terms of service
+│       └── SecurityPage.jsx  # Security information
 ├── services/
-│   └── api.js                  # API layer with error status handling
-├── assets/                     # Images, icons
+│   └── api.js                 # API layer with error status handling
+├── assets/                    # Images, icons
 ├── App.jsx
 ├── main.jsx
 └── index.css
@@ -271,6 +294,15 @@ async function onGenerate() {
 - **Skeleton Loading**: Shimmer effects for auth/history loading states
 - **Modals**: Centered, no blur backdrop, monochrome theme
 - **History Menu**: Dropdown with rename, pin, delete actions
+
+### Footer & Navigation
+- **Minimal Bottom Info**: Single-line footer with organized sections:
+  - **Product**: Chat, History, API links
+  - **Resources**: Documentation, Changelog, GitHub
+  - **Legal**: Privacy, Terms, Security pages
+- **Smooth Scroll**: CSS `scroll-behavior: smooth` + React Router ScrollToTop
+- **Smart Auto-focus**: Desktop auto-focus on Chat click, mobile stays clean
+- **Back to Top**: Multi-fallback scroll mechanism for SPA compatibility
 
 ## 🔗 Related
 

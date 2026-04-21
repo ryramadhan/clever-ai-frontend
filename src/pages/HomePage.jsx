@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import Header from "../components/Header.jsx";
+import { Link, useNavigate } from "react-router-dom";
+import { FileText, Sparkles, CheckCircle, ChevronRight } from "lucide-react";
+import Header from "../components/layout/Header.jsx";
 import Sidebar from "../components/sidebar/Sidebar.jsx";
-import ResultCard from "../components/ResultCard.jsx";
+import ResultCard from "../components/chat/ResultCard.jsx";
+import Footer from "../components/layout/Footer.jsx";
 import { useLanguage } from "../contexts/LanguageContext.jsx";
 import { useAuth } from "../contexts/AuthContext.jsx";
 import { generateResponseStream, getCaptions } from "../services/api.js";
@@ -25,6 +27,8 @@ export default function HomePage() {
   const [retryCount, setRetryCount] = useState(0);
   const timeoutRef = useRef(null);
   const [historyLoadingMore, setHistoryLoadingMore] = useState(false);
+
+  const navigate = useNavigate();
 
   function scrollToBottom(behavior = "smooth") {
     scrollAnchorRef.current?.scrollIntoView({ behavior, block: "end" });
@@ -200,7 +204,11 @@ export default function HomePage() {
     setError("");
     setIsStreaming(false);
     setLoading(false);
-    setTimeout(() => textareaRef.current?.focus({ preventScroll: true }), 0);
+
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (!isMobile) {
+      setTimeout(() => textareaRef.current?.focus({ preventScroll: true }), 0);
+    }
   }
 
   function handleHistoryItemClick(item) {
@@ -221,6 +229,27 @@ export default function HomePage() {
 
   function closeSidebar() {
     setIsSidebarOpen(false);
+  }
+
+  function scrollToTop() {
+    const container = document.querySelector('main .overflow-y-auto') || document.querySelector('.overflow-y-auto');
+    const hero = document.querySelector('section');
+
+    if (container) {
+      container.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (hero) {
+      hero.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+
+  function scrollToChat() {
+    scrollToTop();
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (!isMobile) {
+      setTimeout(() => textareaRef.current?.focus(), 300);
+    }
   }
 
   return (
@@ -263,6 +292,58 @@ export default function HomePage() {
                         ? t("heroQuestion")
                         : t("heroGuestQuestion")}
                     </h1>
+                  </div>
+                </section>
+
+                {/* Bento Grid - 4 Cards */}
+                <section className="mb-8 px-4">
+                  <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
+                    {[
+                      {
+                        icon: "⚡",
+                        title: "Cepat",
+                        desc: "Generate dalam 3 detik",
+                        gradient: "from-blue-500/20 to-cyan-500/10",
+                        accent: "bg-blue-500/20 text-blue-400",
+                      },
+                      {
+                        icon: "🎯",
+                        title: "Akurat",
+                        desc: "AI model terbaik",
+                        gradient: "from-amber-500/20 to-orange-500/10",
+                        accent: "bg-amber-500/20 text-amber-400",
+                      },
+                      {
+                        icon: "🔒",
+                        title: "Aman",
+                        desc: "Data terlindungi",
+                        gradient: "from-emerald-500/20 to-teal-500/10",
+                        accent: "bg-emerald-500/20 text-emerald-400",
+                      },
+                      {
+                        icon: "🌐",
+                        title: "Bilingual",
+                        desc: "ID & English",
+                        gradient: "from-violet-500/20 to-purple-500/10",
+                        accent: "bg-violet-500/20 text-violet-400",
+                      },
+                    ].map((item, index) => (
+                      <div
+                        key={index}
+                        className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${item.gradient} border border-white/[0.08] p-4 transition-all duration-300 ease-out hover:scale-[1.02] hover:border-white/[0.15] hover:shadow-lg hover:shadow-white/5`}
+                      >
+                        <div className="relative z-10">
+                          <div className={`w-10 h-10 rounded-xl ${item.accent.split(' ')[0]} flex items-center justify-center text-xl mb-3 transition-transform duration-300 group-hover:scale-110`}>
+                            {item.icon}
+                          </div>
+                          <p className={`text-sm font-semibold ${item.accent.split(' ')[1]} mb-1`}>
+                            {item.title}
+                          </p>
+                          <p className="text-xs text-white/50">{item.desc}</p>
+                        </div>
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                      </div>
+                    ))}
                   </div>
                 </section>
 
@@ -343,11 +424,10 @@ export default function HomePage() {
                 </div>
 
                 {/* Footer */}
-                <footer className="py-8 text-center">
-                  <span className="text-xs text-white/30">
-                    © {new Date().getFullYear()} Clever AI
-                  </span>
-                </footer>
+                <Footer
+                  onChatClick={scrollToChat}
+                  onHistoryClick={toggleSidebar}
+                />
               </div>
             </div>
           ) : (

@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { useLanguage } from "../contexts/LanguageContext.jsx";
-import { useAuth } from "../contexts/AuthContext.jsx";
+import { useLanguage } from "../../contexts/LanguageContext.jsx";
+import { useAuth } from "../../contexts/AuthContext.jsx";
 import { useState } from "react";
-import logoIconUrl from "../assets/logo-icon.svg";
-import LogoutConfirmModal from "./modals/LogoutConfirmModal.jsx";
+import logoIconUrl from "../../assets/logo-icon.svg";
+import LogoutConfirmModal from "../modals/LogoutConfirmModal.jsx";
 
 export default function Header({ onMenuToggle }) {
   const { lang, toggleLanguage, t } = useLanguage();
