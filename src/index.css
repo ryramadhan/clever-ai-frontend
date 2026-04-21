@@ -131,24 +131,35 @@ body {
   animation: blink 1s step-end infinite;
 }
 
-/* Scrollbar Styling */
+/* Scrollbar Styling - Thin Square Style */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 4px;
+  height: 4px;
 }
 
 ::-webkit-scrollbar-track {
   background: var(--color-black-800);
-  border-radius: 4px;
+  border-radius: 0;
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--color-black-600);
-  border-radius: 4px;
+  border-radius: 0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-black-500);
+}
+
+/* Thin scrollbar utility class */
+.thin-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-black-600) var(--color-black-800);
 }
 
 /* Selection */

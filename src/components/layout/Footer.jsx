@@ -153,19 +153,7 @@ export default function Footer({
             <Link
               to="/"
               onClick={() => {
-                const mainContainer = document.querySelector('main .overflow-y-auto');
-                const fallbackContainer = document.querySelector('.overflow-y-auto');
-                const heroSection = document.querySelector('section');
-
-                if (mainContainer) {
-                  mainContainer.scrollTo({ top: 0, behavior: "smooth" });
-                } else if (fallbackContainer) {
-                  fallbackContainer.scrollTo({ top: 0, behavior: "smooth" });
-                } else if (heroSection) {
-                  heroSection.scrollIntoView({ behavior: "smooth" });
-                } else {
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                }
+                window.scrollTo({ top: 0, behavior: "smooth" });
               }}
               className="flex items-center gap-1.5 text-xs text-white/40 hover:text-white/70 transition-colors duration-200 group"
             >
