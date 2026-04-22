@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback } from "react";
-import { getMe, login as apiLogin, register as apiRegister, googleLogin as apiGoogleLogin } from "../services/api.js";
+import { getMe, login as apiLogin, register as apiRegister, googleLogin as apiGoogleLogin, getStats } from "../services/api.js";
 
 const AuthContext = createContext(null);
 
@@ -11,6 +11,7 @@ export function AuthProvider({ children }) {
     return !!token;
   });
   const [isAuthReady, setIsAuthReady] = useState(false);
+  const [prefetchedStats, setPrefetchedStats] = useState(null);
 
   useEffect(() => {
     const initAuth = async () => {
@@ -31,6 +32,10 @@ export function AuthProvider({ children }) {
     };
 
     initAuth();
+  }, []);
+
+  useEffect(() => {
+    getStats().then(data => setPrefetchedStats(data)).catch(() => { });
   }, []);
 
   const login = useCallback(async ({ email, password }) => {
@@ -68,6 +73,7 @@ export function AuthProvider({ children }) {
     isAuthenticated,
     isAuthReady,
     loading,
+    prefetchedStats,
     login,
     register,
     googleAuth,

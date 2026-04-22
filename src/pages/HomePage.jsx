@@ -11,7 +11,7 @@ import { generateResponseStream, getCaptions, getStats } from "../services/api.j
 
 export default function HomePage() {
   const { t } = useLanguage();
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user, prefetchedStats } = useAuth();
   const [context, setContext] = useState("");
   const [userMessage, setUserMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -28,8 +28,8 @@ export default function HomePage() {
   const timeoutRef = useRef(null);
   const [historyLoadingMore, setHistoryLoadingMore] = useState(false);
   const [newChatLoading, setNewChatLoading] = useState(false);
-  const [stats, setStats] = useState(null);
-  const [statsLoading, setStatsLoading] = useState(true);
+  const [stats, setStats] = useState(prefetchedStats);
+  const [statsLoading, setStatsLoading] = useState(!prefetchedStats);
 
   const navigate = useNavigate();
 
@@ -43,8 +43,9 @@ export default function HomePage() {
     }
   }, [result, isStreaming]);
 
-  // Fetch public stats for social proof section
   useEffect(() => {
+    if (prefetchedStats) return; // Already have stats from AuthContext
+
     async function fetchStats() {
       try {
         const data = await getStats();
@@ -56,7 +57,7 @@ export default function HomePage() {
       }
     }
     fetchStats();
-  }, []);
+  }, [prefetchedStats]);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const textareaRef = useRef(null);
