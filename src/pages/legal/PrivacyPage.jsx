@@ -13,15 +13,15 @@ export default function PrivacyPage() {
       content: [
         {
           subtitle: "Data Akun",
-          text: "Kami mengumpulkan nama, email, dan password (terenkripsi) saat kamu mendaftar. Data Google OAuth (nama, email, foto profil) juga dikumpulkan jika kamu menggunakan login Google.",
+          text: "Kami mengumpulkan nama, alamat email, dan kata sandi (terenkripsi) saat Anda mendaftar. Data Google OAuth (nama, email, foto profil) juga dikumpulkan apabila Anda menggunakan login Google.",
         },
         {
-          subtitle: "Chat History",
-          text: "Semua percakapan dengan AI disimpan untuk memungkinkan fitur history. Data chat milik user yang login disimpan terpisah dari data guest.",
+          subtitle: "Riwayat Percakapan",
+          text: "Semua percakapan dengan AI disimpan untuk mengaktifkan fitur riwayat. Data percakapan pengguna terdaftar disimpan terpisah dari data pengguna tamu.",
         },
         {
           subtitle: "Data Teknis",
-          text: "IP address, browser type, dan timestamp disimpan untuk rate limiting dan keamanan sistem.",
+          text: "Alamat IP, jenis browser, dan timestamp disimpan untuk pembatasan laju permintaan dan keamanan sistem.",
         },
       ],
     },
@@ -30,15 +30,15 @@ export default function PrivacyPage() {
       content: [
         {
           subtitle: "Layanan Utama",
-          text: "Data digunakan untuk autentikasi, menyimpan chat history, dan menyediakan layanan AI chat.",
+          text: "Data digunakan untuk autentikasi, penyimpanan riwayat percakapan, dan penyediaan layanan AI chat.",
         },
         {
           subtitle: "Keamanan",
-          text: "Rate limiting dan deteksi aktivitas mencurigakan untuk melindungi layanan dari abuse.",
+          text: "Pembatasan laju permintaan dan deteksi aktivitas mencurigakan untuk melindungi layanan dari penyalahgunaan.",
         },
         {
-          subtitle: "Improvement",
-          text: "Analisis anonim untuk meningkatkan kualitas respons AI dan user experience.",
+          subtitle: "Peningkatan Layanan",
+          text: "Analisis anonim untuk meningkatkan kualitas respons AI dan pengalaman pengguna.",
         },
       ],
     },
@@ -47,32 +47,32 @@ export default function PrivacyPage() {
       content: [
         {
           subtitle: "Database",
-          text: "Data disimpan di PostgreSQL (Neon) dengan enkripsi SSL. Password di-hash menggunakan bcrypt.",
+          text: "Data disimpan di PostgreSQL (Neon) dengan enkripsi SSL. Kata sandi di-hash menggunakan bcrypt.",
         },
         {
-          subtitle: "Data Retention",
-          text: "Chat history disimpan selama akun aktif. Data akun bisa dihapus permanen dengan request ke support.",
+          subtitle: "Retensi Data",
+          text: "Riwayat percakapan disimpan selama akun aktif. Data akun dapat dihapus secara permanen dengan mengajukan permintaan ke tim dukungan.",
         },
         {
-          subtitle: "Data Separation",
-          text: "Strict separation antara data user. Kamu hanya bisa melihat data milikmu sendiri.",
+          subtitle: "Pemisahan Data",
+          text: "Pemisahan ketat antar data pengguna. Anda hanya dapat melihat data milik Anda sendiri.",
         },
       ],
     },
     {
-      title: "Hak Kamu",
+      title: "Hak Anda",
       content: [
         {
-          subtitle: "Akses & Export",
-          text: "Kamu bisa mengakses dan mengekspor chat history kapan saja melalui sidebar.",
+          subtitle: "Akses & Ekspor",
+          text: "Anda dapat mengakses dan mengekspor riwayat percakapan kapan saja melalui panel samping.",
         },
         {
           subtitle: "Penghapusan Data",
-          text: "Kamu bisa menghapus chat history individual atau seluruh akun. Request penghapusan akun permanen bisa diajukan via email.",
+          text: "Anda dapat menghapus riwayat percakapan individual atau seluruh akun. Permintaan penghapusan akun permanen dapat diajukan melalui email.",
         },
         {
           subtitle: "Opt-out",
-          text: "Gunakan mode Guest jika tidak ingin data disimpan secara permanen.",
+          text: "Gunakan mode Tamu apabila tidak ingin data disimpan secara permanen.",
         },
       ],
     },
@@ -107,7 +107,7 @@ export default function PrivacyPage() {
             Kebijakan Privasi
           </h2>
           <p className="text-sm text-white/50 leading-relaxed">
-            Terakhir diupdate: April 2024. Kami menghargai privasi kamu dan berkomitmen untuk melindungi data pribadi.
+            Terakhir diperbarui: April 2026. Kami menghargai privasi Anda dan berkomitmen untuk melindungi data pribadi dengan serius.
           </p>
         </section>
 
@@ -144,7 +144,7 @@ export default function PrivacyPage() {
               Kontak Privasi
             </h3>
             <p className="text-xs text-white/40 leading-relaxed mb-3">
-              Untuk pertanyaan tentang privasi, request penghapusan data, atau laporan kebocoran data:
+              Untuk pertanyaan terkait privasi, permintaan penghapusan data, atau pelaporan insiden keamanan:
             </p>
             <a
               href="mailto:privacy@cleverai.app"
@@ -158,7 +158,7 @@ export default function PrivacyPage() {
         {/* Footer */}
         <footer className="mt-10 pt-6 border-t border-white/[0.06] text-center">
           <p className="text-[10px] text-white/20">
-            MoodWrite AI Privacy Policy • 2024
+            Clever AI Privacy Policy • 2026
           </p>
         </footer>
       </main>

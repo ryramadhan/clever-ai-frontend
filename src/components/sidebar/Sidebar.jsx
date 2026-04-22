@@ -68,7 +68,7 @@ export default function Sidebar({
     <>
       <aside
         className={`
-          hidden lg:flex flex-col h-full
+          hidden lg:flex flex-col h-screen sticky top-0
           bg-[#0a0a0a] border-r border-white/[0.06]
           transition-all duration-300 ease-out
           ${isOpen ? "w-60" : "w-16"}

@@ -10,52 +10,52 @@ export default function ChangelogPage() {
   const releases = [
     {
       version: "v1.2.0",
-      date: "April 2024",
-      status: "Latest",
+      date: "April 2026",
+      status: "Terbaru",
       changes: [
-        { type: "feature", text: "Footer dengan navigasi lengkap (Chat, History, API, Docs)" },
+        { type: "feature", text: "Footer dengan navigasi lengkap (Chat, History, API, Dokumentasi)" },
         { type: "feature", text: "Halaman dokumentasi API (/docs)" },
-        { type: "feature", text: "Halaman user guide (/guide)" },
-        { type: "feature", text: "Link GitHub di footer dengan icon external" },
-        { type: "improvement", text: "Bento Grid UI di homepage dengan 4 feature cards" },
-        { type: "improvement", text: "Back to top button di footer" },
-        { type: "fix", text: "Smooth scroll dan auto-focus saat klik Chat" },
+        { type: "feature", text: "Halaman panduan pengguna (/guide)" },
+        { type: "feature", text: "Tautan GitHub di footer dengan ikon eksternal" },
+        { type: "improvement", text: "Antarmuka Bento Grid di beranda dengan 4 kartu fitur" },
+        { type: "improvement", text: "Tombol kembali ke atas di footer" },
+        { type: "fix", text: "Perbaikan smooth scroll dan auto-focus saat mengklik Chat" },
       ],
     },
     {
       version: "v1.1.0",
-      date: "March 2024",
+      date: "Maret 2026",
       changes: [
-        { type: "feature", text: "Real-time AI streaming dengan Server-Sent Events (SSE)" },
-        { type: "feature", text: "Google OAuth login dengan one-tap" },
+        { type: "feature", text: "Streaming AI real-time dengan Server-Sent Events (SSE)" },
+        { type: "feature", text: "Autentikasi Google OAuth dengan one-tap" },
         { type: "feature", text: "Auto-retry dengan exponential backoff (3x)" },
-        { type: "feature", text: "Rate limiting handling dengan pesan error yang jelas" },
-        { type: "improvement", text: "Monochrome dark theme consistent di seluruh app" },
-        { type: "improvement", text: "Responsive design untuk mobile dan desktop" },
-        { type: "fix", text: "Memory leak di streaming listener" },
+        { type: "feature", text: "Penanganan rate limiting dengan pesan kesalahan yang jelas" },
+        { type: "improvement", text: "Tema gelap monochrome yang konsisten di seluruh aplikasi" },
+        { type: "improvement", text: "Desain responsif untuk perangkat mobile dan desktop" },
+        { type: "fix", text: "Perbaikan kebocoran memori pada listener streaming" },
       ],
     },
     {
       version: "v1.0.0",
-      date: "February 2024",
+      date: "Februari 2026",
       changes: [
-        { type: "feature", text: "Launch MoodWrite AI - AI Chat Interface" },
-        { type: "feature", text: "ChatGPT/Gemini-style UI dengan monochrome aesthetic" },
-        { type: "feature", text: "Authentication system (JWT + email/password)" },
-        { type: "feature", text: "Guest mode tanpa login" },
-        { type: "feature", text: "History management dengan pin, rename, delete" },
-        { type: "feature", text: "Bilingual UI (English & Indonesia)" },
-        { type: "feature", text: "Copy to clipboard untuk AI responses" },
-        { type: "improvement", text: "PostgreSQL database dengan data separation" },
-        { type: "improvement", text: "Smart auto-scroll saat streaming" },
+        { type: "feature", text: "Peluncuran Clever AI - Antarmuka Chat AI" },
+        { type: "feature", text: "Antarmuka bergaya ChatGPT/Gemini dengan estetika monochrome" },
+        { type: "feature", text: "Sistem autentikasi (JWT + email/kata sandi)" },
+        { type: "feature", text: "Mode tamu tanpa autentikasi" },
+        { type: "feature", text: "Manajemen riwayat dengan semat, ubah nama, hapus" },
+        { type: "feature", text: "Antarmuka dwibahasa (Bahasa Inggris & Indonesia)" },
+        { type: "feature", text: "Salin ke clipboard untuk respons AI" },
+        { type: "improvement", text: "Database PostgreSQL dengan pemisahan data" },
+        { type: "improvement", text: "Auto-scroll cerdas saat streaming" },
       ],
     },
   ];
 
   const typeLabels = {
-    feature: { text: "New", color: "bg-emerald-500/20 text-emerald-400" },
-    improvement: { text: "Improved", color: "bg-amber-500/20 text-amber-400" },
-    fix: { text: "Fixed", color: "bg-blue-500/20 text-blue-400" },
+    feature: { text: "Baru", color: "bg-emerald-500/20 text-emerald-400" },
+    improvement: { text: "Diperbaiki", color: "bg-amber-500/20 text-amber-400" },
+    fix: { text: "Diperbaiki", color: "bg-blue-500/20 text-blue-400" },
   };
 
   return (
@@ -84,10 +84,10 @@ export default function ChangelogPage() {
         {/* Intro */}
         <section className="mb-10">
           <h2 className="text-2xl font-normal text-white/90 mb-3">
-            Perubahan & Update
+            Catatan Perubahan
           </h2>
           <p className="text-sm text-white/50 leading-relaxed">
-            Riwayat update MoodWrite AI. Lihat fitur baru, improvements, dan bug fixes.
+            Riwayat pembaruan Clever AI. Tinjau fitur terbaru, peningkatan, dan perbaikan bug.
           </p>
         </section>
 
@@ -155,10 +155,10 @@ export default function ChangelogPage() {
           >
             <div>
               <p className="text-sm font-medium text-white/70 mb-1">
-                Lihat semua release di GitHub
+                Tinjau seluruh rilis di GitHub
               </p>
               <p className="text-xs text-white/40">
-                Full release history dengan detail teknis
+                Riwayat rilis lengkap dengan detail teknis
               </p>
             </div>
             <svg
@@ -176,7 +176,7 @@ export default function ChangelogPage() {
         {/* Footer */}
         <footer className="mt-10 pt-6 border-t border-white/[0.06] text-center">
           <p className="text-[10px] text-white/20">
-            MoodWrite AI • Semantic Versioning
+            Clever AI • Versi Semantik • 2026
           </p>
         </footer>
       </main>

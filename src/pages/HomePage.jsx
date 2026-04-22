@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FileText, Sparkles, CheckCircle, ChevronRight } from "lucide-react";
 import Header from "../components/layout/Header.jsx";
@@ -244,7 +244,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen flex bg-[#0a0a0a] overflow-y-auto thin-scrollbar">
+    <div className="h-screen flex bg-[#0a0a0a] overflow-hidden">
       <Sidebar
         isOpen={isSidebarOpen}
         onToggle={toggleSidebar}
@@ -257,10 +257,10 @@ export default function HomePage() {
         onHistoryItemsChange={handleHistoryItemsChange}
       />
 
-      <div className="flex-1 flex flex-col min-h-0">
+      <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
         <Header onMenuToggle={toggleSidebar} />
 
-        <main className="flex-1 flex flex-col min-h-0">
+        <main className="flex-1 flex flex-col min-h-0 overflow-y-auto thin-scrollbar">
           {!result ? (
             <div className="flex-1 relative">
               {/* Animated Background */}
@@ -422,10 +422,10 @@ export default function HomePage() {
               </div>
             </div>
           ) : (
-            <div className="flex-1 flex flex-col min-h-0">
+            <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
               {/* Chat History */}
-              <div ref={chatContainerRef} className="flex-1 min-h-0">
-                <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-8 space-y-6">
+              <div ref={chatContainerRef} className="flex-1 min-h-0 overflow-y-auto thin-scrollbar">
+                <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-8 pb-32 space-y-6">
                   {/* User Message */}
                   <div className="flex justify-end">
                     <div className="max-w-[80%] bg-white/[0.03] rounded-2xl px-5 py-3">

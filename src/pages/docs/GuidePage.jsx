@@ -9,87 +9,87 @@ export default function GuidePage() {
 
   const sections = [
     {
-      title: "Getting Started",
+      title: "Memulai",
       items: [
         {
-          question: "Apa itu MoodWrite AI?",
+          question: "Apa itu Clever AI?",
           answer:
-            "MoodWrite AI adalah asisten AI untuk membantu kamu berkreasi dengan ide-ide menarik. Kamu bisa chat dengan AI secara real-time dan mendapatkan respons streaming seperti ChatGPT.",
+            "Clever AI adalah asisten cerdas berbasis kecerdasan buatan yang dirancang untuk membantu Anda menghasilkan ide kreatif dan solusi inovatif. Platform ini menyediakan pengalaman percakapan real-time dengan respons streaming yang responsif.",
         },
         {
-          question: "Bagaimana cara mulai chat?",
+          question: "Bagaimana cara memulai percakapan?",
           answer:
-            'Cukup ketik pertanyaan atau topik yang ingin kamu diskusikan di kotak input, lalu tekan Enter atau klik tombol kirim. AI akan merespons secara real-time dengan streaming text.',
+            "Ketik pertanyaan atau topik yang ingin didiskusikan pada kolom input, lalu tekan Enter atau klik tombol kirim. Sistem akan langsung merespons secara real-time dengan teks yang muncul bertahap.",
         },
         {
-          question: "Apakah perlu login?",
+          question: "Apakah diperlukan autentikasi?",
           answer:
-            "Tidak wajib. Kamu bisa menggunakan MoodWrite AI sebagai Guest tanpa login. Namun, history chat hanya akan tersimpan jika kamu login.",
+            "Autentikasi tidak wajib. Anda dapat menggunakan Clever AI sebagai pengguna tamu. Namun, riwayat percakapan hanya tersimpan secara permanen setelah melakukan login.",
         },
       ],
     },
     {
-      title: "Features",
+      title: "Fitur Utama",
       items: [
         {
-          question: "Streaming Response",
+          question: "Respons Streaming",
           answer:
-            "AI merespons secara real-time dengan efek typing seperti ChatGPT. Kamu bisa melihat respons muncul huruf demi huruf.",
+            "Sistem menghasilkan respons secara real-time dengan efek pengetikan yang natural, memungkinkan Anda membaca jawaban sambil sedang diproses.",
         },
         {
-          question: "History Management",
+          question: "Manajemen Riwayat",
           answer:
-            "Setiap percakapan tersimpan di sidebar kiri. Kamu bisa melihat history, rename, pin, atau menghapus percakapan.",
+            "Semua percakapan tersimpan secara terstruktur pada panel samping. Anda dapat mengelola, mengubah nama, menyematkan, atau menghapus percakapan sesuai kebutuhan.",
         },
         {
-          question: "Bilingual Support",
+          question: "Dukungan Dua Bahasa",
           answer:
-            "MoodWrite AI mendukung Bahasa Indonesia dan English. AI akan otomatis merespons sesuai bahasa yang kamu gunakan.",
+            "Platform mendukung Bahasa Indonesia dan Inggris. Sistem secara otomatis mendeteksi dan merespons dalam bahasa yang Anda gunakan.",
         },
         {
-          question: "Copy & Share",
+          question: "Salin & Bagikan",
           answer:
-            "Kamu bisa menyalin respons AI dengan satu klik menggunakan tombol copy di setiap pesan AI.",
+            "Setiap respons AI dilengkapi fitur salin instan untuk memudahkan penyimpanan atau berbagi informasi.",
         },
       ],
     },
     {
-      title: "Tips & Best Practices",
+      title: "Tips & Praktik Terbaik",
       items: [
         {
-          question: "Bagaimana pertanyaan yang bagus?",
+          question: "Bagaimana merumuskan pertanyaan efektif?",
           answer:
-            "Jelaskan konteks dengan detail. Seperti: 'Berikan tips produktivitas untuk programmer yang kerja remote' daripada hanya 'tips produktivitas'.",
+            "Sertakan konteks yang spesifik. Sebagai contoh: 'Berikan strategi produktivitas untuk pengembang perangkat lunak dalam lingkungan kerja remote' akan menghasilkan respons lebih berkualitas dibandingkan pertanyaan umum.",
         },
         {
-          question: "Batasan karakter",
+          question: "Batasan Input",
           answer:
-            "Input maksimal 2000 karakter. Jika topik kompleks, pecah menjadi beberapa pertanyaan spesifik.",
+            "Panjang maksimum input adalah 2.000 karakter. Untuk topik kompleks, disarankan memecahnya menjadi beberapa pertanyaan yang lebih spesifik dan terfokus.",
         },
         {
-          question: "Follow-up questions",
+          question: "Pertanyaan Lanjutan",
           answer:
-            'Kamu bisa melanjutkan percakapan dengan pertanyaan lanjutan. AI akan mengingat konteks percakapan sebelumnya.',
+            "Anda dapat melanjutkan percakapan dengan pertanyaan berkelanjutan. Sistem mempertahankan konteks percakapan untuk memastikan kelancaran diskusi.",
         },
       ],
     },
     {
-      title: "Troubleshooting",
+      title: "Penyelesaian Masalah",
       items: [
         {
-          question: "AI tidak merespons?",
+          question: "Tidak ada respons dari sistem?",
           answer:
-            'Coba refresh halaman atau klik "New Chat". Jika masalah berlanjut, cek koneksi internet atau coba lagi nanti.',
+            'Coba segarkan halaman atau mulai percakapan baru dengan mengklik "New Chat". Jika kendala berlanjut, periksa konektivitas internet Anda atau tunggu beberapa saat sebelum mencoba kembali.',
         },
         {
-          question: "History hilang?",
+          question: "Riwayat tidak ditemukan?",
           answer:
-            "History Guest hanya tersimpan di device ini. Login untuk menyimpan history di cloud dan mengaksesnya dari device lain.",
+            "Data percakapan pengguna tamu hanya tersimpan secara lokal pada perangkat ini. Untuk penyimpanan permanen dan akses lintas perangkat, silakan login ke akun Anda.",
         },
         {
           question: "Error 429 (Rate Limited)?",
           answer:
-            "Terlalu banyak request dalam waktu singkat. Tunggu 1 menit sebelum mencoba lagi.",
+            "Batas permintaan telah tercapai. Harap tunggu beberapa saat sebelum mengirim permintaan berikutnya.",
         },
       ],
     },
@@ -121,10 +121,10 @@ export default function GuidePage() {
         {/* Intro */}
         <section className="mb-10">
           <h2 className="text-2xl font-normal text-white/90 mb-3">
-            Panduan Pengguna
+            Dokumentasi Pengguna
           </h2>
           <p className="text-sm text-white/50 leading-relaxed">
-            Pelajari cara menggunakan MoodWrite AI secara efektif. Dari dasar hingga tips advanced.
+            Panduan komprehensif untuk memaksimalkan pengalaman Anda dengan Clever AI. Mulai dari penggunaan dasar hingga strategi lanjutan.
           </p>
         </section>
 
@@ -161,7 +161,7 @@ export default function GuidePage() {
               Butuh bantuan lebih lanjut?
             </h3>
             <p className="text-xs text-white/40 mb-4">
-              Jika kamu menemukan bug atau memiliki pertanyaan teknis, silakan buat issue di GitHub.
+              Menemukan bug atau memiliki pertanyaan teknis? Silakan laporkan melalui GitHub Issues untuk mendapatkan dukungan dari tim pengembang.
             </p>
             <a
               href="https://github.com/ryramadhan/moodwrite-ai-frontend/issues"
@@ -183,7 +183,7 @@ export default function GuidePage() {
         {/* Footer */}
         <footer className="mt-10 pt-6 border-t border-white/[0.06] text-center">
           <p className="text-[10px] text-white/20">
-            MoodWrite AI Documentation • Last updated April 2024
+            Clever AI Documentation • Diperbarui April 2026
           </p>
         </footer>
       </main>

@@ -35,10 +35,8 @@ export default function Header({ onMenuToggle }) {
 
   return (
     <>
-      <header className="h-[60px] flex items-center justify-between px-4 bg-[#0a0a0a] border-b border-white/[0.06] flex-shrink-0 z-50">
-        {/* Left: Mobile Toggle + Branding */}
+      <header className="h-[60px] flex items-center justify-between px-4 bg-[#0a0a0a] border-b border-white/[0.06] flex-shrink-0 z-50 sticky top-0">
         <div className="flex items-center gap-3">
-          {/* Mobile Sidebar Toggle */}
           <button
             type="button"
             onClick={onMenuToggle}

@@ -277,7 +277,7 @@ export default function SidebarHistory({
       </div>
 
       {/* List */}
-      <div className="flex-1 overflow-y-auto px-2 pb-2 space-y-1 scrollbar-hide">
+      <div className="flex-1 overflow-y-auto px-2 pb-2 space-y-1 thin-scrollbar">
         {loading && !filteredItems.length ? (
           <div className="space-y-2 px-1">
             <div className="h-14 rounded-lg bg-white/[0.04] animate-skeleton" />

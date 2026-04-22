@@ -9,54 +9,54 @@ export default function TermsPage() {
 
   const sections = [
     {
-      title: "Penerimaan Syarat",
+      title: "Penerimaan Ketentuan",
       content:
-        "Dengan mengakses atau menggunakan MoodWrite AI, kamu menyetujui untuk terikat oleh syarat dan ketentuan ini. Jika tidak setuju, harap tidak menggunakan layanan kami.",
+        "Dengan mengakses atau menggunakan Clever AI, Anda menyetujui untuk terikat oleh seluruh syarat dan ketentuan yang tercantum dalam dokumen ini. Apabila tidak setuju, mohon untuk tidak menggunakan layanan kami.",
     },
     {
       title: "Kelayakan Pengguna",
       content:
-        "Kamu harus berusia minimal 13 tahun untuk menggunakan layanan ini. Jika di bawah 18 tahun, kamu harus memiliki persetujuan orang tua atau wali.",
+        "Pengguna harus berusia minimal 13 tahun. Untuk pengguna di bawah 18 tahun, diperlukan persetujuan dari orang tua atau wali yang sah.",
     },
     {
       title: "Akun Pengguna",
       content:
-        "Kamu bertanggung jawab untuk menjaga kerahasiaan password dan membatasi akses ke akunmu. Beritahu kami segera jika ada penggunaan tidak sah.",
+        "Anda bertanggung jawab penuh untuk menjaga kerahasiaan kata sandi dan membatasi akses ke akun Anda. Segera hubungi kami jika terdapat penggunaan yang tidak sah.",
     },
     {
       title: "Penggunaan yang Diterima",
       content:
-        "Kamu setuju untuk tidak menggunakan layanan untuk: (a) aktivitas ilegal, (b) spam atau abuse, (c) menghasilkan konten berbahaya, (d) mengganggu layanan lain, (e) scraping data tanpa izin.",
+        "Anda setuju untuk tidak menggunakan layanan untuk: (a) kegiatan yang melanggar hukum, (b) spam atau penyalahgunaan, (c) menghasilkan konten yang berbahaya, (d) mengganggu layanan lain, (e) pengambilan data tanpa izin.",
     },
     {
       title: "Konten AI & Hak Cipta",
       content:
-        "Output AI disediakan untuk penggunaan personal. Kamu bertanggung jawab atas penggunaan output dan memastikan tidak melanggar hak cipta pihak ketiga. Kami tidak mengklaim kepemilikan atas output AI.",
+        "Output yang dihasilkan AI disediakan untuk penggunaan pribadi. Anda bertanggung jawab atas penggunaan output tersebut dan memastikan tidak melanggar hak cipta pihak ketiga. Kami tidak mengklaim kepemilikan atas output AI.",
     },
     {
       title: "Batasan Layanan",
       content:
-        "Layanan ini 'sebagaimana adanya'. Kami tidak menjamin: (a) akurasi output AI, (b) ketersediaan tanpa gangguan, (c) keamanan absolut. Gunakan dengan risiko kamu sendiri.",
+        "Layanan disediakan 'sebagaimana adanya'. Kami tidak menjamin: (a) akurasi output AI, (b) ketersediaan tanpa gangguan, (c) keamanan absolut. Penggunaan dilakukan dengan risiko yang ditanggung sendiri.",
     },
     {
       title: "Pembatasan Tanggung Jawab",
       content:
-        "Kami tidak bertanggung jawab atas kerugian tidak langsung, insidental, atau konsekuensial. Tanggung jawab total kami terbatas pada jumlah yang kamu bayar (jika ada) atau $100.",
+        "Kami tidak bertanggung jawab atas kerugian tidak langsung, insidental, atau konsekuensial. Total tanggung jawab kami terbatas pada jumlah yang telah dibayarkan (jika ada) atau sebesar $100.",
     },
     {
-      title: "Penghentian",
+      title: "Penghentian Layanan",
       content:
-        "Kami berhak menangguhkan atau menghentikan akses kamu kapan saja untuk pelanggaran syarat ini. Kamu bisa menghapus akun kapan saja.",
+        "Kami berhak untuk menangguhkan atau menghentikan akses Anda kapan saja apabila terjadi pelanggaran terhadap ketentuan ini. Anda juga dapat menghapus akun kapan saja sesuai kebijakan yang berlaku.",
     },
     {
-      title: "Perubahan Syarat",
+      title: "Perubahan Ketentuan",
       content:
-        "Kami bisa mengubah syarat ini kapan saja. Perubahan efektif saat diposting. Penggunaan berkelanjutan berarti penerimaan perubahan.",
+        "Kami berhak mengubah ketentuan ini sewaktu-waktu. Perubahan akan efektif sejak dipublikasikan. Penggunaan berkelanjutan menunjukkan penerimaan Anda terhadap perubahan tersebut.",
     },
     {
       title: "Hukum yang Berlaku",
       content:
-        "Syarat ini diatur oleh hukum Indonesia. Sengketa diselesaikan di pengadilan Jakarta.",
+        "Ketentuan ini diatur dan ditafsirkan sesuai dengan hukum Republik Indonesia. Segala sengketa akan diselesaikan melalui pengadilan yang berwenang di Jakarta.",
     },
   ];
 
@@ -86,10 +86,10 @@ export default function TermsPage() {
         {/* Intro */}
         <section className="mb-10">
           <h2 className="text-2xl font-normal text-white/90 mb-3">
-            Syarat Penggunaan
+            Ketentuan Layanan
           </h2>
           <p className="text-sm text-white/50 leading-relaxed">
-            Terakhir diupdate: April 2024. Harap baca dengan seksama sebelum menggunakan layanan.
+            Terakhir diperbarui: April 2026. Harap baca dengan saksama sebelum menggunakan layanan.
           </p>
         </section>
 
@@ -116,7 +116,7 @@ export default function TermsPage() {
         <section className="mt-10 pt-8 border-t border-white/[0.06]">
           <div className="p-4 rounded-lg bg-gradient-to-br from-white/[0.05] to-white/[0.02] border border-white/[0.08]">
             <p className="text-xs text-white/50 leading-relaxed">
-              Dengan menggunakan MoodWrite AI, kamu mengakni bahwa telah membaca, memahami, dan menyetujui syarat dan ketentuan ini.
+              Dengan menggunakan Clever AI, Anda mengakui bahwa telah membaca, memahami, dan menyetujui seluruh ketentuan yang tercantum dalam dokumen ini.
             </p>
           </div>
         </section>
@@ -124,7 +124,7 @@ export default function TermsPage() {
         {/* Contact */}
         <section className="mt-6">
           <p className="text-xs text-white/40">
-            Pertanyaan tentang syarat ini? Hubungi{" "}
+            Memiliki pertanyaan terkait ketentuan layanan? Silakan hubungi{" "}
             <a href="mailto:legal@cleverai.app" className="text-white/50 hover:text-white/70 transition-colors">
               legal@cleverai.app
             </a>
@@ -134,7 +134,7 @@ export default function TermsPage() {
         {/* Footer */}
         <footer className="mt-10 pt-6 border-t border-white/[0.06] text-center">
           <p className="text-[10px] text-white/20">
-            MoodWrite AI Terms of Service • 2024
+            Clever AI Terms of Service • 2026
           </p>
         </footer>
       </main>

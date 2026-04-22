@@ -229,7 +229,7 @@ while (true) {
             Built with Express.js + PostgreSQL + Gemini AI
           </p>
           <p className="text-[10px] text-white/20 mt-1">
-            Documentation v1.0 • Last updated April 2024
+            Documentation v1.0 • Last updated April 2026
           </p>
         </footer>
       </main>

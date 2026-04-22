@@ -10,52 +10,52 @@ export default function SecurityPage() {
   const features = [
     {
       icon: "🔐",
-      title: "Password Hashing",
-      desc: "Password di-hash dengan bcrypt sebelum disimpan. Kami tidak pernah menyimpan password dalam bentuk plain text.",
+      title: "Pengamanan Kata Sandi",
+      desc: "Kata sandi di-hash dengan bcrypt sebelum disimpan. Kami tidak pernah menyimpan kata sandi dalam bentuk teks biasa.",
     },
     {
       icon: "🌐",
       title: "HTTPS/SSL",
-      desc: "Semua komunikasi dienkripsi dengan HTTPS. Database connection juga menggunakan SSL encryption.",
+      desc: "Seluruh komunikasi dienkripsi menggunakan HTTPS. Koneksi database juga menggunakan enkripsi SSL.",
     },
     {
       icon: "🎫",
-      title: "JWT Authentication",
-      desc: "JSON Web Tokens dengan expiry untuk autentikasi stateless. Token bisa di-revoke kapan saja.",
+      title: "Autentikasi JWT",
+      desc: "JSON Web Tokens dengan masa berlaku untuk autentikasi stateless. Token dapat dicabut kapan saja.",
     },
     {
       icon: "🛡️",
-      title: "Rate Limiting",
-      desc: "Perlindungan terhadap brute force dan DDoS dengan rate limiting pada semua endpoint.",
+      title: "Pembatasan Laju Permintaan",
+      desc: "Perlindungan terhadap serangan brute force dan DDoS dengan pembatasan laju permintaan pada seluruh endpoint.",
     },
     {
       icon: "🔒",
-      title: "Data Separation",
-      desc: "Strict data isolation. Setiap user hanya bisa mengakses data miliknya sendiri di database level.",
+      title: "Pemisahan Data",
+      desc: "Isolasi data yang ketat. Setiap pengguna hanya dapat mengakses data miliknya sendiri di tingkat database.",
     },
     {
       icon: "🔍",
-      title: "Input Sanitization",
-      desc: "Semua input di-validasi dan di-sanitize untuk mencegah SQL injection dan XSS attacks.",
+      title: "Sanitasi Input",
+      desc: "Seluruh input divalidasi dan disanitasi untuk mencegah serangan SQL injection dan XSS.",
     },
   ];
 
   const bestPractices = [
     {
-      title: "Gunakan Password Kuat",
-      content: "Minimal 8 karakter dengan kombinasi huruf, angka, dan simbol. Hindari informasi personal.",
+      title: "Gunakan Kata Sandi yang Kuat",
+      content: "Minimal 8 karakter dengan kombinasi huruf, angka, dan simbol. Hindari menggunakan informasi pribadi.",
     },
     {
       title: "Jangan Bagikan Akun",
-      content: "Akun bersifat personal. Jangan berbagi password atau biarkan orang lain menggunakan akunmu.",
+      content: "Akun bersifat personal. Mohon untuk tidak berbagi kata sandi atau membiarkan orang lain menggunakan akun Anda.",
     },
     {
-      title: "Logout di Device Publik",
-      content: "Selalu logout setelah menggunakan MoodWrite AI di device publik atau shared.",
+      title: "Keluar dari Perangkat Publik",
+      content: "Selalu keluar setelah menggunakan Clever AI di perangkat publik atau bersama.",
     },
     {
-      title: "Waspada Phishing",
-      content: "Kami tidak akan pernah meminta password via email. Pastikan URL adalah clever-ai-chat.vercel.app",
+      title: "Waspada terhadap Phishing",
+      content: "Kami tidak akan pernah meminta kata sandi melalui email. Pastikan URL yang Anda akses adalah benar.",
     },
   ];
 
@@ -88,7 +88,7 @@ export default function SecurityPage() {
             Keamanan
           </h2>
           <p className="text-sm text-white/50 leading-relaxed">
-            Keamanan data kamu adalah prioritas utama. Berikut langkah-langkah yang kami ambil untuk melindungi informasimu.
+            Keamanan data Anda merupakan prioritas utama. Berikut langkah-langkah yang kami implementasikan untuk melindungi informasi Anda.
           </p>
         </section>
 
@@ -118,7 +118,7 @@ export default function SecurityPage() {
         {/* Best Practices */}
         <section className="mb-10">
           <h3 className="text-xs font-medium text-white/40 uppercase tracking-wider mb-4">
-            Best Practices untuk User
+            Praktik Terbaik untuk Pengguna
           </h3>
           <div className="space-y-3">
             {bestPractices.map((item) => (
@@ -143,11 +143,11 @@ export default function SecurityPage() {
         {/* Report Vulnerability */}
         <section className="mb-10 pt-8 border-t border-white/[0.06]">
           <h3 className="text-xs font-medium text-white/40 uppercase tracking-wider mb-4">
-            Report Security Issue
+            Laporkan Masalah Keamanan
           </h3>
           <div className="p-4 rounded-lg bg-gradient-to-br from-emerald-500/[0.05] to-transparent border border-emerald-500/20">
             <p className="text-xs text-white/50 leading-relaxed mb-3">
-              Jika kamu menemukan kerentanan keamanan, laporkan segera. Kami menghargai responsible disclosure.
+              Apabila Anda menemukan kerentanan keamanan, mohon segera melaporkannya. Kami menghargai pengungkapan yang bertanggung jawab.
             </p>
             <a
               href="mailto:security@cleverai.app"
@@ -164,11 +164,11 @@ export default function SecurityPage() {
         {/* Security Updates */}
         <section>
           <h3 className="text-xs font-medium text-white/40 uppercase tracking-wider mb-4">
-            Update Keamanan
+            Pembaruan Keamanan
           </h3>
           <div className="p-4 rounded-lg bg-white/[0.02] border border-white/[0.06]">
             <p className="text-xs text-white/40 leading-relaxed mb-3">
-              Kami terus memperbarui sistem keamanan. Pantau changelog untuk update terbaru.
+              Kami secara berkelanjutan memperbarui sistem keamanan. Pantau changelog untuk informasi terbaru.
             </p>
             <a
               href="/changelog"
@@ -182,7 +182,7 @@ export default function SecurityPage() {
         {/* Footer */}
         <footer className="mt-10 pt-6 border-t border-white/[0.06] text-center">
           <p className="text-[10px] text-white/20">
-            MoodWrite AI Security • Last updated April 2024
+            Clever AI Security • Terakhir diperbarui April 2026
           </p>
         </footer>
       </main>
