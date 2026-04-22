@@ -98,11 +98,11 @@ export async function* generateResponseStream({ context, signal }) {
 
     // Process SSE events in buffer
     const lines = buffer.split("\n");
-    buffer = lines.pop() || ""; // Keep incomplete line in buffer
+    buffer = lines.pop() || "";
 
     for (const line of lines) {
       if (line.startsWith("data: ")) {
-        const data = line.slice(6); // Remove "data: " prefix
+        const data = line.slice(6);
         if (data) {
           try {
             const parsed = JSON.parse(data);
@@ -245,3 +245,7 @@ export async function deleteCaption(id) {
   return result;
 }
 
+// Public stats for social proof (no auth required)
+export async function getStats() {
+  return request("/api/stats", { requireAuth: false });
+}

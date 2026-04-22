@@ -7,7 +7,7 @@ import ChatResultCard from "../components/chat/ChatResultCard.jsx";
 import Footer from "../components/layout/Footer.jsx";
 import { useLanguage } from "../contexts/LanguageContext.jsx";
 import { useAuth } from "../contexts/AuthContext.jsx";
-import { generateResponseStream, getCaptions } from "../services/api.js";
+import { generateResponseStream, getCaptions, getStats } from "../services/api.js";
 
 export default function HomePage() {
   const { t } = useLanguage();
@@ -28,6 +28,8 @@ export default function HomePage() {
   const timeoutRef = useRef(null);
   const [historyLoadingMore, setHistoryLoadingMore] = useState(false);
   const [newChatLoading, setNewChatLoading] = useState(false);
+  const [stats, setStats] = useState(null);
+  const [statsLoading, setStatsLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -40,6 +42,22 @@ export default function HomePage() {
       scrollToBottom("smooth");
     }
   }, [result, isStreaming]);
+
+  // Fetch public stats for social proof section
+  useEffect(() => {
+    async function fetchStats() {
+      try {
+        const data = await getStats();
+        setStats(data);
+      } catch (err) {
+        console.error("Failed to load stats:", err);
+      } finally {
+        setStatsLoading(false);
+      }
+    }
+    fetchStats();
+  }, []);
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const textareaRef = useRef(null);
   const abortControllerRef = useRef(null);
@@ -167,6 +185,12 @@ export default function HomePage() {
       setContext("");
       setRetryCount(0);
       await refreshHistory();
+
+      // Hybrid stats update
+      if (stats) {
+        setStats(prev => prev ? { ...prev, totalGenerated: prev.totalGenerated + 1 } : prev);
+        getStats().then(data => setStats(data)).catch(() => { });
+      }
     } catch (err) {
       clearTimeout(timeoutId);
       if (err.name === "AbortError") {
@@ -327,25 +351,53 @@ export default function HomePage() {
                 {/* Stats Block — Social Proof */}
                 <section className="mb-10 px-4">
                   <div className="w-full max-w-md mx-auto">
-                    {/* Divider atas */}
                     <div className="w-full h-px bg-white/[0.06] mb-6" />
-
-                    {/* 3 stat items dalam satu row */}
                     <div className="grid grid-cols-3 gap-4">
-                      {[
-                        { value: "1.2K+", label: "Hasil dibuat" },
-                        { value: "< 3s", label: "Waktu generate" },
-                        { value: "2", label: "Bahasa didukung" },
-                      ].map((stat, i) => (
-                        <div key={i} className="flex flex-col gap-1">
-                          <span className="text-xl sm:text-2xl font-semibold text-white/90 tabular-nums">
-                            {stat.value}
-                          </span>
-                          <span className="text-[11px] text-white/60 leading-tight">
-                            {stat.label}
-                          </span>
-                        </div>
-                      ))}
+                      {/* Total Generated - Dynamic */}
+                      <div className="flex flex-col gap-1">
+                        <span className="text-xl sm:text-2xl font-semibold text-white/90 tabular-nums">
+                          {statsLoading || !stats ? (
+                            <span className="inline-block w-16 h-6 bg-white/[0.08] rounded animate-pulse" />
+                          ) : (
+                            stats.totalGenerated >= 1000
+                              ? `${(stats.totalGenerated / 1000).toFixed(1)}K+`
+                              : stats.totalGenerated.toString()
+                          )}
+                        </span>
+                        <span className="text-[11px] text-white/60 leading-tight">
+                          Hasil dibuat
+                        </span>
+                      </div>
+
+                      {/* Avg Generate Time - Dynamic */}
+                      <div className="flex flex-col gap-1">
+                        <span className="text-xl sm:text-2xl font-semibold text-white/90 tabular-nums">
+                          {statsLoading || !stats ? (
+                            <span className="inline-block w-12 h-6 bg-white/[0.08] rounded animate-pulse" />
+                          ) : (
+                            `< ${Math.max(1, Math.ceil(stats.avgGenerateTime / 1000))}s`
+                          )}
+                        </span>
+                        <span className="text-[11px] text-white/60 leading-tight">
+                          Waktu generate
+                        </span>
+                      </div>
+
+                      {/* Total Users - Dynamic */}
+                      <div className="flex flex-col gap-1">
+                        <span className="text-xl sm:text-2xl font-semibold text-white/90 tabular-nums">
+                          {statsLoading || !stats ? (
+                            <span className="inline-block w-14 h-6 bg-white/[0.08] rounded animate-pulse" />
+                          ) : (
+                            stats.totalUsers >= 1000
+                              ? `${(stats.totalUsers / 1000).toFixed(1)}K+`
+                              : stats.totalUsers.toString()
+                          )}
+                        </span>
+                        <span className="text-[11px] text-white/60 leading-tight">
+                          Pengguna aktif
+                        </span>
+                      </div>
                     </div>
 
                     {/* Divider bawah */}

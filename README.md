@@ -37,7 +37,7 @@ AI Assistant Chat Interface — React frontend for asking questions and getting 
 - **History Management** — View, rename, pin, delete conversations
 - **Copy to Clipboard** — One-click response copy
 - **Smart Auto-scroll** — Smooth scroll following streaming content
-- **Init Loading Spinner** — Professional spinner saat cek login dengan minimum delay
+- **Live Social Proof Stats** — Real-time stats: total generated results, avg response time, active users count
 - **Stream Cancellation** — Stop button during AI streamings
 - **Smooth New Chat Flow** — Fade transitions with loading states
 - **Error Recovery** — Retry button with visual error states
@@ -187,6 +187,9 @@ GET  ${API_BASE}/api/auth/me
 POST ${API_BASE}/api/generate/stream  # SSE streaming (recommended)
 POST ${API_BASE}/api/generate         # Legacy non-streaming
 GET  ${API_BASE}/api/captions
+
+// Stats Endpoint (Social Proof)
+GET  ${API_BASE}/api/stats            # Returns: { totalGenerated, avgGenerateTime, totalUsers }
 ```
 
 ## 🌊 Server-Sent Events (SSE) Streaming
