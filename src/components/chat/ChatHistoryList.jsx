@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "../../contexts/LanguageContext.jsx";
-import HistorySkeleton from "../sidebar/HistorySkeleton.jsx";
+import ChatHistorySkeleton from "./ChatHistorySkeleton.jsx";
 
 function truncateContext(context, maxLength = 60) {
   if (!context) return "";
@@ -112,7 +112,7 @@ export default function HistoryList({
 
       {/* Skeleton Loading State */}
       {showLoading && !hasItems && (
-        <HistorySkeleton count={5} />
+        <ChatHistorySkeleton count={5} />
       )}
 
       {/* Guest Context Banner - when community data exists */}

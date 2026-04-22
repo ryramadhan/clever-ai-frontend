@@ -2,8 +2,8 @@ import { useState, useEffect, useCallback, useLayoutEffect, useRef } from "react
 import { Link } from "react-router-dom";
 import { useLanguage } from "../../contexts/LanguageContext.jsx";
 import { useAuth } from "../../contexts/AuthContext.jsx";
-import SidebarHistory from "./SidebarHistory.jsx";
-import HistorySkeleton from "./HistorySkeleton.jsx";
+import SidebarChatHistory from "./SidebarChatHistory.jsx";
+import ChatHistorySkeleton from "../chat/ChatHistorySkeleton.jsx";
 import SidebarUserFooter from "./SidebarUserFooter.jsx";
 import SidebarGuestFooter from "./SidebarGuestFooter.jsx";
 import logoIconUrl from "../../assets/logo-icon.svg";
@@ -142,7 +142,7 @@ export default function Sidebar({
         {/* History Section */}
         {isAuthenticated && isOpen && (
           <div className="flex-1 overflow-hidden flex flex-col min-h-0">
-            <SidebarHistory
+            <SidebarChatHistory
               items={localHistoryItems}
               loading={historyLoading}
               onRefresh={onRefreshHistory}
@@ -258,7 +258,7 @@ export default function Sidebar({
           {/* History */}
           {isAuthenticated && (
             <div className="flex-1 overflow-hidden flex flex-col min-h-0">
-              <SidebarHistory
+              <SidebarChatHistory
                 items={localHistoryItems}
                 loading={historyLoading}
                 onRefresh={onRefreshHistory}

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FileText, Sparkles, CheckCircle, ChevronRight } from "lucide-react";
 import Header from "../components/layout/Header.jsx";
 import Sidebar from "../components/sidebar/Sidebar.jsx";
-import ResultCard from "../components/chat/ResultCard.jsx";
+import ChatResultCard from "../components/chat/ChatResultCard.jsx";
 import Footer from "../components/layout/Footer.jsx";
 import { useLanguage } from "../contexts/LanguageContext.jsx";
 import { useAuth } from "../contexts/AuthContext.jsx";
@@ -488,7 +488,7 @@ export default function HomePage() {
                   </div>
 
                   <div className={`flex justify-start transition-opacity duration-300 ${result ? 'opacity-100' : 'opacity-0'}`}>
-                    <ResultCard
+                    <ChatResultCard
                       text={result}
                       isTyping={isTyping}
                       provider={provider}

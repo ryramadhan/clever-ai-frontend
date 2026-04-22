@@ -37,7 +37,10 @@ AI Assistant Chat Interface — React frontend for asking questions and getting 
 - **History Management** — View, rename, pin, delete conversations
 - **Copy to Clipboard** — One-click response copy
 - **Smart Auto-scroll** — Smooth scroll following streaming content
-- **Stream Cancellation** — Abort ongoing generation via New Chat
+- **Stream Cancellation** — Stop button during AI streamings
+- **Smooth New Chat Flow** — Fade transitions with loading states
+- **Error Recovery** — Retry button with visual error states
+- **History Skeleton Loading** — Animated placeholders while loading
 - **Minimal Footer Navigation** — Clean bottom info with Product, Resources, Legal links
 - **Smooth Page Navigation** — React Router with ScrollToTop component
 - **Multi-page Support** — Docs, Guide, Changelog, Privacy, Terms, Security pages
@@ -103,15 +106,16 @@ src/
 │   │   ├── Footer.jsx          # Minimal bottom navigation with links
 │   │   └── Sidebar.jsx         # Main sidebar (full height, no duplication)
 │   ├── chat/                   # Chat-related components
-│   │   ├── ResultCard.jsx     # AI response display with streaming indicator
-│   │   └── HistoryList.jsx    # History list component
+│   │   ├── ChatResultCard.jsx      # AI response display with streaming indicator
+│   │   ├── ChatHistoryList.jsx     # History list component
+│   │   └── ChatHistorySkeleton.jsx # Loading skeleton for history
 │   ├── ui/                     # UI primitives & reusable components
 │   │   └── Button.jsx         # Reusable button component
 │   ├── common/                 # Shared utility components
 │   │   └── ScrollToTop.jsx    # Auto-scroll to top on route change
 │   ├── sidebar/               # Sidebar sub-components
-│   │   ├── SidebarHistory.jsx # History list with skeleton loading
-│   │   ├── SidebarUserFooter.jsx   # User avatar & logout
+│   │   ├── SidebarChatHistory.jsx  # History list with skeleton loading
+│   │   ├── SidebarUserFooter.jsx   # User avatar & logout (with Google profile pic)
 │   │   ├── SidebarGuestFooter.jsx  # Guest CTA
 │   │   ├── GuestSearchCta.jsx      # Guest search CTA
 │   │   └── HistoryItemMenu.jsx     # Dropdown menu for history items
