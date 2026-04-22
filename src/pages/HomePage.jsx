@@ -29,7 +29,6 @@ export default function HomePage() {
   const [historyLoadingMore, setHistoryLoadingMore] = useState(false);
   const [newChatLoading, setNewChatLoading] = useState(false);
   const [stats, setStats] = useState(prefetchedStats);
-  const [statsLoading, setStatsLoading] = useState(!prefetchedStats);
 
   const navigate = useNavigate();
 
@@ -52,8 +51,6 @@ export default function HomePage() {
         setStats(data);
       } catch (err) {
         console.error("Failed to load stats:", err);
-      } finally {
-        setStatsLoading(false);
       }
     }
     fetchStats();
@@ -357,13 +354,9 @@ export default function HomePage() {
                       {/* Total Generated - Dynamic */}
                       <div className="flex flex-col gap-1">
                         <span className="text-xl sm:text-2xl font-semibold text-white/90 tabular-nums">
-                          {statsLoading || !stats ? (
-                            <span className="inline-block w-16 h-6 bg-white/[0.08] rounded animate-pulse" />
-                          ) : (
-                            stats.totalGenerated >= 1000
-                              ? `${(stats.totalGenerated / 1000).toFixed(1)}K+`
-                              : stats.totalGenerated.toString()
-                          )}
+                          {stats?.totalGenerated >= 1000
+                            ? `${(stats.totalGenerated / 1000).toFixed(1)}K+`
+                            : stats?.totalGenerated?.toString() ?? "-"}
                         </span>
                         <span className="text-[11px] text-white/60 leading-tight">
                           Hasil dibuat
@@ -373,11 +366,9 @@ export default function HomePage() {
                       {/* Avg Generate Time - Dynamic */}
                       <div className="flex flex-col gap-1">
                         <span className="text-xl sm:text-2xl font-semibold text-white/90 tabular-nums">
-                          {statsLoading || !stats ? (
-                            <span className="inline-block w-12 h-6 bg-white/[0.08] rounded animate-pulse" />
-                          ) : (
-                            `< ${Math.max(1, Math.ceil(stats.avgGenerateTime / 1000))}s`
-                          )}
+                          {stats?.avgGenerateTime
+                            ? `< ${Math.max(1, Math.ceil(stats.avgGenerateTime / 1000))}s`
+                            : "-"}
                         </span>
                         <span className="text-[11px] text-white/60 leading-tight">
                           Waktu generate
@@ -387,13 +378,9 @@ export default function HomePage() {
                       {/* Total Users - Dynamic */}
                       <div className="flex flex-col gap-1">
                         <span className="text-xl sm:text-2xl font-semibold text-white/90 tabular-nums">
-                          {statsLoading || !stats ? (
-                            <span className="inline-block w-14 h-6 bg-white/[0.08] rounded animate-pulse" />
-                          ) : (
-                            stats.totalUsers >= 1000
-                              ? `${(stats.totalUsers / 1000).toFixed(1)}K+`
-                              : stats.totalUsers.toString()
-                          )}
+                          {stats?.totalUsers >= 1000
+                            ? `${(stats.totalUsers / 1000).toFixed(1)}K+`
+                            : stats?.totalUsers?.toString() ?? "-"}
                         </span>
                         <span className="text-[11px] text-white/60 leading-tight">
                           Pengguna aktif
