@@ -43,7 +43,7 @@ export default function HomePage() {
   }, [result, isStreaming]);
 
   useEffect(() => {
-    if (prefetchedStats) return; // Already have stats from AuthContext
+    if (prefetchedStats) return;
 
     async function fetchStats() {
       try {
