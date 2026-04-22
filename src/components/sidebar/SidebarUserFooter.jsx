@@ -39,13 +39,19 @@ export default function SidebarUserFooter({ isExpanded = true, onAction }) {
         <div className="border-t border-white/[0.06] p-2">
           <button
             onClick={handleLogoutClick}
-            className="w-10 h-10 mx-auto rounded-full bg-white/[0.06] border border-white/[0.10] flex items-center justify-center overflow-hidden hover:bg-white/[0.10] hover:border-white/[0.15] transition-all duration-200"
+            className="w-10 h-10 mx-auto rounded-full bg-white/[0.06] ring-2 ring-white/[0.15] ring-offset-2 ring-offset-[#0a0a0a] flex items-center justify-center overflow-hidden hover:ring-white/30 hover:scale-105 transition-all duration-200 shadow-lg shadow-black/20"
             title={`${user?.name || t("guestUser")} - ${t("signOut")}`}
           >
             {user?.picture ? (
-              <img src={user.picture} alt="" className="w-full h-full object-cover" />
+              <img
+                src={user.picture}
+                alt=""
+                className="w-full h-full object-cover"
+                loading="lazy"
+                referrerPolicy="no-referrer"
+              />
             ) : (
-              <span className="text-xs font-medium text-white">
+              <span className="text-sm font-semibold text-white">
                 {getInitials(user?.name)}
               </span>
             )}
@@ -62,21 +68,23 @@ export default function SidebarUserFooter({ isExpanded = true, onAction }) {
     );
   }
 
-  // Expanded state - full footer
+  // full footer
   return (
     <>
       <div className="border-t border-white/[0.06] p-3">
         <div className="flex items-center gap-3 px-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.08]">
           {/* Avatar */}
-          <div className="w-8 h-8 rounded-full bg-white/10 border border-white/[0.15] flex items-center justify-center flex-shrink-0 overflow-hidden">
+          <div className="w-9 h-9 rounded-full bg-white/10 ring-2 ring-white/[0.12] ring-offset-1 ring-offset-[#0a0a0a] flex items-center justify-center flex-shrink-0 overflow-hidden shadow-md shadow-black/20">
             {user?.picture ? (
               <img
                 src={user.picture}
                 alt={user.name || "User"}
                 className="w-full h-full object-cover"
+                loading="lazy"
+                referrerPolicy="no-referrer"
               />
             ) : (
-              <span className="text-xs font-medium text-white">
+              <span className="text-sm font-semibold text-white">
                 {getInitials(user?.name)}
               </span>
             )}

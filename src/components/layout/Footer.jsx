@@ -41,35 +41,9 @@ export default function Footer({
   ];
 
   return (
-    <footer className="py-10 px-4 sm:px-6 border-t border-white/[0.06]">
+    <footer className="mt-16 py-10 px-4 sm:px-6 border-t border-white/[0.06]">
       <div className="max-w-5xl mx-auto">
-        {/* Top Section - Newsletter */}
-        <div className="mb-10 pb-8 border-b border-white/[0.04]">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div>
-              <p className="text-sm font-medium text-white">
-                Dapatkan update fitur terbaru
-              </p>
-              <p className="text-xs text-white/60 mt-1">
-                Tips AI dan fitur baru untuk produktivitas kamu
-              </p>
-            </div>
-            <div className="flex gap-2 w-full sm:w-auto">
-              <input
-                type="email"
-                placeholder="email@example.com"
-                className="flex-1 sm:w-64 px-3 py-2 text-sm bg-white/[0.04] border border-white/[0.08] rounded-lg text-white placeholder:text-white/50 focus:outline-none focus:border-white/[0.15]"
-              />
-              <button className="px-4 py-2 text-xs font-medium bg-white text-black rounded-lg hover:bg-white/90 transition-colors">
-                Subscribe
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Main Content - Doormat Navigation */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
-          {/* Brand Column */}
           <div className="col-span-2 md:col-span-1">
             <p className="text-sm font-medium text-white mb-3">
               Clever AI
@@ -89,7 +63,7 @@ export default function Footer({
                 {section.links.map((link) => (
                   <li key={link.label}>
                     {link.external ? (
-                      // External link: use <a>
+                      
                       <a
                         href={link.href}
                         target="_blank"
@@ -102,7 +76,7 @@ export default function Footer({
                         </svg>
                       </a>
                     ) : link.to ? (
-                      // Internal navigation: use <Link>
+                      
                       <Link
                         to={link.to}
                         onClick={link.onClick}
@@ -111,7 +85,7 @@ export default function Footer({
                         {link.label}
                       </Link>
                     ) : link.action ? (
-                      // Action (like toggle): use <button>
+                     
                       <button
                         onClick={link.action}
                         className="text-xs text-white/60 hover:text-white/90 transition-colors duration-200 inline-flex items-center gap-1 bg-transparent border-0 p-0 cursor-pointer"

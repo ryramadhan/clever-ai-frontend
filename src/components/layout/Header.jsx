@@ -86,13 +86,19 @@ export default function Header({ onMenuToggle }) {
           ) : (
             <button
               onClick={handleLogoutClick}
-              className="flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-white/[0.06] transition-colors"
+              className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-white/[0.06] transition-colors"
             >
-              <div className="w-7 h-7 rounded-full bg-white/10 border border-white/[0.12] flex items-center justify-center overflow-hidden">
+              <div className="w-8 h-8 rounded-full bg-white/10 ring-2 ring-white/[0.12] ring-offset-1 ring-offset-[#0a0a0a] flex items-center justify-center overflow-hidden shadow-md shadow-black/20 hover:ring-white/25 transition-all duration-200">
                 {user?.picture ? (
-                  <img src={user.picture} alt="" className="w-full h-full object-cover" />
+                  <img
+                    src={user.picture}
+                    alt=""
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
+                  />
                 ) : (
-                  <span className="text-xs font-medium text-white">
+                  <span className="text-sm font-semibold text-white">
                     {getInitials(user?.name)}
                   </span>
                 )}

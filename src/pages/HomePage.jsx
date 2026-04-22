@@ -357,6 +357,16 @@ export default function HomePage() {
                   </div>
                 </section>
 
+                {/* Scroll Hint */}
+                <div className="flex items-center justify-center gap-2 mb-6 text-white/40">
+                  <div className="w-8 h-px bg-white/20" />
+                  <span className="text-xs">Scroll for footer</span>
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                  <div className="w-8 h-px bg-white/20" />
+                </div>
+
                 {/* Input */}
                 <div className="w-full">
                   <div className="relative bg-[#141414] rounded-2xl sm:rounded-[26px] border border-white/[0.08] shadow-lg shadow-black/20 min-h-[52px] sm:min-h-[56px] flex items-center pr-12 sm:pr-14">
@@ -397,11 +407,8 @@ export default function HomePage() {
                       )}
                     </button>
                   </div>
-                  <p className="text-xs text-white/45 text-center mt-3">
-                    {t("pressEnterToSend")}
-                  </p>
-                  <p className="text-[10px] text-white/45 text-center mt-1">
-                    Clever AI · Generate dalam hitungan detik
+                  <p className="text-[10px] text-white/45 text-center mt-3">
+                    {t("brandTagline")}
                   </p>
 
                   {/* Error */}

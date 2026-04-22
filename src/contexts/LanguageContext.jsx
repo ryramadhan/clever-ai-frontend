@@ -21,7 +21,7 @@ const translations = {
     generating: "Generating...",
     typewriterEffect: "Typewriter effect",
     charLimit: "{current}/{max} characters",
-    pressEnterToSend: "Press Enter to send, Shift+Enter for new line",
+    brandTagline: "Clever AI · Generate in seconds",
     askFollowUp: "Ask a follow-up...",
     aiMayProduceInaccurate: "AI may produce inaccurate information. Verify important details.",
     copy: "Copy",
@@ -129,7 +129,7 @@ const translations = {
 
     // Toggle
     typewriterEffect: "Efek ketik",
-    pressEnterToSend: "Tekan Enter untuk kirim, Shift+Enter untuk baris baru",
+    brandTagline: "Clever AI · Generate dalam hitungan detik",
     askFollowUp: "Tanyakan lanjutan...",
     aiMayProduceInaccurate: "AI dapat menghasilkan informasi yang tidak akurat. Verifikasi detail penting.",
 
