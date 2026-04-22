@@ -1,14 +1,24 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useLanguage } from "../../contexts/LanguageContext.jsx";
 import { useAuth } from "../../contexts/AuthContext.jsx";
 import { useState } from "react";
 import logoIconUrl from "../../assets/logo-icon.svg";
 import LogoutConfirmModal from "../modals/LogoutConfirmModal.jsx";
 
-export default function Header({ onMenuToggle }) {
+export default function Header({ onMenuToggle, onNewChat }) {
+  const navigate = useNavigate();
+  const location = useLocation();
   const { lang, toggleLanguage, t } = useLanguage();
   const { isAuthenticated, isAuthReady, user, logout } = useAuth();
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
+  const handleHomeClick = (e) => {
+    if (location.pathname === "/" && onNewChat) {
+      e.preventDefault();
+      onNewChat(); // Smooth reset without reload
+    }
+    // Jika di halaman lain, Link navigasi normal ke /
+  };
 
   const getInitials = (name) => {
     if (!name) return "?";
@@ -48,7 +58,13 @@ export default function Header({ onMenuToggle }) {
               <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
-          <span className="text-base font-bold text-white tracking-tight">Clever AI</span>
+          <Link
+            to="/"
+            onClick={handleHomeClick}
+            className="text-base font-bold text-white tracking-tight hover:text-white/80 transition-colors"
+          >
+            Clever AI
+          </Link>
         </div>
 
         <div className="flex items-center gap-2">

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useLanguage } from "../../contexts/LanguageContext.jsx";
 import { useAuth } from "../../contexts/AuthContext.jsx";
 import SidebarHistory from "./SidebarHistory.jsx";
+import HistorySkeleton from "./HistorySkeleton.jsx";
 import SidebarUserFooter from "./SidebarUserFooter.jsx";
 import SidebarGuestFooter from "./SidebarGuestFooter.jsx";
 import logoIconUrl from "../../assets/logo-icon.svg";

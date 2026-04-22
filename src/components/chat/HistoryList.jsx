@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "../../contexts/LanguageContext.jsx";
+import HistorySkeleton from "../sidebar/HistorySkeleton.jsx";
 
 function truncateContext(context, maxLength = 60) {
   if (!context) return "";
@@ -109,13 +110,9 @@ export default function HistoryList({
         </div>
       )}
 
-      {/* Skeleton */}
+      {/* Skeleton Loading State */}
       {showLoading && !hasItems && (
-        <div className="space-y-3">
-          <div className="h-24 rounded-xl bg-white/[0.04] animate-skeleton" />
-          <div className="h-24 rounded-xl bg-white/[0.04] animate-skeleton" />
-          <div className="h-24 rounded-xl bg-white/[0.04] animate-skeleton" />
-        </div>
+        <HistorySkeleton count={5} />
       )}
 
       {/* Guest Context Banner - when community data exists */}

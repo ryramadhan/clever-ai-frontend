@@ -27,6 +27,7 @@ export default function HomePage() {
   const [retryCount, setRetryCount] = useState(0);
   const timeoutRef = useRef(null);
   const [historyLoadingMore, setHistoryLoadingMore] = useState(false);
+  const [newChatLoading, setNewChatLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -191,24 +192,46 @@ export default function HomePage() {
   }
 
   async function handleNewChat() {
-    // Cancel any ongoing stream
+    // Cancel ongoing stream
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
     }
-    await refreshHistory();
-    setContext("");
-    setUserMessage("");
-    setResult("");
-    setProvider("");
-    setError("");
+
+    // Set loading state with visual feedback
+    setNewChatLoading(true);
     setIsStreaming(false);
     setLoading(false);
 
+    // Clear result with smooth fade transition
+    setResult("");
+    setProvider("");
+    setUserMessage("");
+    setError("");
+    setContext("");
+
+    // Reload history in background (silent fail for UX)
+    try {
+      await refreshHistory();
+    } catch (err) {
+      console.error("[NewChat] Failed to refresh history:", err);
+    }
+
+    setNewChatLoading(false);
+
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     if (!isMobile) {
-      setTimeout(() => textareaRef.current?.focus({ preventScroll: true }), 0);
+      setTimeout(() => textareaRef.current?.focus({ preventScroll: true }), 200);
     }
+  }
+
+  function cancelStreaming() {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    setIsStreaming(false);
+    setLoading(false);
   }
 
   function handleHistoryItemClick(item) {
@@ -267,7 +290,7 @@ export default function HomePage() {
       />
 
       <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
-        <Header onMenuToggle={toggleSidebar} />
+        <Header onMenuToggle={toggleSidebar} onNewChat={handleNewChat} />
 
         <main className="flex-1 flex flex-col min-h-0 overflow-y-auto thin-scrollbar">
           {!result ? (
@@ -311,8 +334,8 @@ export default function HomePage() {
                     <div className="grid grid-cols-3 gap-4">
                       {[
                         { value: "1.2K+", label: "Hasil dibuat" },
-                        { value: "< 3s",  label: "Waktu generate" },
-                        { value: "2",     label: "Bahasa didukung" },
+                        { value: "< 3s", label: "Waktu generate" },
+                        { value: "2", label: "Bahasa didukung" },
                       ].map((stat, i) => (
                         <div key={i} className="flex flex-col gap-1">
                           <span className="text-xl sm:text-2xl font-semibold text-white/90 tabular-nums">
@@ -390,31 +413,55 @@ export default function HomePage() {
                         e.target.style.height = Math.min(e.target.scrollHeight, 200) + 'px';
                       }}
                     />
-                    {/* Send Button */}
-                    <button
-                      type="button"
-                      onClick={onGenerate}
-                      disabled={!canSubmit || loading}
-                      className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white text-[#0a0a0a] flex items-center justify-center transition-all duration-200 hover:bg-white/90 disabled:opacity-30 disabled:cursor-not-allowed disabled:bg-white/50"
-                      aria-label={t("generate")}
-                    >
-                      {loading ? (
-                        <span className="w-3.5 h-3.5 sm:w-4 sm:h-4 border-2 border-[#0a0a0a]/30 border-t-[#0a0a0a] rounded-full animate-spin" />
-                      ) : (
+                    {isStreaming || loading ? (
+                      <button
+                        type="button"
+                        onClick={cancelStreaming}
+                        className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center transition-all duration-200 hover:bg-red-500/30"
+                        title="Stop generating"
+                      >
+                        <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 24 24">
+                          <rect x="6" y="6" width="12" height="12" rx="2" />
+                        </svg>
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={onGenerate}
+                        disabled={!canSubmit}
+                        className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white text-[#0a0a0a] flex items-center justify-center transition-all duration-200 hover:bg-white/90 disabled:opacity-30 disabled:cursor-not-allowed disabled:bg-white/50"
+                        aria-label={t("generate")}
+                      >
                         <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
                         </svg>
-                      )}
-                    </button>
+                      </button>
+                    )}
                   </div>
                   <p className="text-[10px] text-white/45 text-center mt-3">
                     {t("brandTagline")}
                   </p>
 
-                  {/* Error */}
                   {error && (
-                    <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-center">
-                      <span className="text-red-400 text-sm">{error}</span>
+                    <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20">
+                      <div className="flex flex-col sm:flex-row items-center gap-3">
+                        <div className="flex items-center gap-2">
+                          <svg className="w-4 h-4 text-red-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          <span className="text-red-400 text-sm">{error}</span>
+                        </div>
+                        <button
+                          onClick={() => {
+                            setError("");
+                            onGenerate();
+                          }}
+                          disabled={loading || isStreaming}
+                          className="px-3 py-1.5 rounded-lg bg-red-500/20 text-red-400 text-xs font-medium hover:bg-red-500/30 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {loading ? t("retrying") || "Retrying..." : t("retry") || "Retry"}
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -427,7 +474,9 @@ export default function HomePage() {
               </div>
             </div>
           ) : (
-            <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
+            <div
+              className={`flex-1 flex flex-col min-h-0 overflow-hidden transition-opacity duration-300 ease-out ${newChatLoading ? 'opacity-0' : 'opacity-100'}`}
+            >
               {/* Chat History */}
               <div ref={chatContainerRef} className="flex-1 min-h-0 overflow-y-auto thin-scrollbar">
                 <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-8 pb-32 space-y-6">
@@ -438,8 +487,7 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  {/* AI Response */}
-                  <div className="flex justify-start">
+                  <div className={`flex justify-start transition-opacity duration-300 ${result ? 'opacity-100' : 'opacity-0'}`}>
                     <ResultCard
                       text={result}
                       isTyping={isTyping}
@@ -508,21 +556,30 @@ export default function HomePage() {
                         e.target.style.height = Math.min(e.target.scrollHeight, 200) + 'px';
                       }}
                     />
-                    <button
-                      type="button"
-                      onClick={onGenerate}
-                      disabled={!canSubmit || loading}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white text-[#0a0a0a] flex items-center justify-center transition-all duration-200 hover:bg-white/90 disabled:opacity-30 disabled:cursor-not-allowed disabled:bg-white/50"
-                      aria-label={t("generate")}
-                    >
-                      {loading ? (
-                        <span className="w-4 h-4 border-2 border-[#0a0a0a]/30 border-t-[#0a0a0a] rounded-full animate-spin" />
-                      ) : (
+                    {isStreaming || loading ? (
+                      <button
+                        type="button"
+                        onClick={cancelStreaming}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center transition-all duration-200 hover:bg-red-500/30"
+                        title="Stop generating"
+                      >
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                          <rect x="6" y="6" width="12" height="12" rx="2" />
+                        </svg>
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={onGenerate}
+                        disabled={!canSubmit}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white text-[#0a0a0a] flex items-center justify-center transition-all duration-200 hover:bg-white/90 disabled:opacity-30 disabled:cursor-not-allowed disabled:bg-white/50"
+                        aria-label={t("generate")}
+                      >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
                         </svg>
-                      )}
-                    </button>
+                      </button>
+                    )}
                   </div>
                   <p className="text-[10px] text-white/45 text-center mt-1 sm:mt-2 pb-3 sm:pb-4">
                     {t("aiMayProduceInaccurate")}
