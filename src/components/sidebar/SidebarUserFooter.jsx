@@ -45,7 +45,7 @@ export default function SidebarUserFooter({ isExpanded = true, onAction }) {
             {user?.picture ? (
               <img src={user.picture} alt="" className="w-full h-full object-cover" />
             ) : (
-              <span className="text-xs font-medium text-white/80">
+              <span className="text-xs font-medium text-white">
                 {getInitials(user?.name)}
               </span>
             )}
@@ -76,7 +76,7 @@ export default function SidebarUserFooter({ isExpanded = true, onAction }) {
                 className="w-full h-full object-cover"
               />
             ) : (
-              <span className="text-xs font-medium text-white/80">
+              <span className="text-xs font-medium text-white">
                 {getInitials(user?.name)}
               </span>
             )}
@@ -84,10 +84,10 @@ export default function SidebarUserFooter({ isExpanded = true, onAction }) {
 
           {/* Info */}
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-white/90 truncate">
+            <p className="text-sm font-medium text-white truncate">
               {user?.name || t("guestUser")}
             </p>
-            <p className="text-xs text-white/40 truncate">
+            <p className="text-xs text-white/60 truncate">
               {user?.email || ""}
             </p>
           </div>
@@ -95,7 +95,7 @@ export default function SidebarUserFooter({ isExpanded = true, onAction }) {
           {/* Sign Out */}
           <button
             onClick={handleLogoutClick}
-            className="w-8 h-8 rounded-lg flex items-center justify-center text-white/40 hover:text-red-400 hover:bg-red-500/10 transition-all duration-200 flex-shrink-0"
+            className="w-8 h-8 rounded-lg flex items-center justify-center text-white/60 hover:text-red-400 hover:bg-red-500/10 transition-all duration-200 flex-shrink-0"
             title={t("signOut")}
             aria-label={t("signOut")}
           >

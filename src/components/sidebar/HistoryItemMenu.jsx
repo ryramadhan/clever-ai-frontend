@@ -101,7 +101,7 @@ export default function HistoryItemMenu({
         <button
           type="button"
           onClick={handleRenameClick}
-          className="w-full flex items-center gap-2.5 px-3 py-2 text-xs text-white/70 hover:text-white hover:bg-white/[0.06] rounded-md transition-colors"
+          className="w-full flex items-center gap-2.5 px-3 py-2 text-xs text-white/90 hover:text-white hover:bg-white/[0.06] rounded-md transition-colors"
           role="menuitem"
         >
           <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
@@ -113,7 +113,7 @@ export default function HistoryItemMenu({
         <button
           type="button"
           onClick={handlePin}
-          className="w-full flex items-center gap-2.5 px-3 py-2 text-xs text-white/70 hover:text-white hover:bg-white/[0.06] rounded-md transition-colors"
+          className="w-full flex items-center gap-2.5 px-3 py-2 text-xs text-white/90 hover:text-white hover:bg-white/[0.06] rounded-md transition-colors"
           role="menuitem"
         >
           {item.is_pinned ? (
@@ -138,7 +138,7 @@ export default function HistoryItemMenu({
         <button
           type="button"
           onClick={handleDeleteClick}
-          className="w-full flex items-center gap-2.5 px-3 py-2 text-xs text-white/70 hover:text-white hover:bg-white/[0.06] rounded-md transition-colors"
+          className="w-full flex items-center gap-2.5 px-3 py-2 text-xs text-white/90 hover:text-white hover:bg-white/[0.06] rounded-md transition-colors"
           role="menuitem"
         >
           <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
@@ -159,7 +159,7 @@ export default function HistoryItemMenu({
         className={`
           flex items-center justify-center rounded-md
           transition-all duration-150 ease-out
-          ${isOpen ? "bg-white/15 text-white/90" : "text-white/40 hover:text-white/70 hover:bg-white/8"}
+          ${isOpen ? "bg-white/15 text-white" : "text-white/60 hover:text-white hover:bg-white/8"}
         `}
         style={{ width: "28px", height: "28px" }}
         aria-label={t("menu")}

@@ -47,10 +47,10 @@ export default function Footer({
         <div className="mb-10 pb-8 border-b border-white/[0.04]">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-              <p className="text-sm font-medium text-white/80">
+              <p className="text-sm font-medium text-white">
                 Dapatkan update fitur terbaru
               </p>
-              <p className="text-xs text-white/40 mt-1">
+              <p className="text-xs text-white/60 mt-1">
                 Tips AI dan fitur baru untuk produktivitas kamu
               </p>
             </div>
@@ -58,7 +58,7 @@ export default function Footer({
               <input
                 type="email"
                 placeholder="email@example.com"
-                className="flex-1 sm:w-64 px-3 py-2 text-sm bg-white/[0.04] border border-white/[0.08] rounded-lg text-white/80 placeholder:text-white/30 focus:outline-none focus:border-white/[0.15]"
+                className="flex-1 sm:w-64 px-3 py-2 text-sm bg-white/[0.04] border border-white/[0.08] rounded-lg text-white placeholder:text-white/50 focus:outline-none focus:border-white/[0.15]"
               />
               <button className="px-4 py-2 text-xs font-medium bg-white text-black rounded-lg hover:bg-white/90 transition-colors">
                 Subscribe
@@ -71,10 +71,10 @@ export default function Footer({
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-1">
-            <p className="text-sm font-medium text-white/80 mb-3">
+            <p className="text-sm font-medium text-white mb-3">
               Clever AI
             </p>
-            <p className="text-xs text-white/40 leading-relaxed">
+            <p className="text-xs text-white/60 leading-relaxed">
               AI Assistant untuk membantu kamu berkreasi dengan ide-ide menarik. Chat dengan AI secara real-time dengan streaming response.
             </p>
           </div>
@@ -82,7 +82,7 @@ export default function Footer({
           {/* Navigation Columns */}
           {doormatNav.map((section) => (
             <div key={section.title}>
-              <p className="text-xs font-medium text-white/60 uppercase tracking-wider mb-3">
+              <p className="text-xs font-medium text-white/70 uppercase tracking-wider mb-3">
                 {section.title}
               </p>
               <ul className="space-y-2">
@@ -94,7 +94,7 @@ export default function Footer({
                         href={link.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs text-white/40 hover:text-white/70 transition-colors duration-200 inline-flex items-center gap-1"
+                        className="text-xs text-white/60 hover:text-white/90 transition-colors duration-200 inline-flex items-center gap-1"
                       >
                         {link.label}
                         <svg className="w-3 h-3 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -106,7 +106,7 @@ export default function Footer({
                       <Link
                         to={link.to}
                         onClick={link.onClick}
-                        className="text-xs text-white/40 hover:text-white/70 transition-colors duration-200 inline-flex items-center gap-1"
+                        className="text-xs text-white/60 hover:text-white/90 transition-colors duration-200 inline-flex items-center gap-1"
                       >
                         {link.label}
                       </Link>
@@ -114,12 +114,12 @@ export default function Footer({
                       // Action (like toggle): use <button>
                       <button
                         onClick={link.action}
-                        className="text-xs text-white/40 hover:text-white/70 transition-colors duration-200 inline-flex items-center gap-1 bg-transparent border-0 p-0 cursor-pointer"
+                        className="text-xs text-white/60 hover:text-white/90 transition-colors duration-200 inline-flex items-center gap-1 bg-transparent border-0 p-0 cursor-pointer"
                       >
                         {link.label}
                       </button>
                     ) : (
-                      <span className="text-xs text-white/30 inline-flex items-center gap-1">
+                      <span className="text-xs text-white/45 inline-flex items-center gap-1">
                         {link.label}
                       </span>
                     )}
@@ -135,13 +135,13 @@ export default function Footer({
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             {/* Social Links */}
             <div className="flex items-center gap-3">
-              <span className="text-xs text-white/40">Connect</span>
+              <span className="text-xs text-white/60">Connect</span>
               <div className="flex gap-2">
                 {socialLinks.map((social) => (
                   <a
                     key={social.label}
                     href={social.href}
-                    className="w-8 h-8 flex items-center justify-center text-xs font-medium text-white/50 bg-white/[0.04] border border-white/[0.06] rounded-full hover:text-white/80 hover:bg-white/[0.08] hover:border-white/[0.12] transition-all duration-200"
+                    className="w-8 h-8 flex items-center justify-center text-xs font-medium text-white/60 bg-white/[0.04] border border-white/[0.06] rounded-full hover:text-white hover:bg-white/[0.08] hover:border-white/[0.12] transition-all duration-200"
                   >
                     {social.label}
                   </a>
@@ -155,7 +155,7 @@ export default function Footer({
               onClick={() => {
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
-              className="flex items-center gap-1.5 text-xs text-white/40 hover:text-white/70 transition-colors duration-200 group"
+              className="flex items-center gap-1.5 text-xs text-white/60 hover:text-white/90 transition-colors duration-200 group"
             >
               <span>Back to top</span>
               <svg

@@ -64,9 +64,9 @@ export default function HistoryList({
       {/* Header dengan mode indicator */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <h2 className="text-xl font-semibold tracking-tight text-white/95">{t("historyTitle")}</h2>
+          <h2 className="text-xl font-semibold tracking-tight text-white">{t("historyTitle")}</h2>
           {!isAuthenticated && hasItems && (
-            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs bg-white/[0.04] text-white/50 border border-white/[0.08]">
+            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs bg-white/[0.04] text-white/60 border border-white/[0.08]">
               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -74,7 +74,7 @@ export default function HistoryList({
             </span>
           )}
           {isAuthenticated && (
-            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs bg-white/[0.04] text-white/50 border border-white/[0.08]">
+            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs bg-white/[0.04] text-white/60 border border-white/[0.08]">
               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
@@ -84,7 +84,7 @@ export default function HistoryList({
         </div>
         <button
           type="button"
-          className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-transparent border border-white/[0.08] text-sm text-white/50 transition-all duration-200 hover:bg-white/[0.05] hover:text-white/70 hover:border-white/[0.15] disabled:opacity-40 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-transparent border border-white/[0.08] text-sm text-white/60 transition-all duration-200 hover:bg-white/[0.05] hover:text-white/90 hover:border-white/[0.15] disabled:opacity-40 disabled:cursor-not-allowed"
           onClick={onRefresh}
           disabled={loading || loadingMore}
         >
@@ -121,7 +121,7 @@ export default function HistoryList({
       {/* Guest Context Banner - when community data exists */}
       {!loading && hasItems && !isAuthenticated && (
         <div className="mb-4 p-3 sm:p-4 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-          <p className="text-xs sm:text-sm text-white/40 text-center">
+          <p className="text-xs sm:text-sm text-white/60 text-center">
             {t("guestBannerText")}
           </p>
         </div>
@@ -131,7 +131,7 @@ export default function HistoryList({
       {!loading && !hasItems && !isAuthenticated && (
         <div className="text-center py-12 sm:py-14 px-4">
           <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-4 sm:mb-5 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center">
-            <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white/45" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
           </div>
@@ -139,13 +139,13 @@ export default function HistoryList({
           <p className="text-sm sm:text-base font-medium text-white/60 mb-1.5 sm:mb-2">
             {t("emptyStateTitle")}
           </p>
-          <p className="text-xs sm:text-sm text-white/35 mb-5 sm:mb-6 max-w-xs mx-auto leading-relaxed">
+          <p className="text-xs sm:text-sm text-white/60 mb-5 sm:mb-6 max-w-xs mx-auto leading-relaxed">
             {t("emptyStateSubtitle")}
           </p>
 
           <Link
             to="/login"
-            className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-white/[0.05] border border-white/[0.10] text-sm text-white/60 transition-all duration-200 hover:bg-white/[0.08] hover:text-white hover:border-white/[0.15]"
+            className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-white/[0.05] border border-white/[0.10] text-sm text-white/90 transition-all duration-200 hover:bg-white/[0.08] hover:text-white hover:border-white/[0.15]"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
@@ -159,12 +159,12 @@ export default function HistoryList({
       {!loading && !hasItems && isAuthenticated && (
         <div className="text-center py-10 sm:py-12 px-4">
           <div className="w-11 h-11 sm:w-12 sm:h-12 mx-auto mb-3 sm:mb-4 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center">
-            <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white/30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white/45" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
             </svg>
           </div>
 
-          <p className="text-xs sm:text-sm text-white/50">
+          <p className="text-xs sm:text-sm text-white/60">
             {t("noHistory")}
           </p>
         </div>
@@ -182,9 +182,9 @@ export default function HistoryList({
               {/* Top row */}
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-white/40">{formatDate(it.created_at)}</span>
+                  <span className="text-sm text-white/60">{formatDate(it.created_at)}</span>
                   {!isAuthenticated && (
-                    <span className="text-[10px] text-white/25 px-1.5 py-0.5 rounded border border-white/[0.06]">
+                    <span className="text-[10px] text-white/45 px-1.5 py-0.5 rounded border border-white/[0.06]">
                       {t("publicBadge")}
                     </span>
                   )}
@@ -206,11 +206,11 @@ export default function HistoryList({
 
               {/* Input context */}
               {it.context && (
-                <div className="text-xs sm:text-sm text-white/50 italic mb-1.5 sm:mb-2">Q: "{truncateContext(it.context)}"</div>
+                <div className="text-xs sm:text-sm text-white/60 italic mb-1.5 sm:mb-2">Q: "{truncateContext(it.context)}"</div>
               )}
 
               {/* Result */}
-              <div className="text-sm sm:text-base text-white/95 leading-relaxed">{it.result}</div>
+              <div className="text-sm sm:text-base text-white leading-relaxed">{it.result}</div>
             </article>
           ))}
         </div>
@@ -221,7 +221,7 @@ export default function HistoryList({
         <div className="flex justify-center mt-5 sm:mt-6">
           <button
             type="button"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-transparent border border-white/[0.08] text-sm text-white/50 transition-all duration-200 hover:bg-white/[0.05] hover:text-white/70 hover:border-white/[0.15] disabled:opacity-40"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-transparent border border-white/[0.08] text-sm text-white/60 transition-all duration-200 hover:bg-white/[0.05] hover:text-white/90 hover:border-white/[0.15] disabled:opacity-40"
             onClick={onLoadMore}
             disabled={loading || loadingMore}
           >
@@ -240,13 +240,13 @@ export default function HistoryList({
       {/* Subtle CTA at bottom for Guest with data */}
       {!loading && hasItems && !isAuthenticated && (
         <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-white/[0.06]">
-          <p className="text-center text-xs text-white/30 mb-3">
+          <p className="text-center text-xs text-white/45 mb-3">
             {t("privateCtaText")}
           </p>
           <div className="flex justify-center">
             <Link
               to="/register"
-              className="inline-flex items-center gap-1.5 text-sm text-white/50 hover:text-white/80 transition-colors group"
+              className="inline-flex items-center gap-1.5 text-sm text-white/60 hover:text-white/90 transition-colors group"
             >
               {t("createAccount")}
               <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">

@@ -109,12 +109,12 @@ function HistoryItem({ item, onClick, onRename, onPin, onDelete, t }) {
             onBlur={handleBlur}
             maxLength={255}
             disabled={pending}
-            className="flex-1 min-w-0 bg-transparent text-sm text-white/90 placeholder:text-white/30 focus:outline-none"
+            className="flex-1 min-w-0 bg-transparent text-sm text-white placeholder:text-white/50 focus:outline-none"
             placeholder={t("untitledChat")}
           />
           {pending && <span className="w-4 h-4 border-2 border-white/30 border-t-white/80 rounded-full animate-spin flex-shrink-0" />}
         </div>
-        <p className="text-[10px] text-white/30 mt-1 px-1">{t("renameHint")}</p>
+        <p className="text-[10px] text-white/45 mt-1 px-1">{t("renameHint")}</p>
       </div>
     );
   }
@@ -127,15 +127,15 @@ function HistoryItem({ item, onClick, onRename, onPin, onDelete, t }) {
       >
         <div className="flex items-start justify-between gap-2">
           <div className="flex-1 min-w-0 pr-8">
-            <p className="text-sm text-white/80 group-hover/item:text-white/95 transition-colors flex items-center gap-1.5">
+            <p className="text-sm text-white group-hover/item:text-white transition-colors flex items-center gap-1.5">
               {item.is_pinned && (
-                <svg className="w-3.5 h-3.5 text-white/50 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-3.5 h-3.5 text-white/60 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
                 </svg>
               )}
               <span className="truncate">{truncateText(item.title || item.context || t("untitledChat"), 50)}</span>
             </p>
-            <p className="text-xs text-white/40 mt-0.5 truncate">{truncateText(item.result, 40)}</p>
+            <p className="text-xs text-white/60 mt-0.5 truncate">{truncateText(item.result, 40)}</p>
           </div>
         </div>
       </button>
@@ -223,7 +223,7 @@ export default function SidebarHistory({
       <div className="px-3 pb-2">
         <div className="relative">
           <svg
-            className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30"
+            className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -240,12 +240,12 @@ export default function SidebarHistory({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={t("searchHistory")}
-            className="w-full pl-9 pr-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.08] text-sm text-white/90 placeholder:text-white/30 focus:outline-none focus:border-white/[0.15] focus:bg-white/[0.06] transition-all duration-200"
+            className="w-full pl-9 pr-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.08] text-sm text-white placeholder:text-white/50 focus:outline-none focus:border-white/[0.15] focus:bg-white/[0.06] transition-all duration-200"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-5 h-5 rounded flex items-center justify-center text-white/30 hover:text-white/60 hover:bg-white/[0.08] transition-all duration-200"
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-5 h-5 rounded flex items-center justify-center text-white/45 hover:text-white/60 hover:bg-white/[0.08] transition-all duration-200"
             >
               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -257,13 +257,13 @@ export default function SidebarHistory({
 
       {/* Section Title */}
       <div className="flex items-center justify-between px-4 py-2">
-        <span className="text-xs font-medium text-white/40 uppercase tracking-wider">
+        <span className="text-xs font-medium text-white/60 uppercase tracking-wider">
           {t("historyTitle")}
         </span>
         <button
           onClick={onRefresh}
           disabled={loading}
-          className="w-6 h-6 rounded flex items-center justify-center text-white/30 hover:text-white/60 hover:bg-white/[0.06] transition-all duration-200 disabled:opacity-40"
+          className="w-6 h-6 rounded flex items-center justify-center text-white/45 hover:text-white/60 hover:bg-white/[0.06] transition-all duration-200 disabled:opacity-40"
           title={t("refresh")}
         >
           {loading ? (
@@ -287,11 +287,11 @@ export default function SidebarHistory({
         ) : filteredItems.length === 0 ? (
           <div className="px-2 py-4 text-center">
             <div className="w-10 h-10 mx-auto mb-2 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center">
-              <svg className="w-4 h-4 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
+              <svg className="w-4 h-4 text-white/45" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <p className="text-xs text-white/30">
+            <p className="text-xs text-white/45">
               {searchQuery ? t("noSearchResults") : t("noHistory")}
             </p>
           </div>

@@ -66,16 +66,16 @@ export default function ChangelogPage() {
           <div className="flex items-center gap-3">
             <button
               onClick={goBack}
-              className="w-8 h-8 flex items-center justify-center text-white/50 hover:text-white/80 transition-colors"
+              className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white/90 transition-colors"
               aria-label="Go back"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
-            <h1 className="text-sm font-medium text-white/80">Changelog</h1>
+            <h1 className="text-sm font-medium text-white">Changelog</h1>
           </div>
-          <span className="text-xs text-white/40">Release History</span>
+          <span className="text-xs text-white/60">Release History</span>
         </div>
       </header>
 
@@ -83,10 +83,10 @@ export default function ChangelogPage() {
       <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
         {/* Intro */}
         <section className="mb-10">
-          <h2 className="text-2xl font-normal text-white/90 mb-3">
+          <h2 className="text-2xl font-normal text-white mb-3">
             Catatan Perubahan
           </h2>
-          <p className="text-sm text-white/50 leading-relaxed">
+          <p className="text-sm text-white/60 leading-relaxed">
             Riwayat pembaruan Clever AI. Tinjau fitur terbaru, peningkatan, dan perbaikan bug.
           </p>
         </section>
@@ -114,7 +114,7 @@ export default function ChangelogPage() {
             >
               {/* Version Header */}
               <div className="flex items-center gap-3 mb-4">
-                <h3 className="text-lg font-medium text-white/80">
+                <h3 className="text-lg font-medium text-white/90">
                   {release.version}
                 </h3>
                 {release.status && (
@@ -122,7 +122,7 @@ export default function ChangelogPage() {
                     {release.status}
                   </span>
                 )}
-                <span className="text-xs text-white/40">{release.date}</span>
+                <span className="text-xs text-white/60">{release.date}</span>
               </div>
 
               {/* Changes */}
@@ -137,7 +137,7 @@ export default function ChangelogPage() {
                     >
                       {typeLabels[change.type].text}
                     </span>
-                    <span className="text-sm text-white/60">{change.text}</span>
+                    <span className="text-sm text-white/70">{change.text}</span>
                   </li>
                 ))}
               </ul>
@@ -154,15 +154,15 @@ export default function ChangelogPage() {
             className="flex items-center justify-between p-4 rounded-lg bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.04] transition-all group"
           >
             <div>
-              <p className="text-sm font-medium text-white/70 mb-1">
+              <p className="text-sm font-medium text-white/80 mb-1">
                 Tinjau seluruh rilis di GitHub
               </p>
-              <p className="text-xs text-white/40">
+              <p className="text-xs text-white/60">
                 Riwayat rilis lengkap dengan detail teknis
               </p>
             </div>
             <svg
-              className="w-5 h-5 text-white/40 group-hover:text-white/60 transition-colors"
+              className="w-5 h-5 text-white/60 group-hover:text-white/90 transition-colors"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -175,7 +175,7 @@ export default function ChangelogPage() {
 
         {/* Footer */}
         <footer className="mt-10 pt-6 border-t border-white/[0.06] text-center">
-          <p className="text-[10px] text-white/20">
+          <p className="text-[10px] text-white/45">
             Clever AI • Versi Semantik • 2026
           </p>
         </footer>

@@ -67,16 +67,16 @@ export default function SecurityPage() {
           <div className="flex items-center gap-3">
             <button
               onClick={goBack}
-              className="w-8 h-8 flex items-center justify-center text-white/50 hover:text-white/80 transition-colors"
+              className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white/90 transition-colors"
               aria-label="Go back"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
-            <h1 className="text-sm font-medium text-white/80">Security</h1>
+            <h1 className="text-sm font-medium text-white">Security</h1>
           </div>
-          <span className="text-xs text-white/40">Trust & Safety</span>
+          <span className="text-xs text-white/60">Trust & Safety</span>
         </div>
       </header>
 
@@ -84,17 +84,17 @@ export default function SecurityPage() {
       <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
         {/* Intro */}
         <section className="mb-10">
-          <h2 className="text-2xl font-normal text-white/90 mb-3">
+          <h2 className="text-2xl font-normal text-white mb-3">
             Keamanan
           </h2>
-          <p className="text-sm text-white/50 leading-relaxed">
+          <p className="text-sm text-white/60 leading-relaxed">
             Keamanan data Anda merupakan prioritas utama. Berikut langkah-langkah yang kami implementasikan untuk melindungi informasi Anda.
           </p>
         </section>
 
         {/* Security Features */}
         <section className="mb-10">
-          <h3 className="text-xs font-medium text-white/40 uppercase tracking-wider mb-4">
+          <h3 className="text-xs font-medium text-white/60 uppercase tracking-wider mb-4">
             Fitur Keamanan
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -104,10 +104,10 @@ export default function SecurityPage() {
                 className="p-4 rounded-lg bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.1] transition-colors"
               >
                 <div className="text-lg mb-2">{feature.icon}</div>
-                <h4 className="text-sm font-medium text-white/70 mb-1">
+                <h4 className="text-sm font-medium text-white/80 mb-1">
                   {feature.title}
                 </h4>
-                <p className="text-xs text-white/40 leading-relaxed">
+                <p className="text-xs text-white/60 leading-relaxed">
                   {feature.desc}
                 </p>
               </div>
@@ -117,7 +117,7 @@ export default function SecurityPage() {
 
         {/* Best Practices */}
         <section className="mb-10">
-          <h3 className="text-xs font-medium text-white/40 uppercase tracking-wider mb-4">
+          <h3 className="text-xs font-medium text-white/60 uppercase tracking-wider mb-4">
             Praktik Terbaik untuk Pengguna
           </h3>
           <div className="space-y-3">
@@ -126,12 +126,12 @@ export default function SecurityPage() {
                 key={item.title}
                 className="flex items-start gap-3 p-4 rounded-lg bg-white/[0.02] border border-white/[0.06]"
               >
-                <span className="text-xs text-emerald-400 mt-0.5">✓</span>
+                <span className="text-xs text-emerald-500 mt-0.5">✓</span>
                 <div>
-                  <h4 className="text-sm font-medium text-white/70 mb-1">
+                  <h4 className="text-sm font-medium text-white/80 mb-1">
                     {item.title}
                   </h4>
-                  <p className="text-xs text-white/40 leading-relaxed">
+                  <p className="text-xs text-white/60 leading-relaxed">
                     {item.content}
                   </p>
                 </div>
@@ -142,11 +142,11 @@ export default function SecurityPage() {
 
         {/* Report Vulnerability */}
         <section className="mb-10 pt-8 border-t border-white/[0.06]">
-          <h3 className="text-xs font-medium text-white/40 uppercase tracking-wider mb-4">
+          <h3 className="text-xs font-medium text-white/60 uppercase tracking-wider mb-4">
             Laporkan Masalah Keamanan
           </h3>
           <div className="p-4 rounded-lg bg-gradient-to-br from-emerald-500/[0.05] to-transparent border border-emerald-500/20">
-            <p className="text-xs text-white/50 leading-relaxed mb-3">
+            <p className="text-xs text-white/60 leading-relaxed mb-3">
               Apabila Anda menemukan kerentanan keamanan, mohon segera melaporkannya. Kami menghargai pengungkapan yang bertanggung jawab.
             </p>
             <a
@@ -163,16 +163,16 @@ export default function SecurityPage() {
 
         {/* Security Updates */}
         <section>
-          <h3 className="text-xs font-medium text-white/40 uppercase tracking-wider mb-4">
+          <h3 className="text-xs font-medium text-white/60 uppercase tracking-wider mb-4">
             Pembaruan Keamanan
           </h3>
           <div className="p-4 rounded-lg bg-white/[0.02] border border-white/[0.06]">
-            <p className="text-xs text-white/40 leading-relaxed mb-3">
+            <p className="text-xs text-white/60 leading-relaxed mb-3">
               Kami secara berkelanjutan memperbarui sistem keamanan. Pantau changelog untuk informasi terbaru.
             </p>
             <a
               href="/changelog"
-              className="text-xs text-white/50 hover:text-white/70 transition-colors"
+              className="text-xs text-white/60 hover:text-white/90 transition-colors"
             >
               Lihat Changelog →
             </a>
@@ -181,7 +181,7 @@ export default function SecurityPage() {
 
         {/* Footer */}
         <footer className="mt-10 pt-6 border-t border-white/[0.06] text-center">
-          <p className="text-[10px] text-white/20">
+          <p className="text-[10px] text-white/45">
             Clever AI Security • Terakhir diperbarui April 2026
           </p>
         </footer>

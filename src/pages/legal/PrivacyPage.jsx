@@ -86,16 +86,16 @@ export default function PrivacyPage() {
           <div className="flex items-center gap-3">
             <button
               onClick={goBack}
-              className="w-8 h-8 flex items-center justify-center text-white/50 hover:text-white/80 transition-colors"
+              className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white/90 transition-colors"
               aria-label="Go back"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
-            <h1 className="text-sm font-medium text-white/80">Privacy Policy</h1>
+            <h1 className="text-sm font-medium text-white">Privacy Policy</h1>
           </div>
-          <span className="text-xs text-white/40">Legal</span>
+          <span className="text-xs text-white/60">Legal</span>
         </div>
       </header>
 
@@ -103,10 +103,10 @@ export default function PrivacyPage() {
       <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
         {/* Intro */}
         <section className="mb-10">
-          <h2 className="text-2xl font-normal text-white/90 mb-3">
+          <h2 className="text-2xl font-normal text-white mb-3">
             Kebijakan Privasi
           </h2>
-          <p className="text-sm text-white/50 leading-relaxed">
+          <p className="text-sm text-white/60 leading-relaxed">
             Terakhir diperbarui: April 2026. Kami menghargai privasi Anda dan berkomitmen untuk melindungi data pribadi dengan serius.
           </p>
         </section>
@@ -115,7 +115,7 @@ export default function PrivacyPage() {
         <div className="space-y-8">
           {sections.map((section) => (
             <section key={section.title}>
-              <h3 className="text-sm font-medium text-white/70 mb-4">
+              <h3 className="text-sm font-medium text-white/80 mb-4">
                 {section.title}
               </h3>
               <div className="space-y-4">
@@ -124,10 +124,10 @@ export default function PrivacyPage() {
                     key={item.subtitle}
                     className="p-4 rounded-lg bg-white/[0.02] border border-white/[0.06]"
                   >
-                    <h4 className="text-xs font-medium text-white/60 mb-2">
+                    <h4 className="text-xs font-medium text-white/70 mb-2">
                       {item.subtitle}
                     </h4>
-                    <p className="text-xs text-white/40 leading-relaxed">
+                    <p className="text-xs text-white/60 leading-relaxed">
                       {item.text}
                     </p>
                   </div>
@@ -140,15 +140,15 @@ export default function PrivacyPage() {
         {/* Contact */}
         <section className="mt-10 pt-8 border-t border-white/[0.06]">
           <div className="p-4 rounded-lg bg-white/[0.02] border border-white/[0.06]">
-            <h3 className="text-sm font-medium text-white/70 mb-2">
+            <h3 className="text-sm font-medium text-white/80 mb-2">
               Kontak Privasi
             </h3>
-            <p className="text-xs text-white/40 leading-relaxed mb-3">
+            <p className="text-xs text-white/60 leading-relaxed mb-3">
               Untuk pertanyaan terkait privasi, permintaan penghapusan data, atau pelaporan insiden keamanan:
             </p>
             <a
               href="mailto:privacy@cleverai.app"
-              className="text-xs text-white/50 hover:text-white/70 transition-colors"
+              className="text-xs text-white/60 hover:text-white/90 transition-colors"
             >
               privacy@cleverai.app
             </a>
@@ -157,7 +157,7 @@ export default function PrivacyPage() {
 
         {/* Footer */}
         <footer className="mt-10 pt-6 border-t border-white/[0.06] text-center">
-          <p className="text-[10px] text-white/20">
+          <p className="text-[10px] text-white/45">
             Clever AI Privacy Policy • 2026
           </p>
         </footer>

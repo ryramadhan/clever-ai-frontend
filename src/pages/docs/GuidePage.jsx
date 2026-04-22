@@ -103,16 +103,16 @@ export default function GuidePage() {
           <div className="flex items-center gap-3">
             <button
               onClick={goBack}
-              className="w-8 h-8 flex items-center justify-center text-white/50 hover:text-white/80 transition-colors"
+              className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white/90 transition-colors"
               aria-label="Go back"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
-            <h1 className="text-sm font-medium text-white/80">Documentation</h1>
+            <h1 className="text-sm font-medium text-white">Documentation</h1>
           </div>
-          <span className="text-xs text-white/40">User Guide</span>
+          <span className="text-xs text-white/60">User Guide</span>
         </div>
       </header>
 
@@ -120,10 +120,10 @@ export default function GuidePage() {
       <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
         {/* Intro */}
         <section className="mb-10">
-          <h2 className="text-2xl font-normal text-white/90 mb-3">
+          <h2 className="text-2xl font-normal text-white mb-3">
             Dokumentasi Pengguna
           </h2>
-          <p className="text-sm text-white/50 leading-relaxed">
+          <p className="text-sm text-white/60 leading-relaxed">
             Panduan komprehensif untuk memaksimalkan pengalaman Anda dengan Clever AI. Mulai dari penggunaan dasar hingga strategi lanjutan.
           </p>
         </section>
@@ -132,7 +132,7 @@ export default function GuidePage() {
         <div className="space-y-8">
           {sections.map((section) => (
             <section key={section.title}>
-              <h3 className="text-xs font-medium text-white/40 uppercase tracking-wider mb-4">
+              <h3 className="text-xs font-medium text-white/60 uppercase tracking-wider mb-4">
                 {section.title}
               </h3>
               <div className="space-y-3">
@@ -141,10 +141,10 @@ export default function GuidePage() {
                     key={item.question}
                     className="p-4 rounded-lg bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.1] transition-colors"
                   >
-                    <h4 className="text-sm font-medium text-white/70 mb-2">
+                    <h4 className="text-sm font-medium text-white/80 mb-2">
                       {item.question}
                     </h4>
-                    <p className="text-xs text-white/40 leading-relaxed">
+                    <p className="text-xs text-white/60 leading-relaxed">
                       {item.answer}
                     </p>
                   </div>
@@ -157,17 +157,17 @@ export default function GuidePage() {
         {/* Need Help */}
         <section className="mt-10 pt-8 border-t border-white/[0.06]">
           <div className="p-5 rounded-lg bg-gradient-to-br from-white/[0.05] to-white/[0.02] border border-white/[0.08]">
-            <h3 className="text-sm font-medium text-white/80 mb-2">
+            <h3 className="text-sm font-medium text-white/90 mb-2">
               Butuh bantuan lebih lanjut?
             </h3>
-            <p className="text-xs text-white/40 mb-4">
+            <p className="text-xs text-white/60 mb-4">
               Menemukan bug atau memiliki pertanyaan teknis? Silakan laporkan melalui GitHub Issues untuk mendapatkan dukungan dari tim pengembang.
             </p>
             <a
               href="https://github.com/ryramadhan/moodwrite-ai-frontend/issues"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.06] border border-white/[0.12] text-xs text-white/70 hover:bg-white/[0.10] hover:text-white transition-all"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.06] border border-white/[0.12] text-xs text-white/80 hover:bg-white/[0.10] hover:text-white transition-all"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
@@ -182,7 +182,7 @@ export default function GuidePage() {
 
         {/* Footer */}
         <footer className="mt-10 pt-6 border-t border-white/[0.06] text-center">
-          <p className="text-[10px] text-white/20">
+          <p className="text-[10px] text-white/45">
             Clever AI Documentation • Diperbarui April 2026
           </p>
         </footer>

@@ -289,11 +289,21 @@ async function onGenerate() {
 - Clean typography: `font-normal`, no unnecessary bold
 - Text wrapping: `break-words` for long content
 - Consistent spacing and transitions
+- **WCAG AA Compliant**: All text meets minimum 4.5:1 contrast ratio
 
 ### Components
 - **Skeleton Loading**: Shimmer effects for auth/history loading states
 - **Modals**: Centered, no blur backdrop, monochrome theme
 - **History Menu**: Dropdown with rename, pin, delete actions
+
+### Accessibility (WCAG AA)
+Text contrast standards applied across all pages:
+- **Primary text**: `text-white` (100% opacity)
+- **Important text**: `text-white/90` (90% opacity)
+- **Supporting text**: `text-white/60` (60% opacity)
+- **Muted/placeholder**: `text-white/45-50` (45-50% opacity minimum)
+
+All pages updated: Auth, Legal, Docs, Changelog, Guide, Modals, Sidebar, Chat, Layout components
 
 ### Footer & Navigation
 - **Minimal Bottom Info**: Single-line footer with organized sections:

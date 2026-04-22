@@ -55,7 +55,7 @@ export default function FeedbackModal({ isOpen, onClose, onSubmit }) {
           <h3 className="text-lg font-semibold text-white mb-1">
             Berikan umpan balik negatif
           </h3>
-          <p className="text-sm text-white/50">
+          <p className="text-sm text-white/60">
             Jenis masalah apa yang ingin Anda laporkan?
           </p>
         </div>
@@ -68,11 +68,11 @@ export default function FeedbackModal({ isOpen, onClose, onSubmit }) {
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               className="w-full px-4 py-3 rounded-xl bg-[#0f0f0f] border border-white/[0.08] text-sm text-left transition-all duration-200 hover:border-white/20 focus:outline-none focus:border-white/20"
             >
-              <span className={selectedReason ? "text-white/90" : "text-white/40"}>
+              <span className={selectedReason ? "text-white" : "text-white/50"}>
                 {selectedLabel}
               </span>
               <svg
-                className={`absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`}
+                className={`absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -95,7 +95,7 @@ export default function FeedbackModal({ isOpen, onClose, onSubmit }) {
                     }}
                     className={`w-full px-4 py-3 text-left text-sm transition-all duration-150 ${selectedReason === reason.value
                         ? 'bg-white/10 text-white'
-                        : 'text-white/70 hover:bg-white/[0.06] hover:text-white/90'
+                        : 'text-white/80 hover:bg-white/[0.06] hover:text-white'
                       }`}
                   >
                     {reason.label}
@@ -107,20 +107,20 @@ export default function FeedbackModal({ isOpen, onClose, onSubmit }) {
 
           {/* Detail textarea */}
           <div>
-            <label className="block text-sm text-white/60 mb-2">
+            <label className="block text-sm text-white/70 mb-2">
               Berikan detail (opsional)
             </label>
             <textarea
               value={feedbackDetail}
               onChange={(e) => setFeedbackDetail(e.target.value)}
               placeholder="Apa yang kurang memuaskan dari respons ini?"
-              className="w-full px-4 py-3 rounded-xl bg-[#0f0f0f] border border-white/[0.08] text-sm text-white/90 placeholder:text-white/30 resize-none focus:outline-none focus:border-white/20 transition-colors"
+              className="w-full px-4 py-3 rounded-xl bg-[#0f0f0f] border border-white/[0.08] text-sm text-white placeholder:text-white/50 resize-none focus:outline-none focus:border-white/20 transition-colors"
               rows={3}
             />
           </div>
 
           {/* Info text */}
-          <p className="text-xs text-white/40 leading-relaxed">
+          <p className="text-xs text-white/45 leading-relaxed">
             Mengirimkan laporan ini akan mengirim seluruh percakapan untuk membantu meningkatkan model AI.
           </p>
         </div>
@@ -130,7 +130,7 @@ export default function FeedbackModal({ isOpen, onClose, onSubmit }) {
           <button
             type="button"
             onClick={handleCancel}
-            className="px-4 py-2 rounded-lg text-sm font-medium text-white/70 hover:text-white transition-colors"
+            className="px-4 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white transition-colors"
           >
             Batalkan
           </button>

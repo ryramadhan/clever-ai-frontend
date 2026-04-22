@@ -40,7 +40,7 @@ export default function Header({ onMenuToggle }) {
           <button
             type="button"
             onClick={onMenuToggle}
-            className="lg:hidden w-8 h-8 rounded-lg flex items-center justify-center text-white/60 hover:text-white/90 hover:bg-white/[0.06] transition-all duration-200"
+            className="lg:hidden w-8 h-8 rounded-lg flex items-center justify-center text-white/60 hover:text-white hover:bg-white/[0.06] transition-all duration-200"
             aria-label={t("openSidebar")}
             title={t("openSidebar")}
           >
@@ -55,11 +55,11 @@ export default function Header({ onMenuToggle }) {
           <button
             type="button"
             onClick={toggleLanguage}
-            className="flex items-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium text-white/50 hover:text-white/80 hover:bg-white/[0.06] transition-all duration-200"
+            className="flex items-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium text-white/60 hover:text-white hover:bg-white/[0.06] transition-all duration-200"
             aria-label={t("language")}
           >
             <span className={lang === "en" ? "text-white" : ""}>EN</span>
-            <span className="text-white/20">|</span>
+            <span className="text-white/40">|</span>
             <span className={lang === "id" ? "text-white" : ""}>ID</span>
           </button>
 
@@ -72,7 +72,7 @@ export default function Header({ onMenuToggle }) {
             <div className="flex items-center gap-1">
               <Link
                 to="/login"
-                className="px-3 py-1.5 text-sm font-medium text-white/60 hover:text-white transition-colors"
+                className="px-3 py-1.5 text-sm font-medium text-white/90 hover:text-white transition-colors"
               >
                 {t("signIn")}
               </Link>
@@ -92,7 +92,7 @@ export default function Header({ onMenuToggle }) {
                 {user?.picture ? (
                   <img src={user.picture} alt="" className="w-full h-full object-cover" />
                 ) : (
-                  <span className="text-xs font-medium text-white/70">
+                  <span className="text-xs font-medium text-white">
                     {getInitials(user?.name)}
                   </span>
                 )}

@@ -68,16 +68,16 @@ export default function TermsPage() {
           <div className="flex items-center gap-3">
             <button
               onClick={goBack}
-              className="w-8 h-8 flex items-center justify-center text-white/50 hover:text-white/80 transition-colors"
+              className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white/90 transition-colors"
               aria-label="Go back"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
-            <h1 className="text-sm font-medium text-white/80">Terms of Service</h1>
+            <h1 className="text-sm font-medium text-white">Terms of Service</h1>
           </div>
-          <span className="text-xs text-white/40">Legal</span>
+          <span className="text-xs text-white/60">Legal</span>
         </div>
       </header>
 
@@ -85,10 +85,10 @@ export default function TermsPage() {
       <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
         {/* Intro */}
         <section className="mb-10">
-          <h2 className="text-2xl font-normal text-white/90 mb-3">
+          <h2 className="text-2xl font-normal text-white mb-3">
             Ketentuan Layanan
           </h2>
-          <p className="text-sm text-white/50 leading-relaxed">
+          <p className="text-sm text-white/60 leading-relaxed">
             Terakhir diperbarui: April 2026. Harap baca dengan saksama sebelum menggunakan layanan.
           </p>
         </section>
@@ -98,12 +98,12 @@ export default function TermsPage() {
           {sections.map((section, index) => (
             <section key={section.title}>
               <div className="flex items-start gap-3">
-                <span className="text-xs text-white/30 mt-0.5">{String(index + 1).padStart(2, '0')}</span>
+                <span className="text-xs text-white/45 mt-0.5">{String(index + 1).padStart(2, '0')}</span>
                 <div>
-                  <h3 className="text-sm font-medium text-white/70 mb-2">
+                  <h3 className="text-sm font-medium text-white/80 mb-2">
                     {section.title}
                   </h3>
-                  <p className="text-xs text-white/40 leading-relaxed">
+                  <p className="text-xs text-white/60 leading-relaxed">
                     {section.content}
                   </p>
                 </div>
@@ -115,7 +115,7 @@ export default function TermsPage() {
         {/* Agreement */}
         <section className="mt-10 pt-8 border-t border-white/[0.06]">
           <div className="p-4 rounded-lg bg-gradient-to-br from-white/[0.05] to-white/[0.02] border border-white/[0.08]">
-            <p className="text-xs text-white/50 leading-relaxed">
+            <p className="text-xs text-white/60 leading-relaxed">
               Dengan menggunakan Clever AI, Anda mengakui bahwa telah membaca, memahami, dan menyetujui seluruh ketentuan yang tercantum dalam dokumen ini.
             </p>
           </div>
@@ -123,9 +123,9 @@ export default function TermsPage() {
 
         {/* Contact */}
         <section className="mt-6">
-          <p className="text-xs text-white/40">
+          <p className="text-xs text-white/60">
             Memiliki pertanyaan terkait ketentuan layanan? Silakan hubungi{" "}
-            <a href="mailto:legal@cleverai.app" className="text-white/50 hover:text-white/70 transition-colors">
+            <a href="mailto:legal@cleverai.app" className="text-white/60 hover:text-white/90 transition-colors">
               legal@cleverai.app
             </a>
           </p>
@@ -133,7 +133,7 @@ export default function TermsPage() {
 
         {/* Footer */}
         <footer className="mt-10 pt-6 border-t border-white/[0.06] text-center">
-          <p className="text-[10px] text-white/20">
+          <p className="text-[10px] text-white/45">
             Clever AI Terms of Service • 2026
           </p>
         </footer>

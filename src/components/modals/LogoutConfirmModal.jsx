@@ -12,16 +12,16 @@ export default function LogoutConfirmModal({ isOpen, onConfirm, onCancel, t, zIn
           className="w-full max-w-xs bg-[#141414] rounded-xl border border-white/[0.08] p-5 shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
-          <h3 className="text-base font-semibold text-white/95 mb-2">
+          <h3 className="text-base font-semibold text-white mb-2">
             {t("signOutTitle")}
           </h3>
-          <p className="text-sm text-white/50 mb-5 leading-relaxed">
+          <p className="text-sm text-white/60 mb-5 leading-relaxed">
             {t("signOutMessage")}
           </p>
           <div className="flex flex-col-reverse gap-2">
             <button
               onClick={onCancel}
-              className="px-4 py-2 rounded-lg text-sm font-medium text-white/50 transition-all duration-200 hover:text-white/70"
+              className="px-4 py-2 rounded-lg text-sm font-medium text-white/60 transition-all duration-200 hover:text-white/90"
             >
               {t("cancel")}
             </button>

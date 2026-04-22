@@ -10,7 +10,7 @@ export default function SidebarGuestFooter({ onAction }) {
         <p className="text-sm font-medium text-white/90 mb-1">
           {t("personalizedResponse")}
         </p>
-        <p className="text-xs text-white/50 leading-relaxed mb-3">
+        <p className="text-xs text-white/60 leading-relaxed mb-3">
           {t("signInBenefits")}
         </p>
         <div className="h-px bg-white/[0.08] mb-3" />

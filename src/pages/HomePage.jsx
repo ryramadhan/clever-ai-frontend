@@ -245,6 +245,15 @@ export default function HomePage() {
 
   return (
     <div className="h-screen flex bg-[#0a0a0a] overflow-hidden">
+      {/* Noise texture layer — subtle, non-interactive */}
+      <div
+        className="pointer-events-none fixed inset-0 z-0 opacity-[0.025]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
+          backgroundRepeat: "repeat",
+          backgroundSize: "128px 128px",
+        }}
+      />
       <Sidebar
         isOpen={isSidebarOpen}
         onToggle={toggleSidebar}
@@ -271,75 +280,61 @@ export default function HomePage() {
 
               <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-12 min-h-full flex flex-col relative z-10">
                 {/* Hero */}
-                <section className="mb-8 flex-1 flex flex-col justify-center px-4">
-                  <div className="space-y-2">
-                    <p className="text-base text-white/60 font-normal">
+                <section className="mb-10 flex-1 flex flex-col justify-center px-4">
+                  <div className="space-y-3">
+                    {/* Greeting — kecil, muted */}
+                    <p className="text-sm text-white/60 font-normal tracking-wide">
                       {isAuthenticated && user?.name
                         ? `${t("heroGreeting")} ${user.name.split(' ')[0]}`
                         : t("heroGuestGreeting")}
                     </p>
-                    <h1 className="text-3xl sm:text-[2rem] font-normal text-white/95">
-                      {isAuthenticated
-                        ? t("heroQuestion")
-                        : t("heroGuestQuestion")}
+
+                    {/* Headline — besar, kontras */}
+                    <h1 className="text-3xl sm:text-4xl font-semibold text-white leading-tight">
+                      {isAuthenticated ? t("heroQuestion") : t("heroGuestQuestion")}
                     </h1>
+
+                    {/* Tagline brand — signature Clever AI */}
+                    <p className="text-sm text-white/50 font-normal">
+                      Powered by AI · Bahasa Indonesia & English
+                    </p>
                   </div>
                 </section>
 
-                {/* Bento Grid - 4 Cards */}
-                <section className="mb-8 px-4">
-                  <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
-                    {[
-                      {
-                        icon: "⚡",
-                        title: "Cepat",
-                        desc: "Generate dalam 3 detik",
-                        gradient: "from-blue-500/20 to-cyan-500/10",
-                        accent: "bg-blue-500/20 text-blue-400",
-                      },
-                      {
-                        icon: "🎯",
-                        title: "Akurat",
-                        desc: "AI model terbaik",
-                        gradient: "from-amber-500/20 to-orange-500/10",
-                        accent: "bg-amber-500/20 text-amber-400",
-                      },
-                      {
-                        icon: "🔒",
-                        title: "Aman",
-                        desc: "Data terlindungi",
-                        gradient: "from-emerald-500/20 to-teal-500/10",
-                        accent: "bg-emerald-500/20 text-emerald-400",
-                      },
-                      {
-                        icon: "🌐",
-                        title: "Bilingual",
-                        desc: "ID & English",
-                        gradient: "from-violet-500/20 to-purple-500/10",
-                        accent: "bg-violet-500/20 text-violet-400",
-                      },
-                    ].map((item, index) => (
-                      <div
-                        key={index}
-                        className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${item.gradient} border border-white/[0.08] p-4 transition-all duration-300 ease-out hover:scale-[1.02] hover:border-white/[0.15] hover:shadow-lg hover:shadow-white/5`}
-                      >
-                        <div className="relative z-10">
-                          <div className={`w-10 h-10 rounded-xl ${item.accent.split(' ')[0]} flex items-center justify-center text-xl mb-3 transition-transform duration-300 group-hover:scale-110`}>
-                            {item.icon}
-                          </div>
-                          <p className={`text-sm font-semibold ${item.accent.split(' ')[1]} mb-1`}>
-                            {item.title}
-                          </p>
-                          <p className="text-xs text-white/50">{item.desc}</p>
+                {/* Stats Block — Social Proof */}
+                <section className="mb-10 px-4">
+                  <div className="w-full max-w-md mx-auto">
+                    {/* Divider atas */}
+                    <div className="w-full h-px bg-white/[0.06] mb-6" />
+
+                    {/* 3 stat items dalam satu row */}
+                    <div className="grid grid-cols-3 gap-4">
+                      {[
+                        { value: "1.2K+", label: "Hasil dibuat" },
+                        { value: "< 3s",  label: "Waktu generate" },
+                        { value: "2",     label: "Bahasa didukung" },
+                      ].map((stat, i) => (
+                        <div key={i} className="flex flex-col gap-1">
+                          <span className="text-xl sm:text-2xl font-semibold text-white/90 tabular-nums">
+                            {stat.value}
+                          </span>
+                          <span className="text-[11px] text-white/60 leading-tight">
+                            {stat.label}
+                          </span>
                         </div>
-                        <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                      </div>
-                    ))}
+                      ))}
+                    </div>
+
+                    {/* Divider bawah */}
+                    <div className="w-full h-px bg-white/[0.06] mt-6" />
                   </div>
                 </section>
 
-                {/* Quick Suggestions - Keywords match mockCaption.js */}
+                {/* Quick Suggestions */}
                 <section className="mb-8 px-4">
+                  <p className="text-[11px] text-white/45 text-center mb-3 tracking-wider uppercase">
+                    Coba tanyakan
+                  </p>
                   <div className="flex flex-wrap gap-2 justify-center">
                     {[
                       { icon: "💪", text: "Tips motivasi" },
@@ -353,7 +348,7 @@ export default function HomePage() {
                           setContext(suggestion.text);
                           setTimeout(() => textareaRef.current?.focus(), 0);
                         }}
-                        className="group flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.04] border border-white/[0.08] text-sm text-white/70 hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white/90 hover:scale-105 hover:shadow-lg hover:shadow-white/5 transition-all duration-300 ease-out"
+                        className="group flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.04] border border-white/[0.08] text-sm text-white/90 hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white hover:scale-105 hover:shadow-lg hover:shadow-white/5 transition-all duration-300 ease-out"
                       >
                         <span className="group-hover:scale-110 transition-transform duration-300">{suggestion.icon}</span>
                         <span>{suggestion.text}</span>
@@ -367,7 +362,7 @@ export default function HomePage() {
                   <div className="relative bg-[#141414] rounded-2xl sm:rounded-[26px] border border-white/[0.08] shadow-lg shadow-black/20 min-h-[52px] sm:min-h-[56px] flex items-center pr-12 sm:pr-14">
                     <textarea
                       ref={textareaRef}
-                      className="w-full py-3 sm:py-[15px] px-4 sm:px-5 bg-transparent text-white/95 text-[15px] sm:text-base placeholder:text-white/40 resize-none transition-all duration-200 focus:outline-none disabled:opacity-50 leading-normal"
+                      className="w-full py-3 sm:py-[15px] px-4 sm:px-5 bg-transparent text-white text-[15px] sm:text-base placeholder:text-white/50 resize-none transition-all duration-200 focus:outline-none disabled:opacity-50 leading-normal"
                       value={context}
                       onChange={(e) => setContext(e.target.value)}
                       placeholder={t("contextPlaceholder")}
@@ -402,8 +397,11 @@ export default function HomePage() {
                       )}
                     </button>
                   </div>
-                  <p className="text-xs text-white/25 text-center mt-3">
+                  <p className="text-xs text-white/45 text-center mt-3">
                     {t("pressEnterToSend")}
+                  </p>
+                  <p className="text-[10px] text-white/45 text-center mt-1">
+                    Clever AI · Generate dalam hitungan detik
                   </p>
 
                   {/* Error */}
@@ -429,7 +427,7 @@ export default function HomePage() {
                   {/* User Message */}
                   <div className="flex justify-end">
                     <div className="max-w-[80%] bg-white/[0.03] rounded-2xl px-5 py-3">
-                      <p className="text-white/80 text-[15px] font-normal leading-relaxed break-words">{userMessage}</p>
+                      <p className="text-white text-[15px] font-normal leading-relaxed break-words">{userMessage}</p>
                     </div>
                   </div>
 
@@ -519,7 +517,7 @@ export default function HomePage() {
                       )}
                     </button>
                   </div>
-                  <p className="text-[10px] text-white/20 text-center mt-1 sm:mt-2 pb-3 sm:pb-4">
+                  <p className="text-[10px] text-white/45 text-center mt-1 sm:mt-2 pb-3 sm:pb-4">
                     {t("aiMayProduceInaccurate")}
                   </p>
                 </div>

@@ -84,7 +84,7 @@ export default function Sidebar({
             <>
               <Link
                 to="/"
-                className="w-7 h-7 flex items-center justify-center text-white/80 hover:opacity-80 transition-opacity duration-200"
+                className="w-7 h-7 flex items-center justify-center text-white hover:opacity-80 transition-opacity duration-200"
                 aria-label={t("appTitle")}
                 title={t("appTitle")}
               >
@@ -93,7 +93,7 @@ export default function Sidebar({
               <button
                 type="button"
                 onClick={onClose}
-                className="w-8 h-8 rounded-lg flex items-center justify-center text-white/40 hover:text-white/80 hover:bg-white/[0.06] transition-all duration-200"
+                className="w-8 h-8 rounded-lg flex items-center justify-center text-white/60 hover:text-white hover:bg-white/[0.06] transition-all duration-200"
                 aria-label={t("collapseSidebar")}
                 title={t("collapseSidebar")}
               >
@@ -106,7 +106,7 @@ export default function Sidebar({
             <button
               type="button"
               onClick={onToggle}
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-white/60 hover:text-white/90 hover:bg-white/[0.06] transition-all duration-200"
+              className="w-8 h-8 rounded-lg flex items-center justify-center text-white/60 hover:text-white hover:bg-white/[0.06] transition-all duration-200"
               aria-label={t("openSidebar")}
               title={t("openSidebar")}
             >
@@ -124,7 +124,7 @@ export default function Sidebar({
             onClick={handleNewChatClick}
             className={`
               flex items-center justify-center
-              rounded-xl bg-white/[0.06] border border-white/[0.06] text-white/90
+              rounded-xl bg-white/[0.06] border border-white/[0.06] text-white
               hover:bg-white/[0.10] hover:border-white/[0.10] hover:text-white
               transition-all duration-200
               ${isOpen ? "w-full gap-3 px-4 py-2.5" : "w-10 h-10"}
@@ -156,11 +156,11 @@ export default function Sidebar({
           <div className="flex-1 flex flex-col items-center justify-center px-4">
             <div className="text-center">
               <div className="w-12 h-12 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center mx-auto mb-3">
-                <svg className="w-6 h-6 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
+                <svg className="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
               </div>
-              <p className="text-xs text-white/40 leading-relaxed">
+              <p className="text-xs text-white/60 leading-relaxed">
                 {t("signInToAccess")}
               </p>
             </div>
@@ -170,7 +170,7 @@ export default function Sidebar({
         {/* Collapsed state - simple icons */}
         {!isOpen && isAuthenticated && (
           <div className="flex-1 flex flex-col items-center py-4 gap-2">
-            <div className="w-8 h-8 rounded-lg bg-white/[0.04] flex items-center justify-center text-white/30">
+            <div className="w-8 h-8 rounded-lg bg-white/[0.04] flex items-center justify-center text-white/45">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>

@@ -43,16 +43,16 @@ export default function DocsPage() {
           <div className="flex items-center gap-3">
             <button
               onClick={goBack}
-              className="w-8 h-8 flex items-center justify-center text-white/50 hover:text-white/80 transition-colors"
+              className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white/90 transition-colors"
               aria-label="Go back"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
-            <h1 className="text-sm font-medium text-white/80">API Documentation</h1>
+            <h1 className="text-sm font-medium text-white">API Documentation</h1>
           </div>
-          <span className="text-xs text-white/40">v1.0</span>
+          <span className="text-xs text-white/60">v1.0</span>
         </div>
       </header>
 
@@ -60,7 +60,7 @@ export default function DocsPage() {
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
         {/* Intro */}
         <section className="mb-10">
-          <p className="text-sm text-white/60 leading-relaxed">
+          <p className="text-sm text-white/70 leading-relaxed">
             REST API untuk AI Assistant dengan sistem autentikasi lengkap. Terima pertanyaan konteks dari user, generate respons dengan AI (Google Gemini) + fallback mock berbasis keyword, simpan history ke PostgreSQL dengan data separation antar user.
           </p>
         </section>
@@ -69,7 +69,7 @@ export default function DocsPage() {
         <section className="space-y-8">
           {endpoints.map((section) => (
             <div key={section.category}>
-              <h2 className="text-xs font-medium text-white/40 uppercase tracking-wider mb-4">
+              <h2 className="text-xs font-medium text-white/60 uppercase tracking-wider mb-4">
                 {section.category}
               </h2>
               <div className="space-y-2">
@@ -82,10 +82,10 @@ export default function DocsPage() {
                       {endpoint.method}
                     </span>
                     <div className="flex-1 min-w-0">
-                      <code className="text-xs text-white/70 font-mono block mb-1">
+                      <code className="text-xs text-white/80 font-mono block mb-1">
                         {endpoint.path}
                       </code>
-                      <p className="text-xs text-white/40">{endpoint.desc}</p>
+                      <p className="text-xs text-white/60">{endpoint.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -100,10 +100,10 @@ export default function DocsPage() {
             Authentication
           </h2>
           <div className="p-4 rounded-lg bg-[#141414] border border-white/[0.08]">
-            <p className="text-xs text-white/50 mb-3">
+            <p className="text-xs text-white/60 mb-3">
               Gunakan Bearer token di header untuk endpoint yang memerlukan autentikasi:
             </p>
-            <pre className="text-xs text-white/60 font-mono overflow-x-auto">
+            <pre className="text-xs text-white/70 font-mono overflow-x-auto">
               {`Authorization: Bearer <your_jwt_token>`}
             </pre>
           </div>
@@ -111,15 +111,15 @@ export default function DocsPage() {
 
         {/* Response Examples */}
         <section className="mt-10 pt-8 border-t border-white/[0.06]">
-          <h2 className="text-xs font-medium text-white/40 uppercase tracking-wider mb-4">
+          <h2 className="text-xs font-medium text-white/60 uppercase tracking-wider mb-4">
             Response Examples
           </h2>
 
           {/* Login Response */}
           <div className="mb-4">
-            <p className="text-xs text-white/40 mb-2">POST /api/auth/login - Success</p>
+            <p className="text-xs text-white/60 mb-2">POST /api/auth/login - Success</p>
             <div className="p-4 rounded-lg bg-[#141414] border border-white/[0.08]">
-              <pre className="text-xs text-white/60 font-mono overflow-x-auto">
+              <pre className="text-xs text-white/70 font-mono overflow-x-auto">
                 {`{
   "success": true,
   "message": "Login successful",
@@ -136,9 +136,9 @@ export default function DocsPage() {
 
           {/* Generate Stream */}
           <div>
-            <p className="text-xs text-white/40 mb-2">POST /api/generate/stream - SSE Format</p>
+            <p className="text-xs text-white/60 mb-2">POST /api/generate/stream - SSE Format</p>
             <div className="p-4 rounded-lg bg-[#141414] border border-white/[0.08]">
-              <pre className="text-xs text-white/60 font-mono overflow-x-auto">
+              <pre className="text-xs text-white/70 font-mono overflow-x-auto">
                 {`data: {"chunk": "Berikut ", "provider": "gemini"}
 
 data: {"chunk": "tips produktivitas...", "provider": "gemini"}
@@ -169,7 +169,7 @@ data: {"done": true, "result": "Berikut tips...", "provider": "gemini"}`}
                 <span className="text-xs font-mono font-medium text-rose-400 w-8">
                   {error.code}
                 </span>
-                <span className="text-xs text-white/50">{error.desc}</span>
+                <span className="text-xs text-white/60">{error.desc}</span>
               </div>
             ))}
           </div>
@@ -190,7 +190,7 @@ data: {"done": true, "result": "Berikut tips...", "provider": "gemini"}`}
                 className="flex items-center justify-between p-3 rounded-lg bg-white/[0.02] border border-white/[0.06]"
               >
                 <span className="text-xs text-white/60">{item.endpoint}</span>
-                <span className="text-xs text-white/40 font-mono">{item.limit}</span>
+                <span className="text-xs text-white/60 font-mono">{item.limit}</span>
               </div>
             ))}
           </div>
@@ -198,12 +198,12 @@ data: {"done": true, "result": "Berikut tips...", "provider": "gemini"}`}
 
         {/* Code Examples */}
         <section className="mt-10 pt-8 border-t border-white/[0.06]">
-          <h2 className="text-xs font-medium text-white/40 uppercase tracking-wider mb-4">
+          <h2 className="text-xs font-medium text-white/60 uppercase tracking-wider mb-4">
             Code Example
           </h2>
           <div className="p-4 rounded-lg bg-[#141414] border border-white/[0.08]">
-            <p className="text-xs text-white/40 mb-2">JavaScript - Streaming Request</p>
-            <pre className="text-xs text-white/60 font-mono overflow-x-auto">
+            <p className="text-xs text-white/60 mb-2">JavaScript - Streaming Request</p>
+            <pre className="text-xs text-white/70 font-mono overflow-x-auto">
               {`const response = await fetch('/api/generate/stream', {
   method: 'POST',
   headers: {
@@ -225,10 +225,10 @@ while (true) {
 
         {/* Footer */}
         <footer className="mt-10 pt-6 border-t border-white/[0.06] text-center">
-          <p className="text-xs text-white/30">
+          <p className="text-xs text-white/45">
             Built with Express.js + PostgreSQL + Gemini AI
           </p>
-          <p className="text-[10px] text-white/20 mt-1">
+          <p className="text-[10px] text-white/45 mt-1">
             Documentation v1.0 • Last updated April 2026
           </p>
         </footer>

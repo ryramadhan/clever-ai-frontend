@@ -63,7 +63,7 @@ export default function ResultCard({ text, isTyping, provider, hasResult, onRege
   return (
     <section className="w-full" aria-live="polite">
       <div className="py-6">
-        <div className="text-white/80 text-[15px] font-normal leading-relaxed whitespace-pre-wrap break-words">
+        <div className="text-white text-[15px] font-normal leading-relaxed whitespace-pre-wrap break-words">
           {text}
           {isTyping && (
             <span
@@ -88,7 +88,7 @@ export default function ResultCard({ text, isTyping, provider, hasResult, onRege
                     <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
                   </svg>
                 ) : (
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-white/40 hover:text-white/70">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-white/60 hover:text-white/90">
                     <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
                   </svg>
                 )}
@@ -106,7 +106,7 @@ export default function ResultCard({ text, isTyping, provider, hasResult, onRege
                     <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3" />
                   </svg>
                 ) : (
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-white/40 hover:text-white/70">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-white/60 hover:text-white/90">
                     <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3" />
                   </svg>
                 )}
@@ -115,7 +115,7 @@ export default function ResultCard({ text, isTyping, provider, hasResult, onRege
               <button
                 type="button"
                 onClick={handleCopy}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-white/60 hover:text-white/90 hover:bg-white/[0.06] transition-all duration-200"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-white/90 hover:text-white hover:bg-white/[0.06] transition-all duration-200"
                 title="Salin"
               >
                 {copied ? (
@@ -137,15 +137,15 @@ export default function ResultCard({ text, isTyping, provider, hasResult, onRege
               </button>
 
               {provider && (
-                <span className="ml-auto text-[10px] text-white/30 uppercase tracking-wider">
+                <span className="ml-auto text-[10px] text-white/45 uppercase tracking-wider">
                   {provider === "gemini" ? "Gemini" : "AI"}
                 </span>
               )}
             </div>
 
             {feedbackSubmitted && (
-              <div className="mt-3 flex items-center gap-2 text-sm text-white/70 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-white/60">
+              <div className="mt-3 flex items-center gap-2 text-sm text-white/90 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-white/90">
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                   <polyline points="22 4 12 14.01 9 11.01" />
                 </svg>
