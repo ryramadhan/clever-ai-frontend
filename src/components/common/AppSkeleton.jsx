@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext.jsx";
 
-const MIN_LOADING_TIME = 500;
+const MIN_LOADING_TIME = 400;
 
 export default function AppSkeleton({ children }) {
   const { loading, isAuthReady } = useAuth();
