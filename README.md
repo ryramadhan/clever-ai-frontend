@@ -37,6 +37,7 @@ AI Assistant Chat Interface — React frontend for asking questions and getting 
 - **History Management** — View, rename, pin, delete conversations
 - **Copy to Clipboard** — One-click response copy
 - **Smart Auto-scroll** — Smooth scroll following streaming content
+- **Init Loading Spinner** — Professional spinner saat cek login dengan minimum delay
 - **Stream Cancellation** — Stop button during AI streamings
 - **Smooth New Chat Flow** — Fade transitions with loading states
 - **Error Recovery** — Retry button with visual error states
@@ -112,7 +113,8 @@ src/
 │   ├── ui/                     # UI primitives & reusable components
 │   │   └── Button.jsx         # Reusable button component
 │   ├── common/                 # Shared utility components
-│   │   └── ScrollToTop.jsx    # Auto-scroll to top on route change
+│   │   ├── ScrollToTop.jsx    # Auto-scroll to top on route change
+│   │   └── AppSkeleton.jsx    # Init loading spinner with minimum delay
 │   ├── sidebar/               # Sidebar sub-components
 │   │   ├── SidebarChatHistory.jsx  # History list with skeleton loading
 │   │   ├── SidebarUserFooter.jsx   # User avatar & logout (with Google profile pic)

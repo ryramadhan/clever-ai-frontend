@@ -13,6 +13,7 @@ import PrivacyPage from "./pages/legal/PrivacyPage.jsx";
 import TermsPage from "./pages/legal/TermsPage.jsx";
 import SecurityPage from "./pages/legal/SecurityPage.jsx";
 import ScrollToTop from "./components/common/ScrollToTop.jsx";
+import AppSkeleton from "./components/common/AppSkeleton.jsx";
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
 
@@ -22,7 +23,8 @@ export default function App() {
       <AuthProvider>
         <BrowserRouter>
           <ScrollToTop />
-          <Routes>
+          <AppSkeleton>
+            <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
@@ -34,7 +36,8 @@ export default function App() {
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />
             <Route path="/security" element={<SecurityPage />} />
-          </Routes>
+            </Routes>
+          </AppSkeleton>
         </BrowserRouter>
       </AuthProvider>
     </GoogleOAuthProvider>
